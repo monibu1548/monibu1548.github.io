@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://monibu1548.github.io/"/>
-  <updated>2018-04-15T14:27:23.905Z</updated>
+  <updated>2018-04-15T14:29:17.569Z</updated>
   <id>http://monibu1548.github.io/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>iOS Application 개발 시작하기 - 1 (프로비저닝 생성, XCode 프로젝트 설정)</title>
+    <title>iOS Application 개발 시작하기 - 2 (프로비저닝 생성, XCode 프로젝트 설정)</title>
     <link href="http://monibu1548.github.io/2018/04/15/apple-development-2/"/>
     <id>http://monibu1548.github.io/2018/04/15/apple-development-2/</id>
     <published>2018-04-15T13:50:59.000Z</published>
-    <updated>2018-04-15T14:27:23.905Z</updated>
+    <updated>2018-04-15T14:29:17.569Z</updated>
     
     <content type="html"><![CDATA[<p>지난 포스팅 <a href="http://monibu1548.github.io/2018/04/15/apple-development/">iOS Application 개발 시작하기 - 1 (개발자 등록, 인증서 등록)</a> 에서는 애플 개발자 계정을 만들고 인증서를 등록했다.</p><p>이제 앱을 디바이스에서 실행시키기 위해 Provisioning Profile 을 생성하고, Xcode 프로젝트를 생성하는 과정을 다룬다.</p><h2 id="App-ID-등록"><a href="#App-ID-등록" class="headerlink" title="App ID 등록"></a>App ID 등록</h2><p>앱을 생성하기 위해서 먼저 Apple Developer에서 어떤 앱을 만들건지 App ID를 생성해야 한다.<br><img src="../../../../images/appledevelopment/make3.png" alt=""></p><ul><li>App Name : 앱 이름 ex) YourName</li><li>Bundle Id : 앱의 번들 아이디 ex) io.github.monibu1548.YourName</li></ul><p>아래 체크박스는 어떤 추가 기능이 필요한지 선택할 수 있다. 일단 패스하고 필요한 기능이 있다면 나중에 추가가 가능하다.</p><h2 id="Provisioning-Profile-생성"><a href="#Provisioning-Profile-생성" class="headerlink" title="Provisioning Profile 생성"></a>Provisioning Profile 생성</h2><p>Provisioning Profile 이란, 앱이 디바이스에서 실행 될 수 있는지 정보를 갖고 있는 파일이며 <code>.mobileprovision</code> 확장자를 갖는다.</p><p>Provisiong Profile은 다음과 같은 정보를 갖고 있다. (Development)</p><ul><li>app bundle ID</li><li>device UUID 정보</li><li>certificate 정보</li></ul><h3 id="참고-앱이-디바이스에-정상적으로-설치되기-위해-거치는-검증-과정"><a href="#참고-앱이-디바이스에-정상적으로-설치되기-위해-거치는-검증-과정" class="headerlink" title="참고. 앱이 디바이스에 정상적으로 설치되기 위해 거치는 검증 과정"></a>참고. 앱이 디바이스에 정상적으로 설치되기 위해 거치는 검증 과정</h3><ul><li>Provisioning Profile에서 인증서 정보를 추출, 앱을 실행하려는 디바이스에서 인증서가 유효한지 확인</li><li>Provisioning Profile에서 device UUID 정보를 추출, 앱을 실행하려는 디바이스의 UUID와 일치한지 확인</li><li>CodeResources 디렉토리에서각 파일의 해시값을 실제의 파일들과 확인하여 빌드 후 수정이 되지 않았음을 확인</li></ul><p>Provisioning Profile은 인증서와 마찬가지로 <a href="https://developer.apple.com/kr/support/development/" target="_blank" rel="noopener">애플 개발자센터</a>에서 생성한다.</p><p><img src="../../../../images/appledevelopment/make1.png" alt=""><br><code>Certificates, Identifiers &amp; Profiles</code> 메뉴에서 아래 버튼 클릭한다.</p><p><img src="../../../../images/appledevelopment/make2.png" alt=""><br>인증서 생성때와 마찬가지로 <code>Development</code>와 <code>Production</code>으로 구분되며 같은 구분의 인증서와 연결된다.</p><p>다음페이지에서는 <code>App ID</code> 에서 생성한 ID를 선택한다.<br><img src="../../../../images/appledevelopment/make4.png" alt=""></p><p>전 포스트에서 만들었던 인증서를 선택한다.<br><img src="../../../../images/appledevelopment/make5.png" alt=""></p><p>앱을 테스트 할 디바이스를 선택한다.<br><img src="../../../../images/appledevelopment/make6.png" alt=""></p><ul><li>디바이스 등록은 개발자 센터 좌측 <code>Devices</code> 에서 어렵지 않게 가능하다!</li></ul><p>짜잔. Provisioning Profile이 생성되었다.<br><img src="../../../../images/appledevelopment/make6.png" alt=""></p><p>다운로드 받고, 더블클릭해서 실행하자. 그러면 XCode디렉토리에 자동 등록된다.</p><h2 id="XCode-프로젝트-생성"><a href="#XCode-프로젝트-생성" class="headerlink" title="XCode 프로젝트 생성"></a>XCode 프로젝트 생성</h2><p>XCode 실행 -&gt; 메뉴 <code>File</code> -&gt; <code>New</code> -&gt; <code>Project</code><br>Single View App 선택<br><img src="../../../../images/appledevelopment/make8.png" alt=""></p><p>App ID를 만들때 입력했던 Bundle ID 입력, App Name 입력해서 프로젝트 생성 후<br>프로젝트 파일을 열어보면 다음과 같다.</p><p>이제 <code>Signing</code> 영역에서 Debug(Development), Release(AppStore) 프로비저닝을 선택하여 마무리한다.<br><img src="../../../../images/appledevelopment/make9.png" alt=""></p><p>이제부터 코딩 시작!</p>]]></content>
     
