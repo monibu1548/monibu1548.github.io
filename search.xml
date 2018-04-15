@@ -3,6 +3,21 @@
   
     
     <entry>
+      <title>rooke2week</title>
+      <link href="/2018/04/15/rooke2week/"/>
+      <url>/2018/04/15/rooke2week/</url>
+      <content type="html"><![CDATA[<h1 id="Toast-Rookie-기술교육-2주차"><a href="#Toast-Rookie-기술교육-2주차" class="headerlink" title="Toast-Rookie 기술교육 2주차"></a>Toast-Rookie 기술교육 2주차</h1><h2 id="투표-서비스-‘신의-한-수’-개발-시작"><a href="#투표-서비스-‘신의-한-수’-개발-시작" class="headerlink" title="투표 서비스 ‘신의 한 수’ 개발 시작"></a>투표 서비스 ‘신의 한 수’ 개발 시작</h2><p>2주차부터 본격적으로 개발을 시작했다. git이나 태스크 관리 등 규칙 정하는데 하루를 모두 소비했다. 그 후 Repo 등록하고 Spring Framework프로젝트 생성 후 첫 Initial Commit을 날렸다.<br>2주차에는 DB -&gt; DAO -&gt; Service 까지 개발하기로 했다. 그래야 다음주에 UI를 할 수 있으니..<br>2주차가 끝나는 오늘 아직 Service가 개발중이다. 중간에 DB를 갈아엎은게 영향이 컸다.</p><h2 id="방명록-이후의-spring"><a href="#방명록-이후의-spring" class="headerlink" title="방명록 이후의 spring"></a>방명록 이후의 spring</h2><p>Java는 안드로이드로만 접했고 웹은 node로만 했었는데.. 생소한 Spring Framework로 자바웹을 하게 될 줄이야…<br>그나마 사전과제 방명록 개발하면서 Spring에 익숙해진 덕분에 초기 개발환경 설정이나 구조를 이해하는데 도움이 많이 되었다.</p><h2 id="DB-삽질"><a href="#DB-삽질" class="headerlink" title="DB 삽질"></a>DB 삽질</h2><p>학부 데이터베이스 과목을 열심히 듣지 않았던 것을 매우 후회했다. 결국 DAO, DTO 다 구현해놓고 밤새 갈아엎어버리는 대참사가 발생했다. 프로젝트 개발 전 데이터베이스 검증을 진짜 잘 해야 나중에 고생을 안하겠구나..싶었다.</p><h2 id="TDD"><a href="#TDD" class="headerlink" title="TDD"></a>TDD</h2><p>말로만 들었던 TDD을 적용해보기로 했다. Service 레벨에서 각 필요한 기능을 정의하고 해당 기능에서 발생할 수 있는 예외를 미리 예측하고 테스트케이스를 만들어 실제 서비스가 진행될 때 정의되지 않은 예외가 발생할 가능성을 줄일수 있을 것 같다.<br>물론 TDD할 때도 테스트 케이스를 테스트하는 어처구니 없는 삽질을 하고야 말았다. 많이 연습하고 익숙해져야겠다.</p><h2 id="토비의-스프링"><a href="#토비의-스프링" class="headerlink" title="토비의 스프링"></a>토비의 스프링</h2><p>워낙 유명한 책이라 이름은 많이 들어봤지만, 자바웹에는 1도 관심이 없었기에 볼 생각은 한번도 안했다. Spring을 접하면서 읽게 되었는데 스프링 프레임워크에 대한 지식 뿐 아니라 일반적인 Java 개발에 도움이 되는 지식이 정말 많았다. 지금까지 java 개발을 하면서 의문을 가졌던 부분에 대해서 가장 정석적인, 효율적인 방법을 소개해주는게 제일 마음에 들었다. 붕 떠있던 지식들이 용어와 함께 정리되는 느낌! 또한 다른 오픈소스를 보면서 왜 저런구조인지 이해를 못했던 것도 토비의 스프링을 통해 알게 되었다.</p><p>예를 들면</p><ul><li>Exception 처리를 발생 지점에서 바로 처리할지, 그냥 위로 throw 해버릴지에 대한 고민을 해결했다</li><li>ARCUS DB 오픈소스 공부할때 왜 각 Method 단위가 클래스로 되어있었는지.. 알고보니 전략패턴</li></ul><h2 id="아직도-남는-의문-앞으로-해결해야-할-질문들"><a href="#아직도-남는-의문-앞으로-해결해야-할-질문들" class="headerlink" title="아직도 남는 의문. 앞으로 해결해야 할 질문들"></a>아직도 남는 의문. 앞으로 해결해야 할 질문들</h2><ul><li>Spring은 MVC구조로 되어있다. View를 Spring 에서 만들어서 던져준다.. 요즘은 Front에서 ajax로 구현하는 SPA가 많지 않나..? 그런거에는 적합하지 않은 프레임워크인가?</li><li>Spring 이랑 Catalina. 구조. 동작 순서</li></ul>]]></content>
+      
+      
+        <tags>
+            
+            <tag> NHN 토스트루키 기술교육 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>test</title>
       <link href="/2018/04/15/test/"/>
       <url>/2018/04/15/test/</url>
