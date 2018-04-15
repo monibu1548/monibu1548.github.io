@@ -3,6 +3,21 @@
   
     
     <entry>
+      <title>test</title>
+      <link href="/2018/04/15/test/"/>
+      <url>/2018/04/15/test/</url>
+      <content type="html"><![CDATA[<p>새로 추가되는거 이거 과연 뜰까..떠야되는데…</p>]]></content>
+      
+      
+        <tags>
+            
+            <tag> 엠디 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>Hello World</title>
       <link href="/2018/04/15/hello-world/"/>
       <url>/2018/04/15/hello-world/</url>
