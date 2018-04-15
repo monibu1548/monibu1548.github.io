@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://monibu1548.github.io/"/>
-  <updated>2018-04-15T05:05:22.119Z</updated>
+  <updated>2018-04-15T01:37:57.179Z</updated>
   <id>http://monibu1548.github.io/</id>
   
   <author>
@@ -15,33 +15,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>rooke2week</title>
-    <link href="http://monibu1548.github.io/2018/04/15/rooke2week/"/>
-    <id>http://monibu1548.github.io/2018/04/15/rooke2week/</id>
-    <published>2018-04-15T05:04:30.000Z</published>
-    <updated>2018-04-15T05:05:22.119Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="Toast-Rookie-기술교육-2주차"><a href="#Toast-Rookie-기술교육-2주차" class="headerlink" title="Toast-Rookie 기술교육 2주차"></a>Toast-Rookie 기술교육 2주차</h1><h2 id="투표-서비스-‘신의-한-수’-개발-시작"><a href="#투표-서비스-‘신의-한-수’-개발-시작" class="headerlink" title="투표 서비스 ‘신의 한 수’ 개발 시작"></a>투표 서비스 ‘신의 한 수’ 개발 시작</h2><p>2주차부터 본격적으로 개발을 시작했다. git이나 태스크 관리 등 규칙 정하는데 하루를 모두 소비했다. 그 후 Repo 등록하고 Spring Framework프로젝트 생성 후 첫 Initial Commit을 날렸다.<br>2주차에는 DB -&gt; DAO -&gt; Service 까지 개발하기로 했다. 그래야 다음주에 UI를 할 수 있으니..<br>2주차가 끝나는 오늘 아직 Service가 개발중이다. 중간에 DB를 갈아엎은게 영향이 컸다.</p><h2 id="방명록-이후의-spring"><a href="#방명록-이후의-spring" class="headerlink" title="방명록 이후의 spring"></a>방명록 이후의 spring</h2><p>Java는 안드로이드로만 접했고 웹은 node로만 했었는데.. 생소한 Spring Framework로 자바웹을 하게 될 줄이야…<br>그나마 사전과제 방명록 개발하면서 Spring에 익숙해진 덕분에 초기 개발환경 설정이나 구조를 이해하는데 도움이 많이 되었다.</p><h2 id="DB-삽질"><a href="#DB-삽질" class="headerlink" title="DB 삽질"></a>DB 삽질</h2><p>학부 데이터베이스 과목을 열심히 듣지 않았던 것을 매우 후회했다. 결국 DAO, DTO 다 구현해놓고 밤새 갈아엎어버리는 대참사가 발생했다. 프로젝트 개발 전 데이터베이스 검증을 진짜 잘 해야 나중에 고생을 안하겠구나..싶었다.</p><h2 id="TDD"><a href="#TDD" class="headerlink" title="TDD"></a>TDD</h2><p>말로만 들었던 TDD을 적용해보기로 했다. Service 레벨에서 각 필요한 기능을 정의하고 해당 기능에서 발생할 수 있는 예외를 미리 예측하고 테스트케이스를 만들어 실제 서비스가 진행될 때 정의되지 않은 예외가 발생할 가능성을 줄일수 있을 것 같다.<br>물론 TDD할 때도 테스트 케이스를 테스트하는 어처구니 없는 삽질을 하고야 말았다. 많이 연습하고 익숙해져야겠다.</p><h2 id="토비의-스프링"><a href="#토비의-스프링" class="headerlink" title="토비의 스프링"></a>토비의 스프링</h2><p>워낙 유명한 책이라 이름은 많이 들어봤지만, 자바웹에는 1도 관심이 없었기에 볼 생각은 한번도 안했다. Spring을 접하면서 읽게 되었는데 스프링 프레임워크에 대한 지식 뿐 아니라 일반적인 Java 개발에 도움이 되는 지식이 정말 많았다. 지금까지 java 개발을 하면서 의문을 가졌던 부분에 대해서 가장 정석적인, 효율적인 방법을 소개해주는게 제일 마음에 들었다. 붕 떠있던 지식들이 용어와 함께 정리되는 느낌! 또한 다른 오픈소스를 보면서 왜 저런구조인지 이해를 못했던 것도 토비의 스프링을 통해 알게 되었다.</p><p>예를 들면</p><ul><li>Exception 처리를 발생 지점에서 바로 처리할지, 그냥 위로 throw 해버릴지에 대한 고민을 해결했다</li><li>ARCUS DB 오픈소스 공부할때 왜 각 Method 단위가 클래스로 되어있었는지.. 알고보니 전략패턴</li></ul><h2 id="아직도-남는-의문-앞으로-해결해야-할-질문들"><a href="#아직도-남는-의문-앞으로-해결해야-할-질문들" class="headerlink" title="아직도 남는 의문. 앞으로 해결해야 할 질문들"></a>아직도 남는 의문. 앞으로 해결해야 할 질문들</h2><ul><li>Spring은 MVC구조로 되어있다. View를 Spring 에서 만들어서 던져준다.. 요즘은 Front에서 ajax로 구현하는 SPA가 많지 않나..? 그런거에는 적합하지 않은 프레임워크인가?</li><li>Spring 이랑 Catalina. 구조. 동작 순서</li></ul>]]></content>
-    
-    <summary type="html">
-    
-      Toast-Rookie 기술교육 2주차
-투표 서비스 ‘신의 한 수’ 개발 시작
-2주차부터 본격적으로 개발을 시작했다. git이나 태스크 관리 등 규칙 정하는데 하루를 모두 소비했다. 그 후 Repo 등록하고 Spring Framework프로젝트 생성 후 첫 Initial Commit을 날렸다.
-2주차에는 DB -&gt; DAO -&gt; Service 까지 개발하기로 했다. 그래야 다음주에 UI를 할 수 있으니..
-2주차가 끝나는 오늘 아직 Service가 개발중이다. 중간에 DB를 갈아엎은게 영향이 컸다.
-
-방명록 이후의 spring
-Jav
-    
-    </summary>
-    
-    
-      <category term="NHN 토스트루키 기술교육" scheme="http://monibu1548.github.io/tags/NHN-%ED%86%A0%EC%8A%A4%ED%8A%B8%EB%A3%A8%ED%82%A4-%EA%B8%B0%EC%88%A0%EA%B5%90%EC%9C%A1/"/>
-    
-  </entry>
   
   <entry>
     <title>test</title>
@@ -98,11 +71,11 @@ $ hexo s
   </entry>
   
   <entry>
-    <title>grafana</title>
+    <title>오픈소스 Grafana와 InfluxDB를 활용한 서버 모니터링</title>
     <link href="http://monibu1548.github.io/2017/03/03/grafana/"/>
     <id>http://monibu1548.github.io/2017/03/03/grafana/</id>
     <published>2017-03-03T05:08:38.000Z</published>
-    <updated>2018-04-15T05:10:35.190Z</updated>
+    <updated>2018-04-15T05:12:26.118Z</updated>
     
     <content type="html"><![CDATA[<p><img src="../../../../images/grafana/title.jpg" alt=""></p><h1 id="오픈소스-Grafana와-InfluxDB를-활용한-서버-모니터링"><a href="#오픈소스-Grafana와-InfluxDB를-활용한-서버-모니터링" class="headerlink" title="오픈소스 Grafana와 InfluxDB를 활용한 서버 모니터링"></a>오픈소스 Grafana와 InfluxDB를 활용한 서버 모니터링</h1><h2 id="왜-쓰는가"><a href="#왜-쓰는가" class="headerlink" title="왜 쓰는가?"></a>왜 쓰는가?</h2><p>서버의 리소스 (CPU 사용량 및 메모리 사용량)이나 웹 사이트 URL의 호출 횟수, 응답시간 등 서버 개발자가 실시간 모니터링해야 하는 자원을 쉽게 모아서 실시간으로 보여줄 수 있다.</p><p>간단한 사용 후기로는 Grafana가 그래프를 그려주는게 InfluxDB에 있는 데이터를 가져와서 그려준다. 그릴 데이터를 sql 쿼리로 가져온다. 신기하다!! 물론 DB는 InfluxDB외에도 다른 Plugin을 통해 가져올 수 있다.</p><h2 id="Grafana는"><a href="#Grafana는" class="headerlink" title="Grafana는?"></a>Grafana는?</h2><p>서버 모니터링 대시보드 오픈소스. 이런식으로 그려준다.!</p><p><img src="../../../../images/grafana/ex.jpg" alt=""></p><p>얼마나 아름다운가!</p><p>시간대 별로. DB에서 사용자 쿼리에 의해 얻어진 데이터로 자동으로 그려준다.</p><p>Go와 Nodejs 디펜던시를 갖고있다.</p><h2 id="InfluxDB는"><a href="#InfluxDB는" class="headerlink" title="InfluxDB는?"></a>InfluxDB는?</h2><p>시계열(Time-series) DB. 시계열 데이터란 시간의 흐름에 따라 저장하는 데이터로 서버 환경에서 각종 지표를 수집하는 목적으로 사용한다. http protocol을 이용해 외부에서 제어도 가능하며 표준 SQL을 통해 데이터를 다룰 수 있다.</p><h1 id="시작은-설치로부터"><a href="#시작은-설치로부터" class="headerlink" title="시작은 설치로부터!"></a>시작은 설치로부터!</h1><h2 id="Grafana-설치"><a href="#Grafana-설치" class="headerlink" title="Grafana 설치"></a>Grafana 설치</h2><ul><li>centos6 기준으로 설치한 내용입니다. 모든 설치는 패키지를 사용하지 않고 portable로 진행합니다.</li></ul><h3 id="Go-디펜던시-설치"><a href="#Go-디펜던시-설치" class="headerlink" title="Go 디펜던시 설치"></a>Go 디펜던시 설치</h3><p>go 다운로드 페이지</p><p><a href="https://golang.org/dl/" target="_blank" rel="noopener">https://golang.org/dl/</a></p><p>서버환경에 맞는 tar.gz 파일을 받고 tar로 압축을 해제한다.</p><p>GOPATH와 GOROOT 환경변수를 설정해야합니다.</p><p>GOPATH는 GO에서 받는 데이터를 보관할 장소. ~/grafana 를 만들고 이곳으로 설정했습니다.</p><p>GOROOT는 다운받은 go의 홈디렉토리입니다.</p><p>/.bashrc 에 다음과 같은 내용을 추가합니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">export</span> GOPATH=<span class="string">'/&#123;home&#125;/&#123;username&#125;/grafana'</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> GOROOT=<span class="string">'/&#123;다운 받은 go 위치&#125;'</span></span><br></pre></td></tr></table></figure><p>그리고 수정한 .bashrc를 적용합니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">source</span> .bashrc</span><br></pre></td></tr></table></figure><p>그 후 grafana source 를 다운로드합니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">go get github.com/grafana/grafana</span><br></pre></td></tr></table></figure><p>그러면 $GOPATH에 grafana 디렉토리가 생긴 것을 볼 수 있습니다.</p><p>이어서 grafana를 설치하기 전에 nodejs를 설치합니다.</p><h3 id="nodejs-디펜던시-설치"><a href="#nodejs-디펜던시-설치" class="headerlink" title="nodejs 디펜던시 설치"></a>nodejs 디펜던시 설치</h3><p> <a href="https://nodejs.org/download/" target="_blank" rel="noopener">https://nodejs.org/download/</a></p><p> 위 링크에서 nodejs를 다운받습니다. 최신 버전도 많이 나왔지만 저는 4.7사용.. 서버도 옛날꺼고..파이썬도 옛날거고…. node만 최신이면 꼬일것 같은 기분!</p><p> node도 환경변수로 등록해서 터미널에서 node를 입력했을 때 node 가 바로 실행되어야 합니다.</p><h3 id="이제-진짜-grafana-설치"><a href="#이제-진짜-grafana-설치" class="headerlink" title="이제 진짜 grafana 설치"></a>이제 진짜 grafana 설치</h3><p> 일단 go를 이용해 grafana를 받은 위치로 이동하고 설치를 시작합니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$GOPATH</span>/src/github.com/grafana/grafana</span><br><span class="line"></span><br><span class="line">go run build.go setup</span><br><span class="line"></span><br><span class="line">go run build.go build</span><br></pre></td></tr></table></figure><p>이제 여기까지 grafana의 설치가 끝났습니다!!!는 Back-end만.. 이대로 실행하면 Front-end 와장창</p><p>이제 grunt로 Front-end를 가져옵니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">npm install -g yarn</span><br><span class="line"></span><br><span class="line">yarn install --pure-lockfile</span><br><span class="line"></span><br><span class="line">npm install -g grunt-cli</span><br><span class="line"></span><br><span class="line">grunt</span><br></pre></td></tr></table></figure><p>이제 진짜 설치 끝!!!</p><p>grafana 디렉토리의 ./bin/grafana-server 를 실행시킵니다.</p><p>그러면 기본적으로 3000번 포트로 구동되며. <a href="http://localhost:3000" target="_blank" rel="noopener">http://localhost:3000</a> 로 접근해서 확인할 수 있습니다. 일단 다른 프로그램이 3000번을 잡고있으면 안된다!</p><p><strong> 정말 설치만 하고 실행했다. 설정파일을 통해 admin 계정 등 보안을 위해 많은 설정이 필요하다 </strong></p><h3 id="InfluxDB-설치"><a href="#InfluxDB-설치" class="headerlink" title="InfluxDB 설치"></a>InfluxDB 설치</h3><p>이제 데이터를 예쁘게 그려줄 대쉬보드를 설치했으니 데이터를 저장할 DB를 설치해야한다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">wget https://dl.influxdata.com/influxdb/releases/influxdb-1.2.0_linux_amd64.tar.gz</span><br><span class="line">tar xvfz influxdb-1.2.0_linux_amd64.tar.gz</span><br></pre></td></tr></table></figure><p>2017-03-03일 기준이므로</p><p><a href="https://portal.influxdata.com/downloads#influxdb" target="_blank" rel="noopener">https://portal.influxdata.com/downloads#influxdb</a></p><p>에서 최신버전을 확인하고 설치하는 것을 추천. Standalone 으로!!!!</p><p>다운로드가 완료되면 influxdb 하위 ./usr/bin 의 influxd를 실행한다</p><p>influxd 가 influxDB 데몬이며 influx 는 influxDB 의 cli 클라이언트다.</p><h2 id="Grafana와-InfluxDB-연동하기"><a href="#Grafana와-InfluxDB-연동하기" class="headerlink" title="Grafana와 InfluxDB 연동하기"></a>Grafana와 InfluxDB 연동하기</h2><p>가장 어려운 부분이었다.</p><p>Grafana 페이지. localhost:3000 에서 설정한다. 로그인을 해야한다면 기본 id는 admin, 기본 pw도 admin 이다.</p><p>이제 Grafana 페이지의 DataSource메뉴에서 InfluxDB를 연결한다.</p><p>ip와 포트를 연결하고 Save&amp;Test 버튼을 누른다. 연결이 되었는지 안되었는지는 알려준다!!</p><p>초록불이 뜰때까지 정보들을 맞게 수정한다!!</p><h2 id="Grafana에서-그래프-그리기"><a href="#Grafana에서-그래프-그리기" class="headerlink" title="Grafana에서 그래프 그리기"></a>Grafana에서 그래프 그리기</h2><p>쉽다.</p><ul><li>Dashboard 추가.</li><li>그래프 추가</li><li>각 축에 쿼리문 작성</li></ul><p>TIP. add query로 쿼리 추가해서 막 블록형태로 쿼리를 만든다.. 이거 쓰지말자.. 잘 안된다.<br>쿼리 쓰는데 옆에보면 햄버거 버튼이 있다. Toggle custom query를 통해 직접 query를 작성하자.</p><p>이렇게 해서 나온 내 서비스의 모니터링 페이지!!</p><p><img src="../../../../images/grafana/result.PNG" alt=""></p><h2 id="후기"><a href="#후기" class="headerlink" title="후기"></a>후기</h2><p>Grafana와 InfluxDB를 설치하고 그래프를 그리기까지 2~3일 삽질은 해야하지 않을까 생각했었다. 둘 다 처음사용해보는데다가 디펜던시가 몇가지 있어서 어디선가 터질꺼라 생각했다..! But 설치까지는 1시간만에 끝나버렸다..</p><p>문제는 설치보다 grafana 대시보드 구성과 시계열 데이터에 대한 이해! sql 을 이용해 그래프를 그린다는게 생각하기 힘들었다. 또 시계열 데이터를 어떻게 그려야 원하는 그래프가 나오는지 어렵다 ㅠㅜ.</p><p>grafana에 아쉬운점은 그래프 Scale 을 조절하기 힘들다는 것! 마우스를 이용해 끄적끄적하면 그래프도 좌우로 이동되고 Zoom in out도 되면 좋겠다!!!!</p><p>있는 기능인데 발견을 못한 것일수도!</p><p>좀 더 능숙하게 쓸 수 있도록 이것저것 해봐야겠다</p>]]></content>
     
@@ -121,6 +94,33 @@ Grafana는?
     
     
       <category term="grafana influxDB 모니터링" scheme="http://monibu1548.github.io/tags/grafana-influxDB-%EB%AA%A8%EB%8B%88%ED%84%B0%EB%A7%81/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>rooke2week</title>
+    <link href="http://monibu1548.github.io/2017/01/22/rooke2week/"/>
+    <id>http://monibu1548.github.io/2017/01/22/rooke2week/</id>
+    <published>2017-01-22T05:04:30.000Z</published>
+    <updated>2018-04-15T05:11:40.350Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Toast-Rookie-기술교육-2주차"><a href="#Toast-Rookie-기술교육-2주차" class="headerlink" title="Toast-Rookie 기술교육 2주차"></a>Toast-Rookie 기술교육 2주차</h1><h2 id="투표-서비스-‘신의-한-수’-개발-시작"><a href="#투표-서비스-‘신의-한-수’-개발-시작" class="headerlink" title="투표 서비스 ‘신의 한 수’ 개발 시작"></a>투표 서비스 ‘신의 한 수’ 개발 시작</h2><p>2주차부터 본격적으로 개발을 시작했다. git이나 태스크 관리 등 규칙 정하는데 하루를 모두 소비했다. 그 후 Repo 등록하고 Spring Framework프로젝트 생성 후 첫 Initial Commit을 날렸다.<br>2주차에는 DB -&gt; DAO -&gt; Service 까지 개발하기로 했다. 그래야 다음주에 UI를 할 수 있으니..<br>2주차가 끝나는 오늘 아직 Service가 개발중이다. 중간에 DB를 갈아엎은게 영향이 컸다.</p><h2 id="방명록-이후의-spring"><a href="#방명록-이후의-spring" class="headerlink" title="방명록 이후의 spring"></a>방명록 이후의 spring</h2><p>Java는 안드로이드로만 접했고 웹은 node로만 했었는데.. 생소한 Spring Framework로 자바웹을 하게 될 줄이야…<br>그나마 사전과제 방명록 개발하면서 Spring에 익숙해진 덕분에 초기 개발환경 설정이나 구조를 이해하는데 도움이 많이 되었다.</p><h2 id="DB-삽질"><a href="#DB-삽질" class="headerlink" title="DB 삽질"></a>DB 삽질</h2><p>학부 데이터베이스 과목을 열심히 듣지 않았던 것을 매우 후회했다. 결국 DAO, DTO 다 구현해놓고 밤새 갈아엎어버리는 대참사가 발생했다. 프로젝트 개발 전 데이터베이스 검증을 진짜 잘 해야 나중에 고생을 안하겠구나..싶었다.</p><h2 id="TDD"><a href="#TDD" class="headerlink" title="TDD"></a>TDD</h2><p>말로만 들었던 TDD을 적용해보기로 했다. Service 레벨에서 각 필요한 기능을 정의하고 해당 기능에서 발생할 수 있는 예외를 미리 예측하고 테스트케이스를 만들어 실제 서비스가 진행될 때 정의되지 않은 예외가 발생할 가능성을 줄일수 있을 것 같다.<br>물론 TDD할 때도 테스트 케이스를 테스트하는 어처구니 없는 삽질을 하고야 말았다. 많이 연습하고 익숙해져야겠다.</p><h2 id="토비의-스프링"><a href="#토비의-스프링" class="headerlink" title="토비의 스프링"></a>토비의 스프링</h2><p>워낙 유명한 책이라 이름은 많이 들어봤지만, 자바웹에는 1도 관심이 없었기에 볼 생각은 한번도 안했다. Spring을 접하면서 읽게 되었는데 스프링 프레임워크에 대한 지식 뿐 아니라 일반적인 Java 개발에 도움이 되는 지식이 정말 많았다. 지금까지 java 개발을 하면서 의문을 가졌던 부분에 대해서 가장 정석적인, 효율적인 방법을 소개해주는게 제일 마음에 들었다. 붕 떠있던 지식들이 용어와 함께 정리되는 느낌! 또한 다른 오픈소스를 보면서 왜 저런구조인지 이해를 못했던 것도 토비의 스프링을 통해 알게 되었다.</p><p>예를 들면</p><ul><li>Exception 처리를 발생 지점에서 바로 처리할지, 그냥 위로 throw 해버릴지에 대한 고민을 해결했다</li><li>ARCUS DB 오픈소스 공부할때 왜 각 Method 단위가 클래스로 되어있었는지.. 알고보니 전략패턴</li></ul><h2 id="아직도-남는-의문-앞으로-해결해야-할-질문들"><a href="#아직도-남는-의문-앞으로-해결해야-할-질문들" class="headerlink" title="아직도 남는 의문. 앞으로 해결해야 할 질문들"></a>아직도 남는 의문. 앞으로 해결해야 할 질문들</h2><ul><li>Spring은 MVC구조로 되어있다. View를 Spring 에서 만들어서 던져준다.. 요즘은 Front에서 ajax로 구현하는 SPA가 많지 않나..? 그런거에는 적합하지 않은 프레임워크인가?</li><li>Spring 이랑 Catalina. 구조. 동작 순서</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      Toast-Rookie 기술교육 2주차
+투표 서비스 ‘신의 한 수’ 개발 시작
+2주차부터 본격적으로 개발을 시작했다. git이나 태스크 관리 등 규칙 정하는데 하루를 모두 소비했다. 그 후 Repo 등록하고 Spring Framework프로젝트 생성 후 첫 Initial Commit을 날렸다.
+2주차에는 DB -&gt; DAO -&gt; Service 까지 개발하기로 했다. 그래야 다음주에 UI를 할 수 있으니..
+2주차가 끝나는 오늘 아직 Service가 개발중이다. 중간에 DB를 갈아엎은게 영향이 컸다.
+
+방명록 이후의 spring
+Jav
+    
+    </summary>
+    
+    
+      <category term="NHN 토스트루키 기술교육" scheme="http://monibu1548.github.io/tags/NHN-%ED%86%A0%EC%8A%A4%ED%8A%B8%EB%A3%A8%ED%82%A4-%EA%B8%B0%EC%88%A0%EA%B5%90%EC%9C%A1/"/>
     
   </entry>
   
