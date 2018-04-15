@@ -26,6 +26,21 @@
       
     </entry>
     
+    <entry>
+      <title>Travis CI를 이용한 빌드 테스트</title>
+      <link href="/2017/01/14/TravisCI/"/>
+      <url>/2017/01/14/TravisCI/</url>
+      <content type="html"><![CDATA[<h1 id="Travis-CI"><a href="#Travis-CI" class="headerlink" title="Travis CI"></a>Travis CI</h1><h3 id="Travis-CI-란"><a href="#Travis-CI-란" class="headerlink" title="Travis CI 란?"></a>Travis CI 란?</h3><p><img src="../images/travis/ex.png" alt=""></p><p>Travis CI는 오픈소스 커뮤니티를 위한 지속적 통합 서비스이다. Github의 README.md 파일을 보면 build/passing 같은 뱃지를 볼 수 있다. 이것이 travis의 CI의 결과를 쉽게 알 수 있는 기능이다.</p><h3 id="Travis-CI-서비스-가입하기"><a href="#Travis-CI-서비스-가입하기" class="headerlink" title="Travis CI 서비스 가입하기"></a>Travis CI 서비스 가입하기</h3><ul><li>Travis CI 서비스 홈페이지</li></ul><p><a href="https://travis-ci.org/" target="_blank" rel="noopener">https://travis-ci.org/</a></p><ul><li>서비스 가입은 Github 계정으로만 가입할 수 있다.</li></ul><h3 id="Repository-연동하기"><a href="#Repository-연동하기" class="headerlink" title="Repository 연동하기"></a>Repository 연동하기</h3><p>로그인 후 우측 상단의 계정을 클릭하여 [Account] 메뉴로 진입할 수 있다.</p><p>이 페이지에서 본인의 Repository가 체크박스 형태로 나열되어 있으며 CI를 On/Off 할 수 있다.</p><p><strong>Repository에 .travis.yml 파일이 있어야 한다</strong></p><h3 id="travis-yml"><a href="#travis-yml" class="headerlink" title=".travis.yml"></a>.travis.yml</h3><ul><li><p>.travis.yml 설정 파일을 통해 테스트 환경을 설정할 수 있다.</p></li><li><p>Repository의 가장 최상위 디렉토리에 작성한다.</p></li></ul><p><em>Maven 프로젝트라면 다음과 같은 간단한 .travis.yml로 CI를 연결할 수 있다.</em></p><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">language:</span> <span class="string">java</span></span><br></pre></td></tr></table></figure><p><em>mvn test 결과에 따라 build 성공 여부를 알려준다</em></p><p><strong>Makefile 스크립트로 테스트 코드를 작성하고 .travis.yml 에서 script: 로 실행하여 다양한 테스트를 진행할 수 있다.</strong></p><h3 id="Travis-Badge-설치하기"><a href="#Travis-Badge-설치하기" class="headerlink" title="Travis Badge 설치하기"></a>Travis Badge 설치하기</h3><ul><li>대부분의 Github 오픈소스에서 README.md에 build/passing 이라는 초록 뱃지를 볼 수 있다.</li></ul><p><img src="../images/travis/ex2.png" alt=""></p><p>Travis CI 홈페이지에서 My Repository에 들어가면 레포 이름 옆에 뱃지를  볼 수 있다.</p><p>이 뱃지를 클릭하면</p><p>[Status Image] 라는 대화상자가 뜨며 이미지의 링크가 뜬다.!! 여기에서 branch 도 설정 가능하다..!!</p><p><strong>Travis CI를 통해 쉽게 빌드 테스트를 진행할 수 있으며 Branch뿐만 아니라 PR에 대해서도 검사를 진행하므로 더 생산적인 코딩을 할 수 있지 않을까!!!</strong></p>]]></content>
+      
+      
+        <tags>
+            
+            <tag> CI java maven jenkins </tag>
+            
+        </tags>
+      
+    </entry>
+    
   
   
 </search>
