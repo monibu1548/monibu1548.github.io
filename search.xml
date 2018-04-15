@@ -3,6 +3,29 @@
   
     
     <entry>
+      <title>NHNent가 만든 협업 서비스 Dooray</title>
+      <link href="/2018/03/29/dooray/"/>
+      <url>/2018/03/29/dooray/</url>
+      <content type="html"><![CDATA[<h1 id="JIRA-vs-Line-Works-vs-Dooray-직접-사용해본-후기"><a href="#JIRA-vs-Line-Works-vs-Dooray-직접-사용해본-후기" class="headerlink" title="JIRA vs Line Works vs Dooray 직접 사용해본 후기"></a>JIRA vs Line Works vs Dooray 직접 사용해본 후기</h1><p>JIRA : 강력한 스프린트 관리 기능! But, 위키가 쌓이면 쌓일수록 최신화 안되는 문서들이 가득, 문서찾기도 힘듦ㅠㅜ</p><p>Line Works : 네이버 메일, 드라이브, 캘린더를 그대로 가져와서 익숙하다!</p><p>Dooray : 처음에 배우기 어렵다…. 하지만 익숙해지면 이만한게 없다!! 빠른 문서찾기, 태그! 메신저, 메일, 프로젝트, 드라이브 안되는게 없다!</p><h1 id="Dooray의-강력한-기능들"><a href="#Dooray의-강력한-기능들" class="headerlink" title="Dooray의 강력한 기능들!"></a>Dooray의 강력한 기능들!</h1><h2 id="HOOK을-통해서-자동으로-업무-등록-댓글등록이-가능해요"><a href="#HOOK을-통해서-자동으로-업무-등록-댓글등록이-가능해요" class="headerlink" title="HOOK을 통해서 자동으로 업무 등록, 댓글등록이 가능해요"></a>HOOK을 통해서 자동으로 업무 등록, 댓글등록이 가능해요</h2><ul><li>빌드를 하거나 이슈가 발생했을때 바로바로 업무등록 및 수정 알림!<br><img src="../../../../images/dooray/1.png" alt=""></li></ul><h2 id="우선순위-태그-완료일-마일스톤-지정까지-상세하게"><a href="#우선순위-태그-완료일-마일스톤-지정까지-상세하게" class="headerlink" title="우선순위, 태그, 완료일, 마일스톤 지정까지 상세하게!"></a>우선순위, 태그, 완료일, 마일스톤 지정까지 상세하게!</h2><ul><li>업무의 우선순위 확인이나 나중에 검색할 때 엄청 편해요<br><img src="../../../../images/dooray/2.png" alt=""></li></ul><h2 id="메신저도-엄청나다"><a href="#메신저도-엄청나다" class="headerlink" title="메신저도 엄청나다"></a>메신저도 엄청나다</h2><ul><li>현재 자리에 있는지, 자리비움인지 한눈에 볼 수 있어요<br><img src="../../../../images/dooray/3.png" alt=""></li></ul><h2 id="업무에-최적인-메일"><a href="#업무에-최적인-메일" class="headerlink" title="업무에 최적인 메일"></a>업무에 최적인 메일</h2><ul><li>자동 분류 기능으로 쉽게 분류하고 찾아볼 수 있어요</li></ul><h2 id="그-외…"><a href="#그-외…" class="headerlink" title="그 외…"></a>그 외…</h2><p>말로 표현할 수 없는 정말 유용하고 다양한 기능들</p><ul><li>마크다운으로 글을 이쁘게 쓰면 PPT 발표모드로도 사용할 수 있어요</li><li>UML도 그릴 수 있죠</li><li>다른 업무 자체를 태그할 수도 있어요</li><li>담당자에게 일을 빨리 빨리 넘길 수 있죠</li></ul><p>NHN entertainment의 Dooray! 많이 사용해주세요 :)</p>]]></content>
+      
+      <categories>
+          
+          <category> NHN ent. </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Dooray </tag>
+            
+            <tag> NHN </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>웹 js, css 정적 파일 버전관리 방법</title>
       <link href="/2017/03/10/web-optimize-3/"/>
       <url>/2017/03/10/web-optimize-3/</url>
