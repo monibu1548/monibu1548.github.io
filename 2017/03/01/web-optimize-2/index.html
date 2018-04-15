@@ -1,0 +1,44 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="baidu-site-verification" content="1EB8XoOl0C"><meta name="google-site-verification" content="K7thEgdLm0UfRWJ5MGdF7sCcjClSzAlxFLPv2Oz5CGM"><title> 웹 최적화 (Apache mod_deflate 모듈을 이용한 압축 전송) · JingyuJung's Blog</title><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="웹 최적화 (Apache mod_deflate 모듈을 이용한 압축 전송) - Jingyu Jung"><meta name="keywords"><meta name="author" content="Jingyu Jung"><link rel="short icon" href="/images/favicon.ico"><link rel="stylesheet" href="/css/bubuzou.css"><link rel="search" type="application/opensearchdescription+xml" href="http://monibu1548.github.io/atom.xml" title="JingyuJung's Blog"></head><body><header><div class="header row"> <a href="/" class="logo-link"><img src="/images/logo.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" data-hover="POSTS" class="nav-list-link">POSTS</a></li><li class="nav-list-item"><a href="/archives/" target="_self" data-hover="ARCHIVES" class="nav-list-link">ARCHIVES</a></li></ul><div class="search"><a id="search_btn" href="#search"></a></div></div></header><div class="row scroll-con"><section class="container"><!-- for archive page--><div id="postAr" class="post"><article class="post-block"><h1 class="post-title">웹 최적화 (Apache mod_deflate 모듈을 이용한 압축 전송)</h1><div class="post-info">2017-03-01<p class="visit"><i data-hk-page="current">-</i><span>읽음</span></p></div><div class="post-content"><h1 id="Apache-mod-deflate-모듈을-이용한-압축-전송"><a href="#Apache-mod-deflate-모듈을-이용한-압축-전송" class="headerlink" title="Apache mod_deflate 모듈을 이용한 압축 전송"></a>Apache mod_deflate 모듈을 이용한 압축 전송</h1><p><a href="http://monibu1548.github.io/web-optimize-1/">지난번 WAS와 WEB의 분리</a>를 통해 js, css 등의 정적 파일은 apache에서 서비스 하도록 변경했다.</p>
+<p>js, css등의 파일을 압축 전송하여 좀 더 빠르게 사용자에게 전송할 수 있다.</p>
+<p>물론 장단점이 존재한다.</p>
+<p>장점 : 압축전송으로 인해 좀 더 빠른 전송, 적은 네트워크 트래픽<br>단점 : 보낼때마다 서버의 압축과정 =&gt; 부하 가능성, 브라우저는 받아서 압축 해제해야 하는 추가 과정 필요</p>
+<h2 id="mod-deflate"><a href="#mod-deflate" class="headerlink" title="mod_deflate"></a>mod_deflate</h2><p>gzip 압축전송을 하기 위해서는 apache의 mod_deflate 모듈을 사용한다. mod_deflate모듈은 apache 2.2 버전부터 기본으로 포함되어있다. 그래도 혹시모르니 httpd.conf 에서 확인해보자.</p>
+<h3 id="apache-conf-httpd-conf"><a href="#apache-conf-httpd-conf" class="headerlink" title="apache/conf/httpd.conf"></a>apache/conf/httpd.conf</h3><p><img src="../../../../images/web-optimize/deflate-module.PNG" alt=""></p>
+<p>역시 기본으로 LoadModule하고 있다</p>
+<h3 id="모듈-설정"><a href="#모듈-설정" class="headerlink" title="모듈 설정"></a>모듈 설정</h3><p>이제 어떤 파일을 압축할지, 얼마나 압축할지 등의 상세 설정이 필요하다. httpd.conf에서 설정해도 되며 별도의 파일로도 분리 가능하다.</p>
+<p>일단 같은 파일에 작성!</p>
+<p><img src="../../../../images/web-optimize/deflate-setting.PNG" alt=""></p>
+<ul>
+<li>AddOutputFilterByType DEFLATE {압축할 content type}</li>
+<li>DeflateCompressionLevel : 압축률, 높을수록 많이 압축한다</li>
+<li>BrowerMatch : gzip를 받아주는 브라우저도 있고 안받아주는 브라우저도 있다. 그에 관련된 설정</li>
+<li>SetEnvIfNoCase Request_URI {파일확장자 정규표현식} {환경변수..} : 해당 파일확장자에 대한 요청이 오면 환경변수들을 설정한다. 여기서 NoCase는 대소문자를 가리지 않겠다는 의미</li>
+</ul>
+<hr>
+<ul>
+<li>DefalteFilterNote Input : 로그 관련, 원본 파일 크기</li>
+<li>DefalteFilterNote Output : 로그 관련, 압축된 파일 크기</li>
+<li>DeflateFilterNote Ratio : 로그 관련, 압축 비율</li>
+<li>LogFormat : 로그 관련, 로그 출력 형태 지정</li>
+</ul>
+<h2 id="압축이-돼서-오는지-확인해보자"><a href="#압축이-돼서-오는지-확인해보자" class="headerlink" title="압축이 돼서 오는지 확인해보자"></a>압축이 돼서 오는지 확인해보자</h2><h2 id="일단-현재-압축-전송이-되고-있나-확인해보자"><a href="#일단-현재-압축-전송이-되고-있나-확인해보자" class="headerlink" title="일단!! 현재 압축 전송이 되고 있나 확인해보자!"></a>일단!! 현재 압축 전송이 되고 있나 확인해보자!</h2><p>크롬 개발자도구에서 “Network” 탭을 열고 Ctrl + Shift + F5 를 눌러서 강력 새로고침을 누르면 js, css등 많은 파일을 받는 것을 볼 수 있다.</p>
+<p><img src="../../../../images/web-optimize/gz_after.PNG" alt=""></p>
+<p>Requst Headers를 보면 Content-Encoding에 gzip이 표시되는 것을 확인할 수 있다.</p>
+<p>만약 mod_deflate를 사용하지 않았다면??</p>
+<p>httpd.conf에서 LoadModule mod_deflate.so를 주석처리하고 apache를 재실행하고 다시 페이지를 로드하면</p>
+<p><img src="../../../../images/web-optimize/gz_before.PNG" alt=""></p>
+<p>mod_deflate를 사용하기 이전에는 그냥 js파일이 생으로 날라오고 있었다는 것을 확인할 수 있다.</p>
+<h2 id="실제로-압축이-얼마나-돼서-전송될까"><a href="#실제로-압축이-얼마나-돼서-전송될까" class="headerlink" title="실제로 압축이 얼마나 돼서 전송될까??"></a>실제로 압축이 얼마나 돼서 전송될까??</h2><p>mod_deflate의 로그 파일을 통해 알아볼 수 있다.</p>
+<p>virtual host에 CustomLog를 추가한다.</p>
+<p><img src="../../../../images/web-optimize/log_setting.png" alt=""></p>
+<p>웹 페이지에 접속하여 apache가 파일 전송을 위해 압축을 하게되면 deflate.log가 쌓이는 것을 볼 수 있다.</p>
+<p>내용을 살펴보면 다음과 같다.</p>
+<p><img src="../../../../images/web-optimize/deflate_result.PNG" alt=""></p>
+<p>{HTTP method} {파일경로} {HTTP 버전} {압축 후 크기 / 압축 전 크기} {압축률}</p>
+<p>압축률을 9로 설정해서 그런지 상당히 많이 압축된다.</p>
+<h3 id="참고사항"><a href="#참고사항" class="headerlink" title="참고사항"></a>참고사항</h3><ul>
+<li>사실 js와 css를 gzip하는거보다 minify하는게 더 효과적이라고 한다</li>
+<li>png, pdf 등의 파일은 이미 압축되어 있어서 압축하지 말아야 한다</li>
+<li>아주 적은 json 또는 text를 반환하는 경우 압축하지 않는 것이 좋다.</li>
+</ul>
+</div></article></div><div class="right-container"><div class="widget"><div class="category"><h4>카테고리</h4><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/NHN-ent/">NHN ent.</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Framework/">Spring Framework</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/생산성/">생산성</a><span class="category-list-count">2</span></li></ul></div></div><div class="widget"><div class="tagcloud"><h4>태그</h4><a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/NHN/" style="font-size: 10px;">NHN</a> <a href="/tags/Spring-Framework/" style="font-size: 20px;">Spring Framework</a> <a href="/tags/Web/" style="font-size: 20px;">Web</a> <a href="/tags/grafana/" style="font-size: 10px;">grafana</a> <a href="/tags/influxDB/" style="font-size: 10px;">influxDB</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/jenkins/" style="font-size: 10px;">jenkins</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/기술교육/" style="font-size: 10px;">기술교육</a> <a href="/tags/모니터링/" style="font-size: 10px;">모니터링</a> <a href="/tags/스프링-프레임워크/" style="font-size: 20px;">스프링 프레임워크</a> <a href="/tags/엠디/" style="font-size: 10px;">엠디</a> <a href="/tags/웹/" style="font-size: 20px;">웹</a> <a href="/tags/최적화/" style="font-size: 20px;">최적화</a> <a href="/tags/토스트루키/" style="font-size: 10px;">토스트루키</a></div></div><div class="widget"><div class="recent"><h4>최근 포스트</h4><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/15/test/">test</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/15/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/03/grafana/">오픈소스 Grafana와 InfluxDB를 활용한 서버 모니터링</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/01/web-optimize-2/">웹 최적화 (Apache mod_deflate 모듈을 이용한 압축 전송)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/26/web-optimize-1/">웹 최적화 (WEB과 WAS의 분리)</a></li></ul></div></div><div class="widget"><div id="arAnchorBar"></div></div></div></section></div><div class="right-menu"></div><div class="modal search-modal"><div class="input-field"><input type="text" id="search_input"><label for="search-input">검색</label></div><div id="search_result" class="search-result"></div></div><div class="blog-overlay"></div><footer class="row"><div class="footer-con"><div class="paginator"><a href="/2017/03/03/grafana/" class="prev">PREV</a><a href="/2017/02/26/web-optimize-1/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2018 <a target="_blank">Jingyu Jung</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> <br> and <a href="https://github.com/Bulandent/hexo-theme-bubuzou" target="_blank">hexo-theme-bubuzou</a></p></div><div class="totop"><i></i></div></div></footer><script async src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><script src="http://apps.bdimg.com/libs/jquery/1.8.2/jquery.min.js"></script><script src="https://cdn1.lncld.net/static/js/av-mini-0.6.10.js"></script><script src="/scripts/hit-kounter-lc-0.2.0.js"></script><script src="/scripts/arAnchor.js"></script><script src="/scripts/main.js"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-117570529-1",'auto');ga('send','pageview');</script></body></html>

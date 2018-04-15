@@ -1,0 +1,65 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="baidu-site-verification" content="1EB8XoOl0C"><meta name="google-site-verification" content="K7thEgdLm0UfRWJ5MGdF7sCcjClSzAlxFLPv2Oz5CGM"><title> 웹 최적화 (WEB과 WAS의 분리) · JingyuJung's Blog</title><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="웹 최적화 (WEB과 WAS의 분리) - Jingyu Jung"><meta name="keywords"><meta name="author" content="Jingyu Jung"><link rel="short icon" href="/images/favicon.ico"><link rel="stylesheet" href="/css/bubuzou.css"><link rel="search" type="application/opensearchdescription+xml" href="http://monibu1548.github.io/atom.xml" title="JingyuJung's Blog"></head><body><header><div class="header row"> <a href="/" class="logo-link"><img src="/images/logo.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" data-hover="POSTS" class="nav-list-link">POSTS</a></li><li class="nav-list-item"><a href="/archives/" target="_self" data-hover="ARCHIVES" class="nav-list-link">ARCHIVES</a></li></ul><div class="search"><a id="search_btn" href="#search"></a></div></div></header><div class="row scroll-con"><section class="container"><!-- for archive page--><div id="postAr" class="post"><article class="post-block"><h1 class="post-title">웹 최적화 (WEB과 WAS의 분리)</h1><div class="post-info">2017-02-26<p class="visit"><i data-hk-page="current">-</i><span>읽음</span></p></div><div class="post-content"><h1 id="WEB과-WAS의-분리-Apache와-Tomcat-분리"><a href="#WEB과-WAS의-분리-Apache와-Tomcat-분리" class="headerlink" title="WEB과 WAS의 분리, (Apache와 Tomcat 분리)"></a>WEB과 WAS의 분리, (Apache와 Tomcat 분리)</h1><p>Apache (웹 서버) 는 static한 파일 (js, img, css) 등 변동이 없는 파일을 서비스하기 위해 사용되어 왔다. Tomcat (웹 어플리케이션 서버, 이하 WAS) 는 사용자의 요청 등에 따라 유동적인 서비스를 제공하기 위해 사용한다.</p>
+<p>WEB은 static 파일 서비스에 유리하고, WAS는 동적인 서비스를 제공하는데 유리하다.</p>
+<p>현재까지 구현한 웹 서비스에서는 WEB은 WAS로 proxy 기능만 하고있다. 즉 WEB의 장점을 사용하지 못하고 있었다.</p>
+<p>구글신에게 WAS와 WEB의 분리라는 키워드로 두시간 정도 검색하고 자료를 모아본 결과 크게 2가지 결론을 구할 수 있었다.</p>
+<ol>
+<li>apache의 mod_jk를 이용한 정적 파일 서비스</li>
+</ol>
+<ul>
+<li><p>mod_jk 설정에서 어떤 url을 was로 던질지 결정한다. 즉 was에서 처리해야 할 것만 was로 던지고 나머지는 apache가 처리한다.</p>
+</li>
+<li><p>여기서 흥미로웠던 사실! .nhn .do 등 url에 이상한 확장자 느낌? 으로 사용하는 웹 서비스들을 자주 봐왔다. 저게 뭔가 했더니 알고보니 mod_jk 설정에 의해 WAS로 처리하라는 명시적인 기호였다.</p>
+</li>
+</ul>
+<ol start="2">
+<li>apache의 mod_proxy를 이용한 정적 파일 서비스</li>
+</ol>
+<ul>
+<li>별도의 CDN이나 정적 파일 서버가 존재할 때 유용한 방법이다. /static 또는 /content 등 정적파일용 uri router를 만들고 해당 url로 접근시 정적 파일 서버로 proxy 하는 방법으로 사용할 수 있다.</li>
+</ul>
+<ol start="3">
+<li>내가 내린 결론</li>
+</ol>
+<ul>
+<li>어렵지 않아야 한다<br>=&gt; 메이븐 라이프 사이클에 끝나야 한다. 메이븐 라이프 사이클 밖에서 파일을 옮기고 하는 작업은 다른 서버에서는 어떻게 동작할지 확신할 수 없으니 최대한 피해야 한다.</li>
+</ul>
+<p>이런 고민을 통해 다음과 같은 결과를 얻을 수 있었다.</p>
+<blockquote>
+<p>httpd.conf 에서 Proxy만 잘 하면 war파일 상태 그대로 js, css만 apache가 서비스할 수 있을 것이다.</p>
+</blockquote>
+<p>이게 고민 끝에 내린 답.</p>
+<p><img src="../../../../images/web-optimize/httpd-conf.PNG" alt=""></p>
+<p>ProxyPass를 보면</p>
+<p>ROOT 로 접근하면 127.0.0.1:9001, 즉 WAS 서비스 포트로 Proxy한다.</p>
+<p>resources/img 로 접근하면 proxy를 사용하지 않겠다는 “!” 가 있다.</p>
+<p>마찬가지로</p>
+<p>resources/js</p>
+<p>resources/css</p>
+<p>도 proxy 를 사용하지 않는다는 뜻이다.</p>
+<p>proxy를 사용하지 않는다는 것은 apache의 DocumentRoot 로 부터 파일을 찾게 한다는 뜻이다.</p>
+<p>DocumentRoot를 현재 서비스하고 있는 war의 디렉토리로 설정하면 proxy를 제거한 부분은 apache가 서비스 하게 된다. 경로를 끼워맞추는 느낌?</p>
+<h2 id="한번에-잘-될리가-없지"><a href="#한번에-잘-될리가-없지" class="headerlink" title="한번에 잘 될리가 없지"></a>한번에 잘 될리가 없지</h2><p>브라우저에서 base url을 입력해서 웹 서비스 화면으로 이동해보자. js와 css가 제대로 불러와지고 있나 확인. 크롬 개발자 도구에서 쉽게 볼 수 있다.</p>
+<h3 id="403-권한-관련-에러가-발생하는-경우"><a href="#403-권한-관련-에러가-발생하는-경우" class="headerlink" title="403 권한 관련 에러가 발생하는 경우"></a>403 권한 관련 에러가 발생하는 경우</h3><p>tomcat의 server.xml 설정에 따라 다르겠지만 기본적으로는 ${TOMCAT_HOME}/webapps 디렉토리 밑에 배포가 된다. 서비스하고 있는 디렉토리부터 js, css파일까지의 권한이 없어서 발생하는 문제로 해당 경로를 따라가며 others 가 read, excute 할 수 있는 권한을 준다. 나는 755를 부여했다.</p>
+<h3 id="404-Not-Found-에러가-발생하는-경우"><a href="#404-Not-Found-에러가-발생하는-경우" class="headerlink" title="404 Not Found 에러가 발생하는 경우"></a>404 Not Found 에러가 발생하는 경우</h3><p>경로문제. 처음부터 다시 경로를 잘 살펴봐야 한다.</p>
+<h2 id="이번엔-진짜-잘-되나-보자"><a href="#이번엔-진짜-잘-되나-보자" class="headerlink" title="이번엔 진짜 잘 되나 보자"></a>이번엔 진짜 잘 되나 보자</h2><p>다시 웹 서비스 화면으로 이동한다. js와 css가 정상적으로 로드되어 문제 없이 서비스 되어야 한다</p>
+<h3 id="진짜-잘-된건가-apache가-아니라-그냥-tomcat이-파일-주는거-아냐"><a href="#진짜-잘-된건가-apache가-아니라-그냥-tomcat이-파일-주는거-아냐" class="headerlink" title="진짜 잘 된건가? apache가 아니라 그냥 tomcat이 파일 주는거 아냐?"></a>진짜 잘 된건가? apache가 아니라 그냥 tomcat이 파일 주는거 아냐?</h3><p>원래 WAS로 js, css 줄 때도 잘 됐으니 이 js,css를 apache가 주는건지 tomcat이 주는건지 어떻게 알아.</p>
+<h3 id="테스트해보면-알지"><a href="#테스트해보면-알지" class="headerlink" title="테스트해보면 알지"></a>테스트해보면 알지</h3><p>ex) <a href="http://baseurl/resources/img/plus.PNG" target="_blank" rel="noopener">http://baseurl/resources/img/plus.PNG</a></p>
+<p>내 서비스 경로에는 다음과 같은 이미지 하나가 있다. 접속해보면</p>
+<p><img src="../../../../images/web-optimize/example.PNG" alt=""></p>
+<p>이미지가 잘 나온다. 이제 파일명을 이상하게 수정해보자. 없는 파일로! 에러메세지를 볼꺼니까!</p>
+<p>ex) <a href="http://baseurl/resources/img/plus-hahahahahahhahahahahah.PNG" target="_blank" rel="noopener">http://baseurl/resources/img/plus-hahahahahahhahahahahah.PNG</a></p>
+<p>이런 에러 화면을 볼 수 있다.</p>
+<p><img src="../../../../images/web-optimize/apache-error.PNG" alt=""></p>
+<p>웹 개발하면서 자주 보던 톰캣의 Internal server 500 error 화면이랑 다르다는걸 느껴야한다!</p>
+<p>얘는 apache가 주는 에러창이니까!! apache가 이 파일을 찾고 있다!!! 잘 되고 있다!!</p>
+<p>만약 proxy 설정이 잘못되어 WAS가 아직도 static 파일을 서비스 하고 있었다면</p>
+<p>이 에러페이지는</p>
+<p>tomcat의 404 에러 메세지가 떴을것이다. 이런식으로</p>
+<p><img src="../../../../images/web-optimize/tomcat-error.PNG" alt=""></p>
+<p>이로써 WAS와 WEB이 각자 제 역할을 부여받았다.</p>
+<p><strong> 곧 업데이트할 웹 최적화 시리즈 </strong></p>
+<ul>
+<li>정적 파일 배포 버전관리</li>
+<li>쿼리스트링을 이용한 웹 캐싱 방지</li>
+</ul>
+</div></article></div><div class="right-container"><div class="widget"><div class="category"><h4>카테고리</h4><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/NHN-ent/">NHN ent.</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Framework/">Spring Framework</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/생산성/">생산성</a><span class="category-list-count">2</span></li></ul></div></div><div class="widget"><div class="tagcloud"><h4>태그</h4><a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/NHN/" style="font-size: 10px;">NHN</a> <a href="/tags/Spring-Framework/" style="font-size: 20px;">Spring Framework</a> <a href="/tags/Web/" style="font-size: 20px;">Web</a> <a href="/tags/grafana/" style="font-size: 10px;">grafana</a> <a href="/tags/influxDB/" style="font-size: 10px;">influxDB</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/jenkins/" style="font-size: 10px;">jenkins</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/기술교육/" style="font-size: 10px;">기술교육</a> <a href="/tags/모니터링/" style="font-size: 10px;">모니터링</a> <a href="/tags/스프링-프레임워크/" style="font-size: 20px;">스프링 프레임워크</a> <a href="/tags/엠디/" style="font-size: 10px;">엠디</a> <a href="/tags/웹/" style="font-size: 20px;">웹</a> <a href="/tags/최적화/" style="font-size: 20px;">최적화</a> <a href="/tags/토스트루키/" style="font-size: 10px;">토스트루키</a></div></div><div class="widget"><div class="recent"><h4>최근 포스트</h4><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/15/test/">test</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/15/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/03/grafana/">오픈소스 Grafana와 InfluxDB를 활용한 서버 모니터링</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/01/web-optimize-2/">웹 최적화 (Apache mod_deflate 모듈을 이용한 압축 전송)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/26/web-optimize-1/">웹 최적화 (WEB과 WAS의 분리)</a></li></ul></div></div><div class="widget"><div id="arAnchorBar"></div></div></div></section></div><div class="right-menu"></div><div class="modal search-modal"><div class="input-field"><input type="text" id="search_input"><label for="search-input">검색</label></div><div id="search_result" class="search-result"></div></div><div class="blog-overlay"></div><footer class="row"><div class="footer-con"><div class="paginator"><a href="/2017/03/01/web-optimize-2/" class="prev">PREV</a><a href="/2017/01/22/rooke2week/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2018 <a target="_blank">Jingyu Jung</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> <br> and <a href="https://github.com/Bulandent/hexo-theme-bubuzou" target="_blank">hexo-theme-bubuzou</a></p></div><div class="totop"><i></i></div></div></footer><script async src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><script src="http://apps.bdimg.com/libs/jquery/1.8.2/jquery.min.js"></script><script src="https://cdn1.lncld.net/static/js/av-mini-0.6.10.js"></script><script src="/scripts/hit-kounter-lc-0.2.0.js"></script><script src="/scripts/arAnchor.js"></script><script src="/scripts/main.js"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-117570529-1",'auto');ga('send','pageview');</script></body></html>
