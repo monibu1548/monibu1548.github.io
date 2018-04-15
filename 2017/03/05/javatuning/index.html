@@ -1,0 +1,139 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="baidu-site-verification" content="1EB8XoOl0C"><meta name="google-site-verification" content="K7thEgdLm0UfRWJ5MGdF7sCcjClSzAlxFLPv2Oz5CGM"><title> 자바 성능 튜닝 이야기 · JingyuJung's Blog</title><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="자바 성능 튜닝 이야기 - Jingyu Jung"><meta name="keywords"><meta name="author" content="Jingyu Jung"><link rel="short icon" href="/images/favicon.ico"><link rel="stylesheet" href="/css/bubuzou.css"><link rel="search" type="application/opensearchdescription+xml" href="http://monibu1548.github.io/atom.xml" title="JingyuJung's Blog"></head><body><header><div class="header row"> <a href="/" class="logo-link"><img src="/images/logo.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" data-hover="POSTS" class="nav-list-link">POSTS</a></li><li class="nav-list-item"><a href="/archives/" target="_self" data-hover="ARCHIVES" class="nav-list-link">ARCHIVES</a></li></ul><div class="search"><a id="search_btn" href="#search"></a></div></div></header><div class="row scroll-con"><section class="container"><!-- for archive page--><div id="postAr" class="post"><article class="post-block"><h1 class="post-title">자바 성능 튜닝 이야기</h1><div class="post-info">2017-03-05<p class="visit"><i data-hk-page="current">-</i><span>읽음</span></p></div><div class="post-content"><h2 id="Map-Set-List-Queue의-차이점"><a href="#Map-Set-List-Queue의-차이점" class="headerlink" title="Map, Set, List, Queue의 차이점"></a>Map, Set, List, Queue의 차이점</h2><table>
+<thead>
+<tr>
+<th>인터페이스</th>
+<th>구현 클래스</th>
+<th>특징</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Map</td>
+<td>HashMap<br>TreeMap<br>HashTable<br>Properties</td>
+<td>Key-Value의 쌍으로 이루어진 데이터의 집합. 순서가 없으며 Key의 중복을 허용하지 않음. Value는 중복 가능</td>
+</tr>
+<tr>
+<td>Set</td>
+<td>HashSet<br>TreeSet</td>
+<td>순서가 없는 데이터의 집합. 중복 불허</td>
+</tr>
+<tr>
+<td>List</td>
+<td>LinkedList<br>Stack<br>Vector<br>ArrayList</td>
+<td>순서가 있는 데이터의 집합, 데이터의 중복 허용</td>
+</tr>
+<tr>
+<td>Queue</td>
+<td>PriorityQueue<br>ArrayDequeue</td>
+<td>구조의 양쪽 단에서만 저장/접근할 수 있는 구조</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Reflection-API를-이용하여-매개변수로-넘어온-클래스의-종류-및-메소드-목록을-출력하는-메소드"><a href="#Reflection-API를-이용하여-매개변수로-넘어온-클래스의-종류-및-메소드-목록을-출력하는-메소드" class="headerlink" title="Reflection API를 이용하여 매개변수로 넘어온 클래스의 종류 및 메소드 목록을 출력하는 메소드"></a>Reflection API를 이용하여 매개변수로 넘어온 클래스의 종류 및 메소드 목록을 출력하는 메소드</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printClassInfo</span><span class="params">(Object object)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">		Class c = object.getClass();</span><br><span class="line">		String className = c.getName();</span><br><span class="line">		String classCanonicalName = c.getCanonicalName();</span><br><span class="line">		String classSimpleName= c.getSimpleName();</span><br><span class="line"></span><br><span class="line">		System.out.println(<span class="string">"Class name : "</span> + className);</span><br><span class="line">		System.out.println(<span class="string">"Class canonical name : "</span> + classCanonicalName);</span><br><span class="line">		System.out.println(<span class="string">"Class simple name : "</span> + classSimpleName);</span><br><span class="line"></span><br><span class="line">		Field[] fields = c.getFields();</span><br><span class="line">		System.out.println(<span class="string">"## "</span> + className + <span class="string">" fields"</span>);</span><br><span class="line">		<span class="keyword">for</span> (Field field : fields) &#123;</span><br><span class="line">			System.out.println(field);</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.println(<span class="string">"## "</span> + className + <span class="string">" methods"</span>);</span><br><span class="line">		Method[] methods = c.getMethods();</span><br><span class="line">		<span class="keyword">for</span> (Method method : methods) &#123;</span><br><span class="line">			System.out.println(method);</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Java-Collection"><a href="#Java-Collection" class="headerlink" title="Java Collection"></a>Java Collection</h3><h2 id="SAX와-DOM-파서의-특징-및-장단점"><a href="#SAX와-DOM-파서의-특징-및-장단점" class="headerlink" title="SAX와 DOM 파서의 특징 및 장단점"></a>SAX와 DOM 파서의 특징 및 장단점</h2><table>
+<thead>
+<tr>
+<th></th>
+<th>DOM</th>
+<th>SAX</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>풀네임</td>
+<td>Document Object Model</td>
+<td>Simple Api for XML</td>
+</tr>
+<tr>
+<td>설명</td>
+<td>XML문서를 트리 구조 형태로 Access 할 수 있게 해주는 API</td>
+<td>자료구조를 만들지 않고 XML문서를 스캔하면서 순차적으로 이벤트를 발생시켜 XML문서에 접근하게 하는 API</td>
+</tr>
+<tr>
+<td>파싱 방법</td>
+<td>Tree-Working 기반</td>
+<td>Event 기반</td>
+</tr>
+<tr>
+<td>처리 방법</td>
+<td>메모리에 Tree 형태로 구조화</td>
+<td>순차적 이벤트 발생 처리</td>
+</tr>
+</tbody>
+</table>
+<p>|장점| 1. 문서 구조의 동적 변경 용이 <br> 2. 문서 생성, 편집 가능 <br> 3. 복잡한 처리 연산에 유리 <br> | 1. 메모리 효율적 사용 <br> 2. 단순/속도 빠름 <br> 3. XML 문서 크기에 무관 |<br>|단점| 1. 메모리 사용량 많음 <br> 2. 처리속도 느림 <br> | 1. 문서 생성, 편집 불가 (Read 전용) <br> |<br>|접근 방식|Random Acecss|Streaming|</p>
+<p>참조</p>
+<ul>
+<li><p>XML파싱 + DOM과 SAX의 차이 <a href="http://humble.tistory.com/23" target="_blank" rel="noopener">http://humble.tistory.com/23</a></p>
+</li>
+<li><p>DOM과 SAX을 비교하여 설명 <a href="http://i-bada.blogspot.kr/2012/05/dom-sax.html" target="_blank" rel="noopener">http://i-bada.blogspot.kr/2012/05/dom-sax.html</a></p>
+</li>
+</ul>
+<h2 id="JMX"><a href="#JMX" class="headerlink" title="JMX ?"></a>JMX ?</h2><h3 id="JMX-Java-Management-Extensions"><a href="#JMX-Java-Management-Extensions" class="headerlink" title="JMX (Java Management Extensions)"></a>JMX (Java Management Extensions)</h3><p>어플리케이션과 서비스를 관리하고 감시하기 위한 표준</p>
+<p>자바 기반의 어플리케이션을 모니터링하고 관리하는 기능을 제공</p>
+<p>JSR 3 (Spec.) &amp; JSR 160 (Remote API) 에서 정의</p>
+<p>J2SE 5.0부터 플랫폼에 포함</p>
+<p>참조</p>
+<ul>
+<li>JMX 기초 <a href="http://blog.naver.com/PostView.nhn?blogId=ypark197&amp;logNo=90092368663" target="_blank" rel="noopener">http://blog.naver.com/PostView.nhn?blogId=ypark197&amp;logNo=90092368663</a></li>
+</ul>
+<h2 id="JMX를-모니터링-할-수-있는-도구"><a href="#JMX를-모니터링-할-수-있는-도구" class="headerlink" title="JMX를 모니터링 할 수 있는 도구"></a>JMX를 모니터링 할 수 있는 도구</h2><h3 id="VisualVM"><a href="#VisualVM" class="headerlink" title="VisualVM"></a>VisualVM</h3><p><a href="http://visualvm.java.net/" target="_blank" rel="noopener">VisualVM</a></p>
+<h3 id="JConsole"><a href="#JConsole" class="headerlink" title="JConsole"></a>JConsole</h3><p><a href="http://java.sun.com/javase/6/docs/technotes/tools/share/jconsole.html" target="_blank" rel="noopener">JConsole</a></p>
+<h3 id="JManage"><a href="#JManage" class="headerlink" title="JManage"></a>JManage</h3><p><a href="http://www.jmanage.org/" target="_blank" rel="noopener">JManage</a></p>
+<h2 id="Web-access-log-패턴-분석"><a href="#Web-access-log-패턴-분석" class="headerlink" title="Web access log 패턴 분석"></a>Web access log 패턴 분석</h2><h3 id="httpd-conf-의-Log-format-설정"><a href="#httpd-conf-의-Log-format-설정" class="headerlink" title="httpd.conf 의 Log format 설정"></a>httpd.conf 의 Log format 설정</h3><p><img src="../../../../images/tuning/web-log.PNG" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>표현문자</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%i</td>
+<td>헤더의 내용</td>
+</tr>
+<tr>
+<td>%l</td>
+<td>원격 로그인명</td>
+</tr>
+<tr>
+<td>%u</td>
+<td>원격 사용자</td>
+</tr>
+<tr>
+<td>%t</td>
+<td>common log format 시간 형식의 시간</td>
+</tr>
+<tr>
+<td>%r</td>
+<td>요청의 첫번째 줄</td>
+</tr>
+<tr>
+<td>%s</td>
+<td>status</td>
+</tr>
+<tr>
+<td>%b</td>
+<td>Http 헤더를 제외한 전송 바이트 수, ‘0’은 ‘-‘로 표시</td>
+</tr>
+<tr>
+<td>%D</td>
+<td>요청을 처리하는데 걸린 시간 (마이크로초 단위)</td>
+</tr>
+<tr>
+<td>%T</td>
+<td>요청을 처리하는데 걸린 시간 (초 단위)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="자바-GC-종류"><a href="#자바-GC-종류" class="headerlink" title="자바 GC 종류"></a>자바 GC 종류</h2><h3 id="Serial-Collector"><a href="#Serial-Collector" class="headerlink" title="Serial Collector"></a>Serial Collector</h3><h3 id="Parallel-Collector"><a href="#Parallel-Collector" class="headerlink" title="Parallel Collector"></a>Parallel Collector</h3><h3 id="Parallel-Compacting-Collector"><a href="#Parallel-Compacting-Collector" class="headerlink" title="Parallel Compacting Collector"></a>Parallel Compacting Collector</h3><h3 id="Concurrnt-Mark-Sweep-Controller"><a href="#Concurrnt-Mark-Sweep-Controller" class="headerlink" title="Concurrnt Mark-Sweep Controller"></a>Concurrnt Mark-Sweep Controller</h3><h3 id="Garbage-First-Controller"><a href="#Garbage-First-Controller" class="headerlink" title="Garbage First Controller"></a>Garbage First Controller</h3><p>참조</p>
+<ul>
+<li>Garbage Collection -part 2 <a href="http://blog.embian.com/68" target="_blank" rel="noopener">http://blog.embian.com/68</a></li>
+</ul>
+<h2 id="GC-상황을-모니터링할-수-있는-도구"><a href="#GC-상황을-모니터링할-수-있는-도구" class="headerlink" title="GC 상황을 모니터링할 수 있는 도구"></a>GC 상황을 모니터링할 수 있는 도구</h2><h3 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h3><p><a href="http://docs.oracle.com/javase/7/docs/technotes/tools/share/jstat.html" target="_blank" rel="noopener">jstat</a></p>
+<h3 id="GCViewer"><a href="#GCViewer" class="headerlink" title="GCViewer"></a>GCViewer</h3><p><a href="https://github.com/chewiebug/GCViewer" target="_blank" rel="noopener">GCViewer</a></p>
+<h3 id="GC-Analyzer"><a href="#GC-Analyzer" class="headerlink" title="GC Analyzer"></a>GC Analyzer</h3><p><a href="http://glezen.org/gca/" target="_blank" rel="noopener">GC Analyzer</a></p>
+<h2 id="JMH를-사용하여-Java-SE에-있는-List를-구현한-클래스들의-추가-조회-삭제-기능의-성능을-비교"><a href="#JMH를-사용하여-Java-SE에-있는-List를-구현한-클래스들의-추가-조회-삭제-기능의-성능을-비교" class="headerlink" title="JMH를 사용하여 Java SE에 있는 List를 구현한 클래스들의 추가/조회/삭제 기능의 성능을 비교"></a>JMH를 사용하여 Java SE에 있는 List를 구현한 클래스들의 추가/조회/삭제 기능의 성능을 비교</h2><p><img src="../../../../images/tuning/bench-list.PNG" alt=""></p>
+<h2 id="JMH를-사용하여-Java-SE에-있는-Map를-구현한-클래스들의-추가-조회-삭제-기능의-성능을-비교"><a href="#JMH를-사용하여-Java-SE에-있는-Map를-구현한-클래스들의-추가-조회-삭제-기능의-성능을-비교" class="headerlink" title="JMH를 사용하여 Java SE에 있는 Map를 구현한 클래스들의 추가/조회/삭제 기능의 성능을 비교"></a>JMH를 사용하여 Java SE에 있는 Map를 구현한 클래스들의 추가/조회/삭제 기능의 성능을 비교</h2><p><img src="../../../../images/tuning/bench-map.PNG" alt=""></p>
+</div></article></div><div class="right-container"><div class="widget"><div class="category"><h4>카테고리</h4><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NHN-ent/">NHN ent.</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Framework/">Spring Framework</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/생산성/">생산성</a><span class="category-list-count">2</span></li></ul></div></div><div class="widget"><div class="tagcloud"><h4>태그</h4><a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/Jasypt/" style="font-size: 10px;">Jasypt</a> <a href="/tags/NHN/" style="font-size: 10px;">NHN</a> <a href="/tags/Spring-Framework/" style="font-size: 20px;">Spring Framework</a> <a href="/tags/Web/" style="font-size: 15px;">Web</a> <a href="/tags/grafana/" style="font-size: 10px;">grafana</a> <a href="/tags/influxDB/" style="font-size: 10px;">influxDB</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/jenkins/" style="font-size: 10px;">jenkins</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/기술교육/" style="font-size: 10px;">기술교육</a> <a href="/tags/모니터링/" style="font-size: 10px;">모니터링</a> <a href="/tags/성능-튜닝/" style="font-size: 10px;">성능 튜닝</a> <a href="/tags/스프링-프레임워크/" style="font-size: 20px;">스프링 프레임워크</a> <a href="/tags/웹/" style="font-size: 15px;">웹</a> <a href="/tags/최적화/" style="font-size: 15px;">최적화</a> <a href="/tags/토스트루키/" style="font-size: 10px;">토스트루키</a></div></div><div class="widget"><div class="recent"><h4>최근 포스트</h4><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/03/05/javatuning/">자바 성능 튜닝 이야기</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/03/grafana/">오픈소스 Grafana와 InfluxDB를 활용한 서버 모니터링</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/01/web-optimize-2/">웹 최적화 (Apache mod_deflate 모듈을 이용한 압축 전송)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/26/web-optimize-1/">웹 최적화 (WEB과 WAS의 분리)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/09/jasypt/">Jasypt를 이용한 properties 암호화 spring4</a></li></ul></div></div><div class="widget"><div id="arAnchorBar"></div></div></div></section></div><div class="right-menu"></div><div class="modal search-modal"><div class="input-field"><input type="text" id="search_input"><label for="search-input">검색</label></div><div id="search_result" class="search-result"></div></div><div class="blog-overlay"></div><footer class="row"><div class="footer-con"><div class="paginator"><a href="/2017/03/03/grafana/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2018 <a target="_blank">Jingyu Jung</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> <br> and <a href="https://github.com/Bulandent/hexo-theme-bubuzou" target="_blank">hexo-theme-bubuzou</a></p></div><div class="totop"><i></i></div></div></footer><script async src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><script src="http://apps.bdimg.com/libs/jquery/1.8.2/jquery.min.js"></script><script src="https://cdn1.lncld.net/static/js/av-mini-0.6.10.js"></script><script src="/scripts/hit-kounter-lc-0.2.0.js"></script><script src="/scripts/arAnchor.js"></script><script src="/scripts/main.js"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-117570529-1",'auto');ga('send','pageview');</script></body></html>
