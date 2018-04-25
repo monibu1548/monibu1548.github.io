@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://monibu1548.github.io/"/>
-  <updated>2018-04-18T14:34:26.330Z</updated>
+  <updated>2018-04-25T13:25:39.079Z</updated>
   <id>http://monibu1548.github.io/</id>
   
   <author>
@@ -15,6 +15,40 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>/[Objective-C/] GCD를 이용한 싱글톤 객체 생성하기</title>
+    <link href="http://monibu1548.github.io/2018/04/25/GCD-singleton/"/>
+    <id>http://monibu1548.github.io/2018/04/25/GCD-singleton/</id>
+    <published>2018-04-25T13:11:15.000Z</published>
+    <updated>2018-04-25T13:25:39.079Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Singleton이란"><a href="#Singleton이란" class="headerlink" title="Singleton이란?"></a>Singleton이란?</h2><p>싱글톤 패턴은 하나의 프로그램(정확히는 프로세스)에 하나의 인스턴스만을 사용하기 위해 사용한다.<br>iOS 프로젝트에서는 주로 앱 전반적인 데이터를 저장하고 관리하는 매니저 객체로 많이 사용하게 된다.</p><p>C++ 또는 Java 에서도 Singleton 패턴을 많이 사용해왔는데, 보통 Singleton을 아래와 같은 방법으로 만들었을 것이다.</p><ul><li>생성자를 private 로 만든다</li><li>내부에 private static 객체를 생성한다</li><li><code>getInstance()</code> 메소드를 만들어서 단 1개의 객체를 생성, 반환하도록 한다</li></ul><p>Objective-C 에서는 명시적인 접근지정자가 없으며, thead safe하게 만들기 위해 조금 다른 방식으로 만들게 된다.</p><p>주로 <code>sharedInstance</code> 라는 클래스 메소드를 생성하며 GCD를 이용해 thread safe하게 만든다.</p><figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">YNCSRManager</span> : <span class="title">NSObject</span></span></span><br><span class="line"></span><br><span class="line">+ (<span class="keyword">instancetype</span>)sharedInstance;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">YNCSRManager</span></span></span><br><span class="line"></span><br><span class="line">+ (<span class="keyword">instancetype</span>)sharedInstance &#123;</span><br><span class="line">    <span class="keyword">static</span> YNCSRManager *shared = <span class="literal">nil</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</span><br><span class="line">    <span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;</span><br><span class="line">        shared = [[YNCSRManager alloc] init];</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> shared;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure><p>위 코드는 <code>너의 이름은.</code> 프로젝트에서 사용한 STT(Speech-To-Text) 역할을 해주는 객체로 Singleton으로 구현했다.</p><p><code>dispatch_once</code> 는 단 1회만 실행한다는 것을 보장하며 완벽히 <code>synchronous</code> 하게 동작한다. 따라서 Thead-Safe 함을 보장받을 수 있다.</p><p><code>sharedInstance</code> 가 처음 호출되면 shared 변수에 YNCSRManager가 할당되고, 두번째 호출부터는 첫번째 호출에서 생성된 shared 변수를 그대로 return 하여 어디서든 동일한 YNCSRManager를 활용한 코딩을 할 수 있다.</p>]]></content>
+    
+    <summary type="html">
+    
+      Singleton이란?
+싱글톤 패턴은 하나의 프로그램(정확히는 프로세스)에 하나의 인스턴스만을 사용하기 위해 사용한다.
+iOS 프로젝트에서는 주로 앱 전반적인 데이터를 저장하고 관리하는 매니저 객체로 많이 사용하게 된다.
+
+C++ 또는 Java 에서도 Singleton 패턴을 많이 사용해왔는데, 보통 Singleton을 아래와 같은 방법으로 만들었을 것이다.
+
+ * 생성자를 private 로 만든다
+ * 내부에 private static 객체를 생성한다
+ * getInstance() 메소드를 만들어서 단 1개의 객체를 생성, 반환하
+    
+    </summary>
+    
+      <category term="iOS" scheme="http://monibu1548.github.io/categories/iOS/"/>
+    
+      <category term="Objective-C" scheme="http://monibu1548.github.io/categories/iOS/Objective-C/"/>
+    
+    
+      <category term="iOS" scheme="http://monibu1548.github.io/tags/iOS/"/>
+    
+      <category term="GCD" scheme="http://monibu1548.github.io/tags/GCD/"/>
+    
+  </entry>
   
   <entry>
     <title>Swift 열거형 Enum 사용하기</title>
