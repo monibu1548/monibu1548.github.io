@@ -12,6 +12,8 @@
           
           <category> iOS </category>
           
+          <category> 생산성 </category>
+          
       </categories>
       
       
@@ -111,6 +113,8 @@
       <categories>
           
           <category> iOS </category>
+          
+          <category> 생산성 </category>
           
       </categories>
       
@@ -260,7 +264,7 @@
       
       <categories>
           
-          <category> 생산성 </category>
+          <category> ETC </category>
           
       </categories>
       
@@ -422,7 +426,7 @@
       
       <categories>
           
-          <category> 생산성 </category>
+          <category> ETC </category>
           
       </categories>
       
