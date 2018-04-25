@@ -1,0 +1,112 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="baidu-site-verification" content="1EB8XoOl0C"><meta name="google-site-verification" content="u1mTB5JWczvR8aazOKgWjreaUB1ssIwuGy2FtZnfj68"><title> XCode Server를 이용한 CI(continuous integration) · JingyuJung's Blog</title><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="XCode Server를 이용한 CI(continuous integration) - Jingyu Jung"><meta name="keywords"><meta name="author" content="Jingyu Jung"><link rel="short icon" href="/images/favicon.ico"><link rel="stylesheet" href="/css/bubuzou.css"><link rel="search" type="application/opensearchdescription+xml" href="http://monibu1548.github.io/atom.xml" title="JingyuJung's Blog"></head><body><header><div class="header row"> <a href="/" class="logo-link"><img src="/images/logo.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" data-hover="POSTS" class="nav-list-link">POSTS</a></li><li class="nav-list-item"><a href="/archives/" target="_self" data-hover="ARCHIVES" class="nav-list-link">ARCHIVES</a></li></ul><div class="search"><a id="search_btn" href="#search"></a></div></div></header><div class="row scroll-con"><section class="container"><!-- for archive page--><div id="postAr" class="post"><article class="post-block"><h1 class="post-title">XCode Server를 이용한 CI(continuous integration)</h1><div class="post-info">2018-04-25<p class="visit"><i data-hk-page="current">-</i><span>읽음</span></p></div><div class="post-content"><h2 id="CI-란"><a href="#CI-란" class="headerlink" title="CI 란?"></a>CI 란?</h2><p>CI란 <code>continuous integration</code>의 약자로 지속적 통합을 뜻한다. 작업을 작은 단위로 쪼갠 뒤, 작은 단위로 개발, 지속적으로 통합하는 과정을 통한 개발 방법으로 코드 품질향상, 배포주기 단축을 목표로 한다.</p>
+<h2 id="iOS에서의-CI"><a href="#iOS에서의-CI" class="headerlink" title="iOS에서의 CI"></a>iOS에서의 CI</h2><p>iOS 앱은 실행파일(.ipa) 하나를 Export 하는데에 인증서, 프로비저닝 등 빌드 과정에 관여하는 변수가 많아 CI를 적용하기가 까다로운 편이다.</p>
+<p>작년까지만 해도 <code>Jenkins</code>에 <code>Xcode Plugin</code>을 붙여 빌드를 진행하고 , 그 외 OTA를 위한 manifest, archive, export, OTA 배포까지의 과정은 Shell Script를 이용해 수동으로 작업했다.</p>
+<p>물론, 한번 세팅해두면 이후에는 손 볼 일이 거의 없긴하다.</p>
+<p><code>그러던 어느날</code>, 앱 인증서가 만료되어, 프로비저닝과 인증서를 교체해야 하는 일이 생겼다.</p>
+<h2 id="Jenkins에서-인증서-프로비저닝-갱신하기"><a href="#Jenkins에서-인증서-프로비저닝-갱신하기" class="headerlink" title="Jenkins에서 인증서, 프로비저닝 갱신하기"></a>Jenkins에서 인증서, 프로비저닝 갱신하기</h2><ul>
+<li>Apple developer 사이트에서 새로운 인증서와 프로비저닝을 다운로드 받는다.</li>
+<li>jenkins credential 페이지에서 인증서와 프로비저닝을 업로드 한다.</li>
+<li>프로젝트 Plugin 에서 새로운 인증서와, 프로비저닝을 선택해준다.</li>
+<li>ipa export 하는 과정에서 프로비저닝 이름을 수동으로 입력해준다.</li>
+</ul>
+<p><code>=&gt; 수동으로 해야할 일이 꽤 많다</code></p>
+<p>사실 프로젝트 1개만 있으면 문제가 없다.</p>
+<p>그런데 나는..? 프로젝트가 3개가 있다.. 그것도 dev와 appstore로 구분하면 x2, 총 6개.</p>
+<p>이 작업을 하면서, 아 이건 아니다 싶었고 다른 CI툴을 찾아 나섰고.</p>
+<p>마침 XCode9 가 등장하면서 XCode Server가 무료로 내장되어 업데이트 되어 XCode Server를 사용해보기로 했다.</p>
+<h2 id="XCode-Server-설치하기"><a href="#XCode-Server-설치하기" class="headerlink" title="XCode Server 설치하기"></a>XCode Server 설치하기</h2><p>사실 설치라고 할 게 없다. XCode9 를 설치하면 XCodeServer가 내장되어 있다.<br>그렇다면 XCode Server를 활성화 시켜보자.</p>
+<p><code>XCode</code> -&gt; <code>Preference</code> -&gt; <code>Server &amp; Bots</code><br><img src="../../../../images/xcodeserver/make1.png" alt=""></p>
+<p>off -&gt; <code>on</code> 으로 활성화 시키자.</p>
+<p>XCode Server의 관리자 계정을 설정하고 Next를 누르다 보면<br><img src="../../../../images/xcodeserver/make2.png" alt=""></p>
+<p><code>끝</code></p>
+<p><code>setting</code> : 서버 계정, 빌드 타임아웃 시간 설정<br><code>permission</code> : 봇을 생성하고 볼 수 있는 권한 설정<br><code>mail</code> : 빌드 과정에서 메일 알람을 주기 위한 메일 설정</p>
+<p>이제 서버가 할 일은 끝났다.</p>
+<h2 id="XCodeServer에-접속하기"><a href="#XCodeServer에-접속하기" class="headerlink" title="XCodeServer에 접속하기"></a>XCodeServer에 접속하기</h2><p>지금까지는 XCode Server를 활성화 하는 과정이었다.<br>이제 XCode에 XCode Server를 연동하여 사용하는 과정을 소개한다.</p>
+<p>우선 XCode에 XCode Server를 연결한다.<br><code>XCode</code> -&gt; <code>Preference</code> -&gt; <code>Accounts</code><br><img src="../../../../images/xcodeserver/make3.png" alt=""></p>
+<p>우측 하단의 <code>+</code> 를 눌러보자.</p>
+<p><img src="../../../../images/xcodeserver/make4.png" alt=""></p>
+<p>하단의 XCode Server 를 추가할 수 있도록 되어있다.</p>
+<p><img src="../../../../images/xcodeserver/make5.png" alt=""></p>
+<p>같은 맥에 XCode Server와 XCode를 구동하기 때문에 위 사진처럼 바로 목록이 뜨지만. XCode Server가 원격지에 있다면 ip를  직접 입력해줘야 한다.</p>
+<p>그 후 XCode Server에서 권한을 부여받은 계정을 입력해주면 끝!</p>
+<p><img src="../../../../images/xcodeserver/make6.png" alt=""></p>
+<p>대화상자 하단에 XCode Server의 스펙을 볼 수 있다.</p>
+<h2 id="Build-Bot-만들기"><a href="#Build-Bot-만들기" class="headerlink" title="Build Bot 만들기"></a>Build Bot 만들기</h2><p>위 과정을 통해 XCode Server를 정상적으로 추가했다면 Build Bot을 생성할 수 있다.<br>XCode Server에서는 빌드는 모두 Bot이라는 단위로 실행되며 Bot은 프로젝트 빌드 타겟과 매칭된다고 보면 된다.</p>
+<p>이제 Bot을 만들어보자.</p>
+<p>XCode에서 <code>Product</code> -&gt; <code>Create Bot...</code> 를 선택한다.<br><img src="../../../../images/xcodeserver/make7.png" alt=""></p>
+<p>봇의 이름과 봇을 생성할 서버를 선택한다.<br>봇의 이름은 <code>한글</code> 도 가능하다.</p>
+<p><img src="../../../../images/xcodeserver/make8.png" alt=""><br>봇을 생성하려는 프로젝트가 git을 사용중이라면 그 내용을 자동으로 긁어온다.<br>현재 빨간색으로 <code>레포지토리 권한이 없습니다</code> 라고 뜨는데 오른쪽의 <code>Sign in</code> 으로 레포지토리 로그인을 하면 해결된다.</p>
+<p><img src="../../../../images/xcodeserver/make9.png" alt=""><br>로그인을 완료하면 브랜치를 선택 가능하다. CI에 사용할 브랜치를 선택한다.</p>
+<p><img src="../../../../images/xcodeserver/make10.png" alt=""><br>프로젝트의 Scheme, Configuration 을 설정할 수 있으며 Analyze 또는 Test도 선택적으로 수행 가능하다.<br>Archive도 제공하며 ipa 까지 추출하기 위해서는 별도의 ExportOptions.plist가 필요하다.</p>
+<p><img src="../../../../images/xcodeserver/make11.png" alt=""><br>빌드 시간과, Clean시점을 설정할 수 있어서 주기적으로 정해진 시간에 빌드를 진행, 배포할 수 있다.<br>선택 옵션은 <code>Preiodically</code>, <code>on commit</code>, <code>maually</code> 이 있어서 수동 빌드도 가능하다.</p>
+<p><img src="../../../../images/xcodeserver/make12.png" alt=""><br><code>여기가 진정한 XCode Server의 꽃이다</code></p>
+<p>XCode에 연결된 계정에서 사용 가능한 인증서와 프로비저닝 목록을 한번에 볼 수 있으며 빌드에 필요한 인증서와 프로비저닝을 선택하여 <code>Add to server</code> 만 선택하면 빌드서버에 자동으로 등록 설치된다.</p>
+<ul>
+<li>Jenkins에서 이 작업이 얼마나 번거로웠는지,,,,,</li>
+</ul>
+<p><img src="../../../../images/xcodeserver/make13.png" alt=""><br>빌드 과정에서 사용할 환경변수를 지정할 수 있다.</p>
+<p><img src="../../../../images/xcodeserver/make14.png" alt=""><br>마지막 관문이다.<br>빌드를 시작할 때 Slack에 보내고 빌드가 끝나면 빌드 파일을 Slack으로 보내고! 이런 작업이 필요한데<br>바로 여기서 설정 할 수 있다.</p>
+<p>왼쪽 하단의 <code>+</code> 버튼을 누르면 다양한 스크립트를 추가할 수 있다.</p>
+<ul>
+<li>빌드 시작</li>
+<li>빌드 종료</li>
+<li>메일 전송</li>
+</ul>
+<p>등 다양한 상황이 존재하며, 해당 상황에 적절한 스크립트를 통해 여러가지 기능을 확장 할 수 있다.<br><code>cocoaPod</code> 을 사용한다면 <code>Pre-Integration</code> 스크립트에 <code>Pod install</code> 을 추가해주자.</p>
+<p><code>끝</code></p>
+<h2 id="Bot을-만들었으면-사용해야지"><a href="#Bot을-만들었으면-사용해야지" class="headerlink" title="Bot을 만들었으면 사용해야지"></a>Bot을 만들었으면 사용해야지</h2><p>Bot을 만들었는데 어디에 있는 것일까?!</p>
+<p><img src="../../../../images/xcodeserver/make15.png" alt=""><br><code>얍짠</code></p>
+<p><img src="../../../../images/xcodeserver/make16.png" alt=""><br>봇의 상세화면이다. 다음의 내용을 확인 할 수 있다.</p>
+<ul>
+<li>테스트 성공률</li>
+<li>Warning 수</li>
+<li>이전 빌드보다 추가된 커밋 수</li>
+<li>이전 빌드 이후 제거된 warning들</li>
+<li>코드 커버리지</li>
+<li>archive 했다면 archive file</li>
+<li>export 했다면 ipa file</li>
+</ul>
+<p><code>짱이다</code></p>
+<p>빌드를 한번 해보자. 우측 상단의 <code>Integrate</code> 버튼을 눌러보자.</p>
+<h2 id="Jenkins-vs-XCodeServer"><a href="#Jenkins-vs-XCodeServer" class="headerlink" title="Jenkins  vs  XCodeServer"></a>Jenkins  vs  XCodeServer</h2><p>Jenkins와 XCodeServer를 사용해보면서 느낀 특징, 장단점은 다음과 같다.</p>
+<ul>
+<li><p>Jenkins</p>
+<ul>
+<li>장점<ul>
+<li>Github과 연동이 잘된다. Hook을 통해 PR, Commit 등 다양한 상황과 연동 가능하다</li>
+</ul>
+</li>
+<li>단점<ul>
+<li>XCode8 이후로 ipa 추출하는 과정에서 ExportOptions.plist 가 추가적으로 필요하게 되었는데 아직 이를 자동으로 해주는 플러그인이 없다.</li>
+<li>인증서, 프로비저닝 갱신 과정이 번거롭다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>XCodeServer</p>
+<ul>
+<li>장점<ul>
+<li>XCode와의 연동이 최고다. 인증서, 프로비저닝 관리가 가장 깔끔하다.</li>
+<li>빌드를 위해 별도의 웹 페이지에 접속할 필요가 없다.</li>
+<li>OTA 기능도 지원한다 (근데 사실상 사용 불가… 애플놈들…)</li>
+</ul>
+</li>
+<li>단점<ul>
+<li>Github과의 연동이 약하다. PR을 통한 Test를 진행하는 프로젝트에서는 바로 적용이 힘들다.</li>
+<li>아직 안정화가 될 되었다. 작은 버그들이 우수수수….</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>결론적으로, <code>XCode Server</code> 를 선택해서 사용중이며 만족하면서 사용하고 있습니다~!</p>
+<h2 id="그-외의-iOS-CI-툴"><a href="#그-외의-iOS-CI-툴" class="headerlink" title="그 외의 iOS CI 툴"></a>그 외의 iOS CI 툴</h2><p><code>fastlane</code>이라는게 있답니다..! </p>
+</div></article></div><div class="right-container"><div class="widget"><div class="category"><h4>카테고리</h4><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NHN-ent/">NHN ent.</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Framework/">Spring Framework</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/Objective-C/">Objective-C</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/Swift/">Swift</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/생산성/">생산성</a><span class="category-list-count">2</span></li></ul></div></div><div class="widget"><div class="tagcloud"><h4>태그</h4><a href="/tags/Apple/" style="font-size: 12.5px;">Apple</a> <a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/CocoaPods/" style="font-size: 12.5px;">CocoaPods</a> <a href="/tags/Dooray/" style="font-size: 10px;">Dooray</a> <a href="/tags/GCD/" style="font-size: 10px;">GCD</a> <a href="/tags/Jasypt/" style="font-size: 10px;">Jasypt</a> <a href="/tags/NHN/" style="font-size: 12.5px;">NHN</a> <a href="/tags/Spring-Framework/" style="font-size: 17.5px;">Spring Framework</a> <a href="/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/tags/Web/" style="font-size: 15px;">Web</a> <a href="/tags/XCode/" style="font-size: 10px;">XCode</a> <a href="/tags/XCodeServer/" style="font-size: 10px;">XCodeServer</a> <a href="/tags/Xcode/" style="font-size: 12.5px;">Xcode</a> <a href="/tags/grafana/" style="font-size: 10px;">grafana</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/influxDB/" style="font-size: 10px;">influxDB</a> <a href="/tags/java/" style="font-size: 12.5px;">java</a> <a href="/tags/jenkins/" style="font-size: 10px;">jenkins</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/기술교육/" style="font-size: 10px;">기술교육</a> <a href="/tags/모니터링/" style="font-size: 10px;">모니터링</a> <a href="/tags/배포/" style="font-size: 10px;">배포</a> <a href="/tags/버전-관리/" style="font-size: 10px;">버전 관리</a> <a href="/tags/생산성/" style="font-size: 10px;">생산성</a> <a href="/tags/성능-튜닝/" style="font-size: 10px;">성능 튜닝</a> <a href="/tags/스위프트/" style="font-size: 10px;">스위프트</a> <a href="/tags/스프링-프레임워크/" style="font-size: 17.5px;">스프링 프레임워크</a> <a href="/tags/웹/" style="font-size: 15px;">웹</a> <a href="/tags/최적화/" style="font-size: 12.5px;">최적화</a> <a href="/tags/쿼리스트링/" style="font-size: 10px;">쿼리스트링</a> <a href="/tags/토스트루키/" style="font-size: 10px;">토스트루키</a></div></div><div class="widget"><div class="recent"><h4>최근 포스트</h4><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/25/xcode-server-intro/">XCode Server를 이용한 CI(continuous integration)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/25/GCD-singleton/">[Objective-C] GCD를 이용한 싱글톤 객체 생성하기</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/18/swift-enum/">[Swift] 열거형 Enum 사용하기</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/16/cocoapods-prompt/">CocoaPods 똑똑하게 사용하기 (명령어, 사용 예시 소개)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/16/cocoapods/">iOS 프로젝트에 cocoapods 적용하기</a></li></ul></div></div><div class="widget"><div id="arAnchorBar"></div></div></div></section></div><div class="right-menu"></div><div class="modal search-modal"><div class="input-field"><input type="text" id="search_input"><label for="search-input">검색</label></div><div id="search_result" class="search-result"></div></div><div class="blog-overlay"></div><footer class="row"><div class="footer-con"><div class="paginator"><a href="/2018/04/25/GCD-singleton/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'jingyujung';
+var disqus_identifier = '2018/04/25/xcode-server-intro/';
+var disqus_title = 'XCode Server를 이용한 CI(continuous integration)';
+var disqus_url = 'http://monibu1548.github.io/2018/04/25/xcode-server-intro/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//jingyujung.disqus.com/count.js" async></script><div class="copyright"><p>© 2017 - 2018 <a target="_blank">Jingyu Jung</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> <br> and <a href="https://github.com/Bulandent/hexo-theme-bubuzou" target="_blank">hexo-theme-bubuzou</a></p></div><div class="totop"><i></i></div></div></footer><script async src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><script src="http://apps.bdimg.com/libs/jquery/1.8.2/jquery.min.js"></script><script src="https://cdn1.lncld.net/static/js/av-mini-0.6.10.js"></script><script src="/scripts/hit-kounter-lc-0.2.0.js"></script><script src="/scripts/arAnchor.js"></script><script src="/scripts/main.js"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-117570529-1",'auto');ga('send','pageview');</script><script src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({google_ad_client: "ca-pub-5848720540760149",enable_page_level_ads: true});</script></body></html>

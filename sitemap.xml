@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://monibu1548.github.io/2018/04/25/xcode-server-intro/</loc>
+    
+    <lastmod>2018-04-25T14:20:42.330Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://monibu1548.github.io/2018/04/25/GCD-singleton/</loc>
     
     <lastmod>2018-04-25T13:28:44.176Z</lastmod>
