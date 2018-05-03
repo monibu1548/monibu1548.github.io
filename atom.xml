@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://monibu1548.github.io/"/>
-  <updated>2018-05-01T15:40:56.868Z</updated>
+  <updated>2018-05-03T12:37:34.851Z</updated>
   <id>http://monibu1548.github.io/</id>
   
   <author>
@@ -15,6 +15,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Interface Builder IBOutlet연결에 Strong과 Weak 어떤것을 써야할까?</title>
+    <link href="http://monibu1548.github.io/2018/05/03/iboutlet-strong-weak/"/>
+    <id>http://monibu1548.github.io/2018/05/03/iboutlet-strong-weak/</id>
+    <published>2018-05-03T11:34:36.000Z</published>
+    <updated>2018-05-03T12:37:34.851Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="IBOutlet의-Strong-vs-Weak"><a href="#IBOutlet의-Strong-vs-Weak" class="headerlink" title="IBOutlet의 Strong vs Weak"></a>IBOutlet의 Strong vs Weak</h2><p>Interface Builder를 사용하는 프로젝트에서 View를 코드상에서 제어하기 위해 <code>IBOutlet</code>으로 <code>스토리보드</code> <-> <code>코드</code> 를 연결하게 됩니다.<br><code>Ctrl</code>키를 누르고 View를 .m 또는 .h 파일로 가져오면 다음과 같이 IBOutlet 연결 팝업이 뜹니다.<br><img src="../../../../images/iboutlet/1.png" alt=""></-></p><p>여기에서 아마도 Property명 또는 Action명을 입력 후 <code>Connect</code> 버튼을 눌러 커넥션을 생성하셨을텐데요.<br>혹시, 아래쪽의 <code>Storage</code> 영역을 확인해보신적이 있으신가요?</p><p>아마도 디폴트 값은 <code>Weak</code> 일겁니다.</p><p>여기에서 Strong, Weak 는 ARC(Auto Reference Count)와 관련이 깊습니다.<br>Strong, Weak에 대한 자세한 내용은 다른 포스트에서 다루도록 하겠습니다.</p><p>간단히 소개하자면, <code>Strong</code>은 소유대상의 reference count를 1 증가시킴으로써 dealloc 되지 않도록 하고, <code>Weak</code> 는 reference count는 증가시키지 않고 소유함으로써 상호참조 발생을 막아 메모리 누수를 막기위해 사용합니다.</p><h2 id="Dafault는-Weak니까-당연히-Weak을-써야지"><a href="#Dafault는-Weak니까-당연히-Weak을-써야지" class="headerlink" title="Dafault는 Weak니까 당연히 Weak을 써야지?"></a>Dafault는 Weak니까 당연히 Weak을 써야지?</h2><p>네, 아마 커넥션 팝업에서 디폴트로 <code>Weak</code>가 선택되어 있습니다. 왜 <code>Weak</code>가 디폴트일까요?</p><p><code>Strong</code> 으로 사용할 때 문제가 있는지 먼저 살펴보겠습니다.<br><code>ViewController</code>, <code>View</code>, <code>Label</code> 이 3가지 요소로 확인해보도록 하겠습니다.</p><h3 id="IBOutlet에-Strong을-사용한-경우-시나리오"><a href="#IBOutlet에-Strong을-사용한-경우-시나리오" class="headerlink" title="IBOutlet에 Strong을 사용한 경우 시나리오"></a>IBOutlet에 Strong을 사용한 경우 시나리오</h3><p><img src="../../../../images/iboutlet/strong.png" alt=""><br>위 사진과 같이 <code>Strong</code>으로 연결을 한 경우</p><p>Reference Count를 계산해봅시다.</p><ul><li>코드에서 ViewController가 <code>Strong</code>으로 aView를 소유하므로 =&gt; aView:1</li><li>Interface Builder에서 aView가 <code>Label</code> subView로 소유하므로 =&gt; aView:1, Label:1</li><li>코드에서 ViewController가 <code>Strong</code>으로 Label을 소유하므로 =&gt; aView:1, Label:2</li></ul><p>그렇다면 여기에서 메모리 누수가 발생할 가능성이 있을까요?</p><h2 id="ViewController가-dealloc-된다고-가정해보면"><a href="#ViewController가-dealloc-된다고-가정해보면" class="headerlink" title="ViewController가 dealloc 된다고 가정해보면"></a>ViewController가 dealloc 된다고 가정해보면</h2><p>ViewController가 dealloc되는 시나리오로 다시 Reference Count를 계산해봅니다.</p><ul><li>ViewController가 dealloc되므로 소유하고 있던 <code>aView</code>의 reference count를 감소 =&gt; aView:0  (<code>aView의 Reference Count가 0이 되어 dealloc 됩니다</code>)</li><li><code>Label</code>을 소유하던 <code>aView</code>가 dealloc 되므로 <code>Label</code>의 reference Count 감소 =&gt; aView:<code>dealloc 됨</code>, Label:1</li><li>ViewController가 dealloc되므로 소유하고 있던 <code>Label</code> reference Count 감소 =&gt; aView:<code>dealloc 됨</code>, Label:0 <code>Label의 Reference Count가 0이 되어 dealloc 됩니다</code>)</li></ul><p>모두가 깔끔하게 Dealloc 되는 <code>해피앤딩</code> 입니다.<br>이렇듯 IBOutlet에 <code>Strong</code> 을 쓴다고 해서 잘못된 일은 아닙니다.</p><p>오히려 <code>Strong</code>을 써야하는 경우가 있습니다!!!</p><h2 id="IBOutlet에-Strong을-써야-하는-경우"><a href="#IBOutlet에-Strong을-써야-하는-경우" class="headerlink" title="IBOutlet에 Strong을 써야 하는 경우"></a>IBOutlet에 Strong을 써야 하는 경우</h2><p>복잡한 뷰 Hierarchy를 가진 경우에는 <code>Weak</code> 대신 <code>Strong</code>을 써야만 하는 경우도 존재합니다.<br>깊은 뷰 Hierarchy 구조에서 모든 Connection이 <code>Weak</code>라고 한다면 중간쯤 있는 <code>View</code>가 어느 이유에서인지 <code>dealloc</code>이 된다면? 그 하위뷰들도 함께 <code>dealloc</code>이 됩니다.<br>만약 복잡한 뷰 Hierechy 구조상에서 subview의 subview를 사용해야 하는 경우. 의도치 않은 nil을 경험할 수도 있습니다. 일반적이지는 않지만 충분히 겪을 수 있습니다.</p><h2 id="그러면-Strong이-복잡한-Hierarchy에도-문제없고-메모리-누수도-없으니-무조건-Strong을-쓰면-되나요"><a href="#그러면-Strong이-복잡한-Hierarchy에도-문제없고-메모리-누수도-없으니-무조건-Strong을-쓰면-되나요" class="headerlink" title="그러면 Strong이 복잡한 Hierarchy에도 문제없고, 메모리 누수도 없으니 무조건 Strong을 쓰면 되나요?"></a>그러면 Strong이 복잡한 Hierarchy에도 문제없고, 메모리 누수도 없으니 무조건 Strong을 쓰면 되나요?</h2><p><code>아뇨</code></p><p>Default 값이 <code>Weak</code>인 이유가 또 있겠죠. 좀 더 일반적인 상황에서 <code>Weak</code>가 유리한 상황이 존재합니다.</p><p>바로 <code>메모리 부족</code></p><p>메모리가 부족하면 ViewController의 <code>didReceiveMemoryWarning</code>가 호출됩니다.<br>보통 <code>didReceiveMemoryWarning</code> 에서 main view를 <code>nil</code> 처리함으로써 main view를 포함한 subview들 까지 모두 dealloc 하여 메모리를 확보하는 동작을 구현합니다.</p><p>이 경우에 IBOutlet <code>Strong</code> 으로 Subview들을 갖고있다면, ViewController가 <code>Strong</code>으로 갖고있는 <code>Reference Count 1</code> 때문에 절대 최소 1 이하로 내려가질 않습니다.<br>즉, 그 Subview의 ParentView가 nil이 되더라도 SubView는 dealloc되지 않게 됩니다. 보이지도 않는 뷰가 메모리를 차지하게 되어버리는 것이죠.</p><h2 id="결론"><a href="#결론" class="headerlink" title="결론"></a>결론</h2><p>디폴트로 <code>Weak</code>을 사용하는게 좋습니다. 그 외 정말 위에서 소개한 특별한 상황 (복잡한 뷰 Hierarchy)를 이해하고 정말 필요할 때 <code>Strong</code>으로 사용하시면 됩니다.</p>]]></content>
+    
+    <summary type="html">
+    
+      IBOutlet의 Strong vs Weak
+Interface Builder를 사용하는 프로젝트에서 View를 코드상에서 제어하기 위해 IBOutlet으로 스토리보드 코드 를 연결하게 됩니다.
+Ctrl키를 누르고 View를 .m 또는 .h 파일로 가져오면 다음과 같이 IBOutlet 연결 팝업이 뜹니다.
+
+
+여기에서 아마도 Property명 또는 Action명을 입력 후 Connect 버튼을 눌러 커넥션을 생성하셨을텐데요.
+혹시, 아래쪽의 Storage 영역을 확인해보신적이 있으신가요?
+
+아마도 디폴트 값은 Weak 일겁니다.
+
+여
+    
+    </summary>
+    
+      <category term="iOS" scheme="http://monibu1548.github.io/categories/iOS/"/>
+    
+    
+      <category term="iOS" scheme="http://monibu1548.github.io/tags/iOS/"/>
+    
+      <category term="Interface Builder" scheme="http://monibu1548.github.io/tags/Interface-Builder/"/>
+    
+      <category term="Storyboard" scheme="http://monibu1548.github.io/tags/Storyboard/"/>
+    
+  </entry>
   
   <entry>
     <title>[Objective-C] NSXMLParser로 XML Object Mapper 구현하기 (공공데이터 Response 파싱하기)</title>
