@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://monibu1548.github.io/"/>
-  <updated>2018-05-03T12:37:34.851Z</updated>
+  <updated>2018-05-05T19:08:15.995Z</updated>
   <id>http://monibu1548.github.io/</id>
   
   <author>
@@ -17,11 +17,51 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>iOS 앱에서 광고 수익 얻기 (Admob 애드몹 설치, 부착)</title>
+    <link href="http://monibu1548.github.io/2018/05/06/ios-admob/"/>
+    <id>http://monibu1548.github.io/2018/05/06/ios-admob/</id>
+    <published>2018-05-05T18:30:43.000Z</published>
+    <updated>2018-05-05T19:08:15.995Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="앱을-다-만들었다면-수익에-도전해보자"><a href="#앱을-다-만들었다면-수익에-도전해보자" class="headerlink" title="앱을 다 만들었다면 수익에 도전해보자"></a>앱을 다 만들었다면 수익에 도전해보자</h2><p>모바일 어플리케이션에 광고를 부착할 수 있는 다양한 플랫폼이 있다. 그중에서도 Google의 Admob을 이용한 방법을 소개합니다.</p><h2 id="Admob-가입하기"><a href="#Admob-가입하기" class="headerlink" title="Admob 가입하기"></a>Admob 가입하기</h2><p><a href="https://www.google.co.kr/admob" target="_blank" rel="noopener">https://www.google.co.kr/admob</a> 구글 애드몹 페이지</p><p>구글 계정으로 로그인 할 수 있습니다.</p><h2 id="광고-생성하기"><a href="#광고-생성하기" class="headerlink" title="광고 생성하기"></a>광고 생성하기</h2><p>우선 애드몹 페이지에서 광고를 붙일 앱을 설정합니다. <code>앱 추가</code> 버튼을 통해 추가할 수 있습니다.</p><p><img src="../../../../images/admob/1.png" alt=""><br>광고를 부착할 앱이 기존에 스토어에 등록되어있던 앱인지, 새로 만들 앱인지 선택합니다. 저는 아직 스토어에 업로드 하지 않아서 <code>아니요</code>를 선택했습니다.</p><p><img src="../../../../images/admob/2.png" alt=""><br>앱의 이름(스토어에 노출되는 이름은 아니고, Admob에서 구분하기 위한 별명같은 용도로 사용됩니다.)과 플랫폼을 선택합니다.</p><p><img src="../../../../images/admob/3.png" alt=""><br>앱을 생성하면 앱 리스트에 노출되며, 앱이름을 클릭해서 더 상세한 설정을 할 수 있습니다.</p><p><img src="../../../../images/admob/4.png" alt=""><br>광고 단위 만들기 버튼을 통해 광고 단위를 생성합니다.</p><p><img src="../../../../images/admob/5.png" alt=""><br>현재 배너, 전면, 리워드 이렇게 3가지 광고 타입을 제공합니다. 앱의 사용성을 선택해서 선택하면 되는데, 저는 배너를 사용했습니다.</p><p><img src="../../../../images/admob/6.png" alt=""><br>광고 단위 이름을 입력해줍니다.</p><p><img src="../../../../images/admob/7.png" alt=""><br>광고 단위가 생성되었습니다. 이제 AppID와 UnitID를 통해 앱에 광고를 부착할 수 있습니다.<br>이 페이지에서 2개의 ID값을 볼 수 있는데요, 위에가 AppID, 아래가 UnitID입니다.</p><ul><li>AppID : 앱의 Identifier, AppDelegate.m 에서 설정에 필요</li><li>UnitID : 배너 광고를 띄울 뷰컨트롤러 설정에 필요</li></ul><h2 id="CocoaPods-설치"><a href="#CocoaPods-설치" class="headerlink" title="CocoaPods 설치"></a>CocoaPods 설치</h2><p>이제 앱에 배너광고를 설치합니다.<br><code>Podfile</code>에 아래 Pod를 추가하고 <code>Pod install</code>을 통해 SDK를 설치합니다.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod &apos;Google-Mobile-Ads-SDK&apos;</span><br></pre></td></tr></table></figure><h2 id="App-Delegate-설정"><a href="#App-Delegate-설정" class="headerlink" title="App Delegate 설정"></a>App Delegate 설정</h2><p>AppDelegate.m 파일을 열어주세요.</p><figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">&lt;GoogleAnalytics/GAI.h&gt;</span></span></span><br></pre></td></tr></table></figure><p>위 헤더파일이 필요합니다.</p><p>아래 코드와 같이 <code>didFinishLaunchingWithOptions</code> 메소드에 애드몹을 설정하는 코드를 추가합니다.</p><figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="built_in">NSDictionary</span> *)launchOptions &#123;</span><br><span class="line">    <span class="comment">// Override point for customization after application launch.</span></span><br><span class="line">    </span><br><span class="line">    [GADMobileAds configureWithApplicationID:<span class="string">@"애드몹AppId"</span>];</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="Banner-영역-설정하기"><a href="#Banner-영역-설정하기" class="headerlink" title="Banner 영역 설정하기"></a>Banner 영역 설정하기</h2><p><img src="../../../../images/admob/8.png" alt=""></p><p>스토리보드에서 Banner영역을 잡아줍니다.<br>저는 화면 아래쪽에 배치했습니다. Banner의 Size는 <code>320 * 50</code>으로 지정해주셔야합니다. 그리고 그 View 의 CustomClass를 <code>GADBannerView</code>로 설정합니다.</p><p>이제 코드영역에서 해당 뷰에 UnitID를 지정해줘야 합니다. 이 작업은 <code>ViewDidLoad</code> 에서 작업합니다.</p><figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">self</span>.bannerView.adUnitID = admobBannerUnitId;</span><br><span class="line"><span class="keyword">self</span>.bannerView.rootViewController = <span class="keyword">self</span>;</span><br><span class="line">[<span class="keyword">self</span>.bannerView loadRequest:[GADRequest request]];</span><br></pre></td></tr></table></figure><p>여기에서 self.bannerView는 스토리보드에서 IBOutlet으로 가져온 GADBannerView 입니다.<br><code>admobBannerUnitId</code> 을 발급받은 UnitID로 변경합니다.</p><ul><li>추가적으로, bannerView에 델리게이트를 지정하여 광고를 성공적으로 가져왔는지, 문제가 있는지 등의 결과를 받을 수 있습니다. 해당내용은 아래에 링크합니다.<br><a href="https://developers.google.com/admob/ios/banner" target="_blank" rel="noopener">https://developers.google.com/admob/ios/banner</a></li></ul><h2 id="Test-광고-붙여보기"><a href="#Test-광고-붙여보기" class="headerlink" title="Test 광고 붙여보기"></a>Test 광고 붙여보기</h2><p>위 과정까지 진행하고 앱을 실행시켜보면 광고가 뜨지 않습니다. 왜냐하면 <code>Debug</code> 모드에서는 광고가 노출되지 않기 때문이죠. 그러면 어떻게 광고가 잘 노출되는지 확인할 수 있을까요.<br>ADMob에서는 테스트 광고를 제공합니다.</p><p>발급받은 AppID와 UnitID중에서 UnitID를 <code>ca-app-pub-3940256099942544/6300978111</code> 로 변경합니다.</p><p>위 테스트 UnitID는 배너 타입의 광고에만 유효하며 그 외 타입은 다음 링크를 참고해주세요.<br><a href="https://developers.google.com/admob/android/test-ads" target="_blank" rel="noopener">https://developers.google.com/admob/android/test-ads</a></p><p>이제 앱을 다시 실행해보면 테스트 광고가 노출되는 것을 확인할 수 있습니다.</p><ul><li>빌드 과정에서 <code>Release</code> config로 빌드하는 경우 실제 UnitID를 사용하고, <code>Debug</code>로 빌드하는 경우 테스트용 UnitID를 사용하게 설정해두면 편합니다!</li></ul><h2 id="더-나아가서"><a href="#더-나아가서" class="headerlink" title="더 나아가서"></a>더 나아가서</h2><p>ADMob에서는 더 다양한 기능을 제공합니다.<br>예를들면 광고를 불러오기 전까지는 배너 영역을 갖고있지 않다가, 광고를 받아오면 해당 배너영역을 확장시켜 보여줄 수도 있습니다.</p>]]></content>
+    
+    <summary type="html">
+    
+      앱을 다 만들었다면 수익에 도전해보자
+모바일 어플리케이션에 광고를 부착할 수 있는 다양한 플랫폼이 있다. 그중에서도 Google의 Admob을 이용한 방법을 소개합니다.
+
+Admob 가입하기
+https://www.google.co.kr/admob 구글 애드몹 페이지
+
+구글 계정으로 로그인 할 수 있습니다.
+
+광고 생성하기
+우선 애드몹 페이지에서 광고를 붙일 앱을 설정합니다. 앱 추가 버튼을 통해 추가할 수 있습니다.
+
+
+광고를 부착할 앱이 기존에 스토어에 등록되어있던 앱인지, 새로 만들 앱인지 선택합니다. 저는 아직 스토어에 업로드
+    
+    </summary>
+    
+      <category term="iOS" scheme="http://monibu1548.github.io/categories/iOS/"/>
+    
+      <category term="Etc" scheme="http://monibu1548.github.io/categories/iOS/Etc/"/>
+    
+    
+      <category term="iOS" scheme="http://monibu1548.github.io/tags/iOS/"/>
+    
+      <category term="Admob" scheme="http://monibu1548.github.io/tags/Admob/"/>
+    
+      <category term="애드몹" scheme="http://monibu1548.github.io/tags/%EC%95%A0%EB%93%9C%EB%AA%B9/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Interface Builder IBOutlet연결에 Strong과 Weak 어떤것을 써야할까?</title>
     <link href="http://monibu1548.github.io/2018/05/03/iboutlet-strong-weak/"/>
     <id>http://monibu1548.github.io/2018/05/03/iboutlet-strong-weak/</id>
     <published>2018-05-03T11:34:36.000Z</published>
-    <updated>2018-05-03T12:37:34.851Z</updated>
+    <updated>2018-05-05T19:08:53.563Z</updated>
     
     <content type="html"><![CDATA[<h2 id="IBOutlet의-Strong-vs-Weak"><a href="#IBOutlet의-Strong-vs-Weak" class="headerlink" title="IBOutlet의 Strong vs Weak"></a>IBOutlet의 Strong vs Weak</h2><p>Interface Builder를 사용하는 프로젝트에서 View를 코드상에서 제어하기 위해 <code>IBOutlet</code>으로 <code>스토리보드</code> <-> <code>코드</code> 를 연결하게 됩니다.<br><code>Ctrl</code>키를 누르고 View를 .m 또는 .h 파일로 가져오면 다음과 같이 IBOutlet 연결 팝업이 뜹니다.<br><img src="../../../../images/iboutlet/1.png" alt=""></-></p><p>여기에서 아마도 Property명 또는 Action명을 입력 후 <code>Connect</code> 버튼을 눌러 커넥션을 생성하셨을텐데요.<br>혹시, 아래쪽의 <code>Storage</code> 영역을 확인해보신적이 있으신가요?</p><p>아마도 디폴트 값은 <code>Weak</code> 일겁니다.</p><p>여기에서 Strong, Weak 는 ARC(Auto Reference Count)와 관련이 깊습니다.<br>Strong, Weak에 대한 자세한 내용은 다른 포스트에서 다루도록 하겠습니다.</p><p>간단히 소개하자면, <code>Strong</code>은 소유대상의 reference count를 1 증가시킴으로써 dealloc 되지 않도록 하고, <code>Weak</code> 는 reference count는 증가시키지 않고 소유함으로써 상호참조 발생을 막아 메모리 누수를 막기위해 사용합니다.</p><h2 id="Dafault는-Weak니까-당연히-Weak을-써야지"><a href="#Dafault는-Weak니까-당연히-Weak을-써야지" class="headerlink" title="Dafault는 Weak니까 당연히 Weak을 써야지?"></a>Dafault는 Weak니까 당연히 Weak을 써야지?</h2><p>네, 아마 커넥션 팝업에서 디폴트로 <code>Weak</code>가 선택되어 있습니다. 왜 <code>Weak</code>가 디폴트일까요?</p><p><code>Strong</code> 으로 사용할 때 문제가 있는지 먼저 살펴보겠습니다.<br><code>ViewController</code>, <code>View</code>, <code>Label</code> 이 3가지 요소로 확인해보도록 하겠습니다.</p><h3 id="IBOutlet에-Strong을-사용한-경우-시나리오"><a href="#IBOutlet에-Strong을-사용한-경우-시나리오" class="headerlink" title="IBOutlet에 Strong을 사용한 경우 시나리오"></a>IBOutlet에 Strong을 사용한 경우 시나리오</h3><p><img src="../../../../images/iboutlet/strong.png" alt=""><br>위 사진과 같이 <code>Strong</code>으로 연결을 한 경우</p><p>Reference Count를 계산해봅시다.</p><ul><li>코드에서 ViewController가 <code>Strong</code>으로 aView를 소유하므로 =&gt; aView:1</li><li>Interface Builder에서 aView가 <code>Label</code> subView로 소유하므로 =&gt; aView:1, Label:1</li><li>코드에서 ViewController가 <code>Strong</code>으로 Label을 소유하므로 =&gt; aView:1, Label:2</li></ul><p>그렇다면 여기에서 메모리 누수가 발생할 가능성이 있을까요?</p><h2 id="ViewController가-dealloc-된다고-가정해보면"><a href="#ViewController가-dealloc-된다고-가정해보면" class="headerlink" title="ViewController가 dealloc 된다고 가정해보면"></a>ViewController가 dealloc 된다고 가정해보면</h2><p>ViewController가 dealloc되는 시나리오로 다시 Reference Count를 계산해봅니다.</p><ul><li>ViewController가 dealloc되므로 소유하고 있던 <code>aView</code>의 reference count를 감소 =&gt; aView:0  (<code>aView의 Reference Count가 0이 되어 dealloc 됩니다</code>)</li><li><code>Label</code>을 소유하던 <code>aView</code>가 dealloc 되므로 <code>Label</code>의 reference Count 감소 =&gt; aView:<code>dealloc 됨</code>, Label:1</li><li>ViewController가 dealloc되므로 소유하고 있던 <code>Label</code> reference Count 감소 =&gt; aView:<code>dealloc 됨</code>, Label:0 <code>Label의 Reference Count가 0이 되어 dealloc 됩니다</code>)</li></ul><p>모두가 깔끔하게 Dealloc 되는 <code>해피앤딩</code> 입니다.<br>이렇듯 IBOutlet에 <code>Strong</code> 을 쓴다고 해서 잘못된 일은 아닙니다.</p><p>오히려 <code>Strong</code>을 써야하는 경우가 있습니다!!!</p><h2 id="IBOutlet에-Strong을-써야-하는-경우"><a href="#IBOutlet에-Strong을-써야-하는-경우" class="headerlink" title="IBOutlet에 Strong을 써야 하는 경우"></a>IBOutlet에 Strong을 써야 하는 경우</h2><p>복잡한 뷰 Hierarchy를 가진 경우에는 <code>Weak</code> 대신 <code>Strong</code>을 써야만 하는 경우도 존재합니다.<br>깊은 뷰 Hierarchy 구조에서 모든 Connection이 <code>Weak</code>라고 한다면 중간쯤 있는 <code>View</code>가 어느 이유에서인지 <code>dealloc</code>이 된다면? 그 하위뷰들도 함께 <code>dealloc</code>이 됩니다.<br>만약 복잡한 뷰 Hierechy 구조상에서 subview의 subview를 사용해야 하는 경우. 의도치 않은 nil을 경험할 수도 있습니다. 일반적이지는 않지만 충분히 겪을 수 있습니다.</p><h2 id="그러면-Strong이-복잡한-Hierarchy에도-문제없고-메모리-누수도-없으니-무조건-Strong을-쓰면-되나요"><a href="#그러면-Strong이-복잡한-Hierarchy에도-문제없고-메모리-누수도-없으니-무조건-Strong을-쓰면-되나요" class="headerlink" title="그러면 Strong이 복잡한 Hierarchy에도 문제없고, 메모리 누수도 없으니 무조건 Strong을 쓰면 되나요?"></a>그러면 Strong이 복잡한 Hierarchy에도 문제없고, 메모리 누수도 없으니 무조건 Strong을 쓰면 되나요?</h2><p><code>아뇨</code></p><p>Default 값이 <code>Weak</code>인 이유가 또 있겠죠. 좀 더 일반적인 상황에서 <code>Weak</code>가 유리한 상황이 존재합니다.</p><p>바로 <code>메모리 부족</code></p><p>메모리가 부족하면 ViewController의 <code>didReceiveMemoryWarning</code>가 호출됩니다.<br>보통 <code>didReceiveMemoryWarning</code> 에서 main view를 <code>nil</code> 처리함으로써 main view를 포함한 subview들 까지 모두 dealloc 하여 메모리를 확보하는 동작을 구현합니다.</p><p>이 경우에 IBOutlet <code>Strong</code> 으로 Subview들을 갖고있다면, ViewController가 <code>Strong</code>으로 갖고있는 <code>Reference Count 1</code> 때문에 절대 최소 1 이하로 내려가질 않습니다.<br>즉, 그 Subview의 ParentView가 nil이 되더라도 SubView는 dealloc되지 않게 됩니다. 보이지도 않는 뷰가 메모리를 차지하게 되어버리는 것이죠.</p><h2 id="결론"><a href="#결론" class="headerlink" title="결론"></a>결론</h2><p>디폴트로 <code>Weak</code>을 사용하는게 좋습니다. 그 외 정말 위에서 소개한 특별한 상황 (복잡한 뷰 Hierarchy)를 이해하고 정말 필요할 때 <code>Strong</code>으로 사용하시면 됩니다.</p>]]></content>
     
@@ -42,6 +82,8 @@ Ctrl키를 누르고 View를 .m 또는 .h 파일로 가져오면 다음과 같�
     </summary>
     
       <category term="iOS" scheme="http://monibu1548.github.io/categories/iOS/"/>
+    
+      <category term="Etc" scheme="http://monibu1548.github.io/categories/iOS/Etc/"/>
     
     
       <category term="iOS" scheme="http://monibu1548.github.io/tags/iOS/"/>
@@ -131,7 +173,7 @@ Introspection을 이용해서 다양한 기능을 구현할 수 있
     <link href="http://monibu1548.github.io/2018/04/25/xcode-server-intro/"/>
     <id>http://monibu1548.github.io/2018/04/25/xcode-server-intro/</id>
     <published>2018-04-25T13:29:35.000Z</published>
-    <updated>2018-04-25T14:26:16.081Z</updated>
+    <updated>2018-05-05T19:10:04.291Z</updated>
     
     <content type="html"><![CDATA[<h2 id="CI-란"><a href="#CI-란" class="headerlink" title="CI 란?"></a>CI 란?</h2><p>CI란 <code>continuous integration</code>의 약자로 지속적 통합을 뜻한다. 작업을 작은 단위로 쪼갠 뒤, 작은 단위로 개발, 지속적으로 통합하는 과정을 통한 개발 방법으로 코드 품질향상, 배포주기 단축을 목표로 한다.</p><h2 id="iOS에서의-CI"><a href="#iOS에서의-CI" class="headerlink" title="iOS에서의 CI"></a>iOS에서의 CI</h2><p>iOS 앱은 실행파일(.ipa) 하나를 Export 하는데에 인증서, 프로비저닝 등 빌드 과정에 관여하는 변수가 많아 CI를 적용하기가 까다로운 편이다.</p><p>작년까지만 해도 <code>Jenkins</code>에 <code>Xcode Plugin</code>을 붙여 빌드를 진행하고 , 그 외 OTA를 위한 manifest, archive, export, OTA 배포까지의 과정은 Shell Script를 이용해 수동으로 작업했다.</p><p>물론, 한번 세팅해두면 이후에는 손 볼 일이 거의 없긴하다.</p><p><code>그러던 어느날</code>, 앱 인증서가 만료되어, 프로비저닝과 인증서를 교체해야 하는 일이 생겼다.</p><h2 id="Jenkins에서-인증서-프로비저닝-갱신하기"><a href="#Jenkins에서-인증서-프로비저닝-갱신하기" class="headerlink" title="Jenkins에서 인증서, 프로비저닝 갱신하기"></a>Jenkins에서 인증서, 프로비저닝 갱신하기</h2><ul><li>Apple developer 사이트에서 새로운 인증서와 프로비저닝을 다운로드 받는다.</li><li>jenkins credential 페이지에서 인증서와 프로비저닝을 업로드 한다.</li><li>프로젝트 Plugin 에서 새로운 인증서와, 프로비저닝을 선택해준다.</li><li>ipa export 하는 과정에서 프로비저닝 이름을 수동으로 입력해준다.</li></ul><p><code>=&gt; 수동으로 해야할 일이 꽤 많다</code></p><p>사실 프로젝트 1개만 있으면 문제가 없다.</p><p>그런데 나는..? 프로젝트가 3개가 있다.. 그것도 dev와 appstore로 구분하면 x2, 총 6개.</p><p>이 작업을 하면서, 아 이건 아니다 싶었고 다른 CI툴을 찾아 나섰고.</p><p>마침 XCode9 가 등장하면서 XCode Server가 무료로 내장되어 업데이트 되어 XCode Server를 사용해보기로 했다.</p><h2 id="XCode-Server-설치하기"><a href="#XCode-Server-설치하기" class="headerlink" title="XCode Server 설치하기"></a>XCode Server 설치하기</h2><p>사실 설치라고 할 게 없다. XCode9 를 설치하면 XCodeServer가 내장되어 있다.<br>그렇다면 XCode Server를 활성화 시켜보자.</p><p><code>XCode</code> -&gt; <code>Preference</code> -&gt; <code>Server &amp; Bots</code><br><img src="../../../../images/xcodeserver/make1.png" alt=""></p><p>off -&gt; <code>on</code> 으로 활성화 시키자.</p><p>XCode Server의 관리자 계정을 설정하고 Next를 누르다 보면<br><img src="../../../../images/xcodeserver/make2.png" alt=""></p><p><code>끝</code></p><p><code>setting</code> : 서버 계정, 빌드 타임아웃 시간 설정<br><code>permission</code> : 봇을 생성하고 볼 수 있는 권한 설정<br><code>mail</code> : 빌드 과정에서 메일 알람을 주기 위한 메일 설정</p><p>이제 서버가 할 일은 끝났다.</p><h2 id="XCodeServer에-접속하기"><a href="#XCodeServer에-접속하기" class="headerlink" title="XCodeServer에 접속하기"></a>XCodeServer에 접속하기</h2><p>지금까지는 XCode Server를 활성화 하는 과정이었다.<br>이제 XCode에 XCode Server를 연동하여 사용하는 과정을 소개한다.</p><p>우선 XCode에 XCode Server를 연결한다.<br><code>XCode</code> -&gt; <code>Preference</code> -&gt; <code>Accounts</code><br><img src="../../../../images/xcodeserver/make3.png" alt=""></p><p>우측 하단의 <code>+</code> 를 눌러보자.</p><p><img src="../../../../images/xcodeserver/make4.png" alt=""></p><p>하단의 XCode Server 를 추가할 수 있도록 되어있다.</p><p><img src="../../../../images/xcodeserver/make5.png" alt=""></p><p>같은 맥에 XCode Server와 XCode를 구동하기 때문에 위 사진처럼 바로 목록이 뜨지만. XCode Server가 원격지에 있다면 ip를  직접 입력해줘야 한다.</p><p>그 후 XCode Server에서 권한을 부여받은 계정을 입력해주면 끝!</p><p><img src="../../../../images/xcodeserver/make6.png" alt=""></p><p>대화상자 하단에 XCode Server의 스펙을 볼 수 있다.</p><h2 id="Build-Bot-만들기"><a href="#Build-Bot-만들기" class="headerlink" title="Build Bot 만들기"></a>Build Bot 만들기</h2><p>위 과정을 통해 XCode Server를 정상적으로 추가했다면 Build Bot을 생성할 수 있다.<br>XCode Server에서는 빌드는 모두 Bot이라는 단위로 실행되며 Bot은 프로젝트 빌드 타겟과 매칭된다고 보면 된다.</p><p>이제 Bot을 만들어보자.</p><p>XCode에서 <code>Product</code> -&gt; <code>Create Bot...</code> 를 선택한다.<br><img src="../../../../images/xcodeserver/make7.png" alt=""></p><p>봇의 이름과 봇을 생성할 서버를 선택한다.<br>봇의 이름은 <code>한글</code> 도 가능하다.</p><p><img src="../../../../images/xcodeserver/make8.png" alt=""><br>봇을 생성하려는 프로젝트가 git을 사용중이라면 그 내용을 자동으로 긁어온다.<br>현재 빨간색으로 <code>레포지토리 권한이 없습니다</code> 라고 뜨는데 오른쪽의 <code>Sign in</code> 으로 레포지토리 로그인을 하면 해결된다.</p><p><img src="../../../../images/xcodeserver/make9.png" alt=""><br>로그인을 완료하면 브랜치를 선택 가능하다. CI에 사용할 브랜치를 선택한다.</p><p><img src="../../../../images/xcodeserver/make10.png" alt=""><br>프로젝트의 Scheme, Configuration 을 설정할 수 있으며 Analyze 또는 Test도 선택적으로 수행 가능하다.<br>Archive도 제공하며 ipa 까지 추출하기 위해서는 별도의 ExportOptions.plist가 필요하다.</p><p><img src="../../../../images/xcodeserver/make11.png" alt=""><br>빌드 시간과, Clean시점을 설정할 수 있어서 주기적으로 정해진 시간에 빌드를 진행, 배포할 수 있다.<br>선택 옵션은 <code>Preiodically</code>, <code>on commit</code>, <code>maually</code> 이 있어서 수동 빌드도 가능하다.</p><p><img src="../../../../images/xcodeserver/make12.png" alt=""><br><code>여기가 진정한 XCode Server의 꽃이다</code></p><p>XCode에 연결된 계정에서 사용 가능한 인증서와 프로비저닝 목록을 한번에 볼 수 있으며 빌드에 필요한 인증서와 프로비저닝을 선택하여 <code>Add to server</code> 만 선택하면 빌드서버에 자동으로 등록 설치된다.</p><ul><li>Jenkins에서 이 작업이 얼마나 번거로웠는지,,,,,</li></ul><p><img src="../../../../images/xcodeserver/make13.png" alt=""><br>빌드 과정에서 사용할 환경변수를 지정할 수 있다.</p><p><img src="../../../../images/xcodeserver/make14.png" alt=""><br>마지막 관문이다.<br>빌드를 시작할 때 Slack에 보내고 빌드가 끝나면 빌드 파일을 Slack으로 보내고! 이런 작업이 필요한데<br>바로 여기서 설정 할 수 있다.</p><p>왼쪽 하단의 <code>+</code> 버튼을 누르면 다양한 스크립트를 추가할 수 있다.</p><ul><li>빌드 시작</li><li>빌드 종료</li><li>메일 전송</li></ul><p>등 다양한 상황이 존재하며, 해당 상황에 적절한 스크립트를 통해 여러가지 기능을 확장 할 수 있다.<br><code>cocoaPod</code> 을 사용한다면 <code>Pre-Integration</code> 스크립트에 <code>Pod install</code> 을 추가해주자.</p><p><code>끝</code></p><h2 id="Bot을-만들었으면-사용해야지"><a href="#Bot을-만들었으면-사용해야지" class="headerlink" title="Bot을 만들었으면 사용해야지"></a>Bot을 만들었으면 사용해야지</h2><p>Bot을 만들었는데 어디에 있는 것일까?!</p><p><img src="../../../../images/xcodeserver/make15.png" alt=""><br><code>얍짠</code></p><p><img src="../../../../images/xcodeserver/make16.png" alt=""><br>봇의 상세화면이다. 다음의 내용을 확인 할 수 있다.</p><ul><li>테스트 성공률</li><li>Warning 수</li><li>이전 빌드보다 추가된 커밋 수</li><li>이전 빌드 이후 제거된 warning들</li><li>코드 커버리지</li><li>archive 했다면 archive file</li><li>export 했다면 ipa file</li></ul><p><code>짱이다</code></p><p>빌드를 한번 해보자. 우측 상단의 <code>Integrate</code> 버튼을 눌러보자.</p><h2 id="Jenkins-vs-XCodeServer"><a href="#Jenkins-vs-XCodeServer" class="headerlink" title="Jenkins  vs  XCodeServer"></a>Jenkins  vs  XCodeServer</h2><p>Jenkins와 XCodeServer를 사용해보면서 느낀 특징, 장단점은 다음과 같다.</p><ul><li><p>Jenkins</p><ul><li>장점<ul><li>Github과 연동이 잘된다. Hook을 통해 PR, Commit 등 다양한 상황과 연동 가능하다</li></ul></li><li>단점<ul><li>XCode8 이후로 ipa 추출하는 과정에서 ExportOptions.plist 가 추가적으로 필요하게 되었는데 아직 이를 자동으로 해주는 플러그인이 없다.</li><li>인증서, 프로비저닝 갱신 과정이 번거롭다.</li></ul></li></ul></li><li><p>XCodeServer</p><ul><li>장점<ul><li>XCode와의 연동이 최고다. 인증서, 프로비저닝 관리가 가장 깔끔하다.</li><li>빌드를 위해 별도의 웹 페이지에 접속할 필요가 없다.</li><li>OTA 기능도 지원한다 (근데 사실상 사용 불가… 애플놈들…)</li></ul></li><li>단점<ul><li>Github과의 연동이 약하다. PR을 통한 Test를 진행하는 프로젝트에서는 바로 적용이 힘들다.</li><li>아직 안정화가 될 되었다. 작은 버그들이 우수수수….</li></ul></li></ul></li></ul><p>결론적으로, <code>XCode Server</code> 를 선택해서 사용중이며 만족하면서 사용하고 있습니다~!</p><h2 id="그-외의-iOS-CI-툴"><a href="#그-외의-iOS-CI-툴" class="headerlink" title="그 외의 iOS CI 툴"></a>그 외의 iOS CI 툴</h2><p><code>fastlane</code>이라는게 있답니다..! </p>]]></content>
     
@@ -149,7 +191,7 @@ iOS 앱은 실행파일(.ipa) 하나를 Export 하는데에 인증서, 프로비
     
       <category term="iOS" scheme="http://monibu1548.github.io/categories/iOS/"/>
     
-      <category term="생산성" scheme="http://monibu1548.github.io/categories/iOS/%EC%83%9D%EC%82%B0%EC%84%B1/"/>
+      <category term="Etc" scheme="http://monibu1548.github.io/categories/iOS/Etc/"/>
     
     
       <category term="XCodeServer" scheme="http://monibu1548.github.io/tags/XCodeServer/"/>
@@ -251,7 +293,7 @@ le
     <link href="http://monibu1548.github.io/2018/04/16/cocoapods-prompt/"/>
     <id>http://monibu1548.github.io/2018/04/16/cocoapods-prompt/</id>
     <published>2018-04-16T14:57:44.000Z</published>
-    <updated>2018-04-16T15:36:49.473Z</updated>
+    <updated>2018-05-05T19:09:28.705Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Pod-install"><a href="#Pod-install" class="headerlink" title="Pod install"></a>Pod install</h2><p>iOS 프로젝트에서 CocoaPods을 사용하지 않은 프로젝트를 보기 힘들정도로 대부분의 iOS 프로젝트가 CocoaPods를 사용한다.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">프로젝트 다운받고 -&gt; `Pod install` -&gt; 앱 실행</span><br></pre></td></tr></table></figure><p>너무나도 익숙한 Flow지만 막상 다른 명령어는 뭐가 있는지, <code>Pod install</code>과 <code>Pod update</code>의 차이를 정확하게 이해하고 사용하고 있지 않다.</p><p>이번 기회에 <code>CocoaPods</code> 을 정확히 이해하고 사용해보자.</p><h2 id="CocoaPods-명령어"><a href="#CocoaPods-명령어" class="headerlink" title="CocoaPods 명령어"></a>CocoaPods 명령어</h2><h3 id="Pod-install-1"><a href="#Pod-install-1" class="headerlink" title="Pod install"></a>Pod install</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod install</span><br></pre></td></tr></table></figure><p>가장 많이 사용하는 명령어.<br>새로운 <code>pod</code> 을 다운로드, 설치하기 위해 사용한다.</p><p>다운로드 받을 <code>pod</code>을 결정하는 것은 <code>Podfile.lock</code> 또는 <code>Podfile</code> 이다.</p><ol><li>Podfile.lock 파일이 있다면, .lock 파일 내에 명시된 pod과 그 버전을 다운받는다.</li><li>Podfile.lock 파일이 없다면, <code>Podfile</code> 에서 pod과 <code>~&gt;</code> 으로 명시된 버전을 다운받고 Podfile.lock에 버전을 명시한다</li></ol><h3 id="Podfile-에서-gt-는-무엇을-의미할까"><a href="#Podfile-에서-gt-는-무엇을-의미할까" class="headerlink" title="Podfile 에서 ~&gt; 는 무엇을 의미할까?"></a>Podfile 에서 <code>~&gt;</code> 는 무엇을 의미할까?</h3><p><code>~&gt;</code> 기호는 버전의 상한선(이보다 높을 수 없음) 을 의미한다. 버전은 <code>메이저.마이너.패치</code>로 구분한다.</p><ul><li><code>~&gt; 0.1.2</code> 버전 0.1.2 ~ 0.2 (0.2 이상 포함되지 않음)</li><li><code>~&gt; 0.1&#39;</code> 버전 0.1 (1.0 이상 포함하지 않음)</li></ul><p><code>-&gt;</code> 말고도 다른 연산자도 있다</p><ul><li><code>&gt; 0.1</code> 0.1보다 큰 모든 버전</li><li><code>&gt;= 0.1</code> 버전 0.1 이상</li><li><code>&lt; 0.1</code> 0.1보다 낮은 모든 버전</li><li><code>&lt;= 0.1</code> 버전 0.1 및 그 이하 버전</li></ul><p><code>Podfile</code> 에 명시된 <code>pod</code>를 다운받고 <code>Podfile.lock</code> 에 다운받은 버전을 명시한다.</p><p><em>Podfile.lock 은 왜 필요할까?</em><br><code>Podfile.lock</code>에 설치된 pod의 버전을 명시함으로써, pod이 업데이트 되면서 기존 앱이 동작되지 않는 문제를 해결하기 위해 <code>Podfile.lock</code> 에 기존 pod의 버전을 lock함으로써, 다른사람이 프로젝트를 clone 받아 <code>pod install</code> 했을때 유효한 pod 버전을 다운받기 위함이다! 버전픽스!</p><h3 id="Pod-Update"><a href="#Pod-Update" class="headerlink" title="Pod Update"></a>Pod Update</h3><p><code>Podfile.lock</code> 파일이 있는 한, <code>Pod install</code> 명령어를 사용하면 .lock 파일에 명시된 pod 버전에서 벗어날 수 없다. 시간이 흘러 pod 이 업데이트 되고, 업데이트 된 기능을 내 프로젝트에 적용해야 할 때, 내 프로젝트가 갖고있는 pod 을 업데이트 할 때 <code>Pod update</code> 를 사용한다.</p><h4 id="Pod-update-팟-이름-을-실행하면"><a href="#Pod-update-팟-이름-을-실행하면" class="headerlink" title="Pod update {팟 이름} 을 실행하면"></a>Pod update {팟 이름} 을 실행하면</h4><ol><li>Podfile.lock에 있는 버전은 무시하고 CocoaPods 원격 레포지토리에 있는 Pod 의 최신 버전을 다운받는다. <code>단! Podfile 에서 ~&gt;, &gt;= 등으로 제한을 걸어두었다면, 이 버전 제한 내의 최신버전이 적용될 것이다</code></li><li>Podfile.lock에 새로운 pod 버전을 명시한다</li></ol><h4 id="Pod-update을-실행하면"><a href="#Pod-update을-실행하면" class="headerlink" title="Pod update을 실행하면"></a>Pod update을 실행하면</h4><p>Podfile 에 있는 모든 Pod들을 대상으로 update 과정을 거친다</p><h3 id="Podfile-lock-의-버전관리-git-commit에-포함해야-하나"><a href="#Podfile-lock-의-버전관리-git-commit에-포함해야-하나" class="headerlink" title="Podfile.lock 의 버전관리 (git commit에 포함해야 하나?)"></a>Podfile.lock 의 버전관리 (git commit에 포함해야 하나?)</h3><p><code>해야한다</code></p><p>뭔가 확장자가 .gitignore에 포함되어야 할 느낌이지만! Podfile.lock은 Pod 파일들의 버전을 픽스시켜주는 역할을 한다.<br>다른사람에게 프로젝트를 공유할 때, 동일한 라이브러리 환경을 제공하기 위해 필수로 필요하며, 따라서 Git 으로 함께 버전관리를 해야한다.</p>]]></content>
     
@@ -284,6 +326,8 @@ pod install
     
       <category term="iOS" scheme="http://monibu1548.github.io/categories/iOS/"/>
     
+      <category term="Etc" scheme="http://monibu1548.github.io/categories/iOS/Etc/"/>
+    
     
       <category term="iOS" scheme="http://monibu1548.github.io/tags/iOS/"/>
     
@@ -296,7 +340,7 @@ pod install
     <link href="http://monibu1548.github.io/2018/04/16/cocoapods/"/>
     <id>http://monibu1548.github.io/2018/04/16/cocoapods/</id>
     <published>2018-04-16T13:46:03.000Z</published>
-    <updated>2018-04-25T14:26:17.753Z</updated>
+    <updated>2018-05-05T19:08:54.947Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Cocoapods"><a href="#Cocoapods" class="headerlink" title="Cocoapods?"></a>Cocoapods?</h2><p>iOS 앱을 개발하면서 외부 라이브러리의 필요성을 느끼게 되고, 여러 라이브러리를 사용하다보면 서로 의존성이 꼬이는 문제가 발생할 수 있다.이런 문제를 해결하기 위해 자바에서는 Maven이나 Gradle등의 의존성 관리 툴을 사용한다.<br>iOS 생태계에도 감사하게 <code>CocoaPods</code>이라는 의존성 관리 툴이 있다.</p><p><code>CocoaPods</code> 외에도 <code>Carthage</code> 라는 툴이 있지만, 사용해본 적 없고 사용중인 프로젝트를 본적이 아직 없다.</p><h2 id="Cocoapods-설치"><a href="#Cocoapods-설치" class="headerlink" title="Cocoapods 설치"></a>Cocoapods 설치</h2><p>맥 사용자라면 일단 <code>HomeBrew</code>는 설치되어 있겠지!<br>아직 <code>HomeBrew</code>를 설치하지 않았다면?</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo gem install cocoapods</span><br><span class="line">pod setup</span><br></pre></td></tr></table></figure><p>터미널에 위 명령어를 입력하면 끝!</p><h2 id="XCode-프로젝트에-적용하기"><a href="#XCode-프로젝트에-적용하기" class="headerlink" title="XCode 프로젝트에 적용하기"></a>XCode 프로젝트에 적용하기</h2><h3 id="XCode-프로젝트-위치로-이동"><a href="#XCode-프로젝트-위치로-이동" class="headerlink" title="XCode 프로젝트 위치로 이동"></a>XCode 프로젝트 위치로 이동</h3><p>터미널에서 XCode 프로젝트 위치로 이동한다<br><img src="../../../../images/cocoapods/make1.png" alt=""></p><h3 id="Podfile-생성"><a href="#Podfile-생성" class="headerlink" title="Podfile 생성"></a>Podfile 생성</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod init</span><br></pre></td></tr></table></figure><p><code>pod init</code> 명령어를 통해 Podfile 을 생성한다.<br><img src="../../../../images/cocoapods/make2.png" alt=""></p><p>이 Podfile은 이렇게 생겼다.</p><p><img src="../../../../images/cocoapods/make3.png" alt=""></p><p>이제 사용할 pods 들을 넣는다. 네트워크를 위한 <code>AFNetworking</code>은 거의 필수고,<br>이번 프로젝트에는 RXSwift를 공부 해보고 싶어서 Podsfile 에 RXSwift를 넣었다.<br><img src="../../../../images/cocoapods/make4.png" alt=""></p><p>이렇게 만들고 저장!!</p><h3 id="Pods-설치"><a href="#Pods-설치" class="headerlink" title="Pods 설치"></a>Pods 설치</h3><p>Podfile이 완성되었으면 아래 명령어로 <code>Pods</code> 들을 설치한다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod install</span><br></pre></td></tr></table></figure><p>Pods 가 설치된다.<br><img src="../../../../images/cocoapods/make5.png" alt=""></p><p>Pods가 모두 설치되고 나면 <code>Podfile.lock</code>, <code>Pods</code>, <code>{프로젝트명}.xcworkspace</code> 3개의 파일 또는 디렉토리가 생성된다.<br><img src="../../../../images/cocoapods/make6.png" alt=""></p><ul><li>Podfile.lock : Pods 의 버전픽스를 위한 파일</li><li>Pods : 라이브러리들이 다운로드 되는 디렉토리</li><li>{프로젝트명}.xcworkspace : Pods를 사용할 수 있도록 포함된 워크스페이스 =&gt; 앞으로 이걸로 프로젝트를 열어야 한다</li></ul><h3 id="프로젝트명-xcworkspace-실행"><a href="#프로젝트명-xcworkspace-실행" class="headerlink" title="{프로젝트명}.xcworkspace 실행"></a>{프로젝트명}.xcworkspace 실행</h3><p><img src="../../../../images/cocoapods/make7.png" alt=""></p><p><code>Pod install</code> 을 통해 생성된 워크스페이스를 실행한다.<br>왼쪽의 메뉴바를 보면 <code>Pods</code> 프로젝트와, 그 내부에 Pod 들이 설치된 것을 볼 수 있다.</p><p><img src="../../../../images/cocoapods/make8.png" alt=""></p>]]></content>
     
@@ -316,7 +360,7 @@ Cocoapods 설치
     
       <category term="iOS" scheme="http://monibu1548.github.io/categories/iOS/"/>
     
-      <category term="생산성" scheme="http://monibu1548.github.io/categories/iOS/%EC%83%9D%EC%82%B0%EC%84%B1/"/>
+      <category term="Etc" scheme="http://monibu1548.github.io/categories/iOS/Etc/"/>
     
     
       <category term="iOS" scheme="http://monibu1548.github.io/tags/iOS/"/>
@@ -330,7 +374,7 @@ Cocoapods 설치
     <link href="http://monibu1548.github.io/2018/04/15/apple-development-2/"/>
     <id>http://monibu1548.github.io/2018/04/15/apple-development-2/</id>
     <published>2018-04-15T13:50:59.000Z</published>
-    <updated>2018-04-15T14:29:17.569Z</updated>
+    <updated>2018-05-05T19:09:27.385Z</updated>
     
     <content type="html"><![CDATA[<p>지난 포스팅 <a href="http://monibu1548.github.io/2018/04/15/apple-development/">iOS Application 개발 시작하기 - 1 (개발자 등록, 인증서 등록)</a> 에서는 애플 개발자 계정을 만들고 인증서를 등록했다.</p><p>이제 앱을 디바이스에서 실행시키기 위해 Provisioning Profile 을 생성하고, Xcode 프로젝트를 생성하는 과정을 다룬다.</p><h2 id="App-ID-등록"><a href="#App-ID-등록" class="headerlink" title="App ID 등록"></a>App ID 등록</h2><p>앱을 생성하기 위해서 먼저 Apple Developer에서 어떤 앱을 만들건지 App ID를 생성해야 한다.<br><img src="../../../../images/appledevelopment/make3.png" alt=""></p><ul><li>App Name : 앱 이름 ex) YourName</li><li>Bundle Id : 앱의 번들 아이디 ex) io.github.monibu1548.YourName</li></ul><p>아래 체크박스는 어떤 추가 기능이 필요한지 선택할 수 있다. 일단 패스하고 필요한 기능이 있다면 나중에 추가가 가능하다.</p><h2 id="Provisioning-Profile-생성"><a href="#Provisioning-Profile-생성" class="headerlink" title="Provisioning Profile 생성"></a>Provisioning Profile 생성</h2><p>Provisioning Profile 이란, 앱이 디바이스에서 실행 될 수 있는지 정보를 갖고 있는 파일이며 <code>.mobileprovision</code> 확장자를 갖는다.</p><p>Provisiong Profile은 다음과 같은 정보를 갖고 있다. (Development)</p><ul><li>app bundle ID</li><li>device UUID 정보</li><li>certificate 정보</li></ul><h3 id="참고-앱이-디바이스에-정상적으로-설치되기-위해-거치는-검증-과정"><a href="#참고-앱이-디바이스에-정상적으로-설치되기-위해-거치는-검증-과정" class="headerlink" title="참고. 앱이 디바이스에 정상적으로 설치되기 위해 거치는 검증 과정"></a>참고. 앱이 디바이스에 정상적으로 설치되기 위해 거치는 검증 과정</h3><ul><li>Provisioning Profile에서 인증서 정보를 추출, 앱을 실행하려는 디바이스에서 인증서가 유효한지 확인</li><li>Provisioning Profile에서 device UUID 정보를 추출, 앱을 실행하려는 디바이스의 UUID와 일치한지 확인</li><li>CodeResources 디렉토리에서각 파일의 해시값을 실제의 파일들과 확인하여 빌드 후 수정이 되지 않았음을 확인</li></ul><p>Provisioning Profile은 인증서와 마찬가지로 <a href="https://developer.apple.com/kr/support/development/" target="_blank" rel="noopener">애플 개발자센터</a>에서 생성한다.</p><p><img src="../../../../images/appledevelopment/make1.png" alt=""><br><code>Certificates, Identifiers &amp; Profiles</code> 메뉴에서 아래 버튼 클릭한다.</p><p><img src="../../../../images/appledevelopment/make2.png" alt=""><br>인증서 생성때와 마찬가지로 <code>Development</code>와 <code>Production</code>으로 구분되며 같은 구분의 인증서와 연결된다.</p><p>다음페이지에서는 <code>App ID</code> 에서 생성한 ID를 선택한다.<br><img src="../../../../images/appledevelopment/make4.png" alt=""></p><p>전 포스트에서 만들었던 인증서를 선택한다.<br><img src="../../../../images/appledevelopment/make5.png" alt=""></p><p>앱을 테스트 할 디바이스를 선택한다.<br><img src="../../../../images/appledevelopment/make6.png" alt=""></p><ul><li>디바이스 등록은 개발자 센터 좌측 <code>Devices</code> 에서 어렵지 않게 가능하다!</li></ul><p>짜잔. Provisioning Profile이 생성되었다.<br><img src="../../../../images/appledevelopment/make6.png" alt=""></p><p>다운로드 받고, 더블클릭해서 실행하자. 그러면 XCode디렉토리에 자동 등록된다.</p><h2 id="XCode-프로젝트-생성"><a href="#XCode-프로젝트-생성" class="headerlink" title="XCode 프로젝트 생성"></a>XCode 프로젝트 생성</h2><p>XCode 실행 -&gt; 메뉴 <code>File</code> -&gt; <code>New</code> -&gt; <code>Project</code><br>Single View App 선택<br><img src="../../../../images/appledevelopment/make8.png" alt=""></p><p>App ID를 만들때 입력했던 Bundle ID 입력, App Name 입력해서 프로젝트 생성 후<br>프로젝트 파일을 열어보면 다음과 같다.</p><p>이제 <code>Signing</code> 영역에서 Debug(Development), Release(AppStore) 프로비저닝을 선택하여 마무리한다.<br><img src="../../../../images/appledevelopment/make9.png" alt=""></p><p>이제부터 코딩 시작!</p>]]></content>
     
@@ -351,6 +395,8 @@ App ID 등록
     
       <category term="iOS" scheme="http://monibu1548.github.io/categories/iOS/"/>
     
+      <category term="Etc" scheme="http://monibu1548.github.io/categories/iOS/Etc/"/>
+    
     
       <category term="iOS" scheme="http://monibu1548.github.io/tags/iOS/"/>
     
@@ -365,7 +411,7 @@ App ID 등록
     <link href="http://monibu1548.github.io/2018/04/15/apple-development/"/>
     <id>http://monibu1548.github.io/2018/04/15/apple-development/</id>
     <published>2018-04-15T10:59:43.000Z</published>
-    <updated>2018-04-15T12:16:29.714Z</updated>
+    <updated>2018-05-05T19:09:34.924Z</updated>
     
     <content type="html"><![CDATA[<h1 id="Apple-개발자-계정"><a href="#Apple-개발자-계정" class="headerlink" title="Apple 개발자 계정"></a>Apple 개발자 계정</h1><p>iOS앱을 개발하고 AppStore에 등록, 판매하기 위해서 Apple에 개발자 계정을 등록해야 한다. 애플 개발자 계정은 1년에 약 한화로 10만원 정도 된다. Google에 비하면 정말 비싼가격이지만…! iOS 개발자가 개발자 계정 없이 먹고 살 수 없으니 등록하자!</p><p>준비물은 약 10만원 정도가 든 카드와, Apple 계정이다</p><h2 id="애플-개발자-사이트-접속"><a href="#애플-개발자-사이트-접속" class="headerlink" title="애플 개발자 사이트 접속"></a>애플 개발자 사이트 접속</h2><p><a href="https://developer.apple.com/kr/support/development/" target="_blank" rel="noopener">https://developer.apple.com/kr/support/development/</a></p><p>우측 상단의 <code>Account</code> 메뉴를 통해 로그인을 하면 개발자 콘솔로 진입한다.</p><p><img src="../../../../images/appledevelopment/1.png" alt=""></p><ul><li>3년전 다른 프로젝트에서 iOS 개발자 등록을 하면서 renew로 뜨는 상태</li></ul><h2 id="새로-등록-또는-재등록-결국은-결제"><a href="#새로-등록-또는-재등록-결국은-결제" class="headerlink" title="새로 등록, 또는 재등록. 결국은 결제"></a>새로 등록, 또는 재등록. 결국은 결제</h2><p><img src="../../../../images/appledevelopment/pay.png" alt=""><br>2015년 첫 등록시에도 129,000 원이었나요.. 역시 개발자 계정 등록은 회사돈으로 ㅠㅜ</p><p>결제를 마치면 감사합니다! 문구와 함께 등록이 끝나고 iOS개발을 위한 첫번째 과정이 끝난다</p><p><img src="../../../../images/appledevelopment/payend.png" alt=""></p><h1 id="개발자-인증서-등록"><a href="#개발자-인증서-등록" class="headerlink" title="개발자 인증서 등록"></a>개발자 인증서 등록</h1><p>이제 개인 인증서를 앱에 서명을 하기위해 Apple에 등록을 해야한다.</p><p><a href="https://developer.apple.com/" target="_blank" rel="noopener">https://developer.apple.com/</a> 왼쪽 메뉴 <code>Certificates</code> 에서 등록 가능 합니다.</p><ul><li>직접 인증서를 수동으로 등록하지 않아도, XCode에서 Auto Managing 옵션을 사용할 경우 자동으로 Certificate와 Provisioning profile이 생성되어 등록됩니다. 개인 혼자 앱을 개발하는 경우 AutoManaging을 사용해도 문제가 없으나, 하나의 인증서로 여러명이 개발하는 경우 Auto managing을 사용시 타인이 Revoke 시킬 수 있는 등, AutoManaging보다는 명시적으로 직접 등록하여 사용하는 것이 좋습니다.</li></ul><h2 id="Mac-에서-인증서-생성"><a href="#Mac-에서-인증서-생성" class="headerlink" title="Mac 에서 인증서 생성"></a>Mac 에서 인증서 생성</h2><p><code>키체인 접근</code> 프로그램을 실행한다.<br>메뉴 <code>키체인 접근</code> -&gt; <code>인증서 지원</code> -&gt; <code>인증 기관에서 인증서 요청...</code>에 진입하여 내용을 작성한다.</p><p><img src="../../../../images/appledevelopment/makecert.png" alt=""></p><p>요청항목에서는 <code>디스크에 저장됨</code>을 선택해주세요<br>디스크에 <code>CertificateSigningRequest.certSigningRequest</code> 파일을 저장해둡니다! 잘 보관해주세요</p><h2 id="Apple-Developer에-인증서-등록"><a href="#Apple-Developer에-인증서-등록" class="headerlink" title="Apple Developer에 인증서 등록"></a>Apple Developer에 인증서 등록</h2><ul><li>애플 개발자 페이지에서 + 버튼을 통해 위 과정에서 만든 인증서를 등록한다<br><a href="https://developer.apple.com/account/ios/certificate/create" target="_blank" rel="noopener">https://developer.apple.com/account/ios/certificate/create</a></li></ul><p>여러가지 옵션을 볼 수 있는데,</p><ul><li>iOS App Development : 개발용 인증서</li><li><p>Apple Push Notification service SSL : 개발용 푸시 테스트 인증서</p></li><li><p>App Store and Ad Hoc : 앱스토어 or 인하우스 배포용 인증서</p></li><li>Apple Push Notification service SSL : 앱스토어 or 인하우스 배포용 인증서</li></ul><p>크게 Development와 Production 으로 구분된다.</p><p>iOS를 개발하기 위해 Development 인증서를 사용하고 개발이 완료되고 AppStore에 등록하기 위해 App Store 인증서를 사용한다고 보면 된다.</p><p>지금은 개발을 위한 인증서가 먼저 필요하므로 <code>iOS App Development</code>를 선택한다.</p><p>그 다음. Continue, Continue 를 눌러 다음단계로 진행한다.</p><p><img src="../../../../images/appledevelopment/selectCert.png" alt=""></p><p>Choose File.. 을 눌러 위 과정에서 만든 <code>CertificateSigningRequest.certSigningRequest</code>을 선택한다.</p><p>그러면 다음페이지에서 cer 파일을 되돌려 받게 된다. 이걸 다운로드 받아서 실행! 키체인에 등록한다.</p><p><img src="../../../../images/appledevelopment/finish.png" alt=""></p><p>여기까지가 iOS 앱 개발 시작을 위한 사전 준비과정이 끝났다!</p><ul><li>디바이스에서 앱 실행을 위한 프로비저닝 생성은 다음시간에 포스팅!</li></ul>]]></content>
     
@@ -384,6 +430,8 @@ https://developer.apple.com/kr/support/development/
     </summary>
     
       <category term="iOS" scheme="http://monibu1548.github.io/categories/iOS/"/>
+    
+      <category term="Etc" scheme="http://monibu1548.github.io/categories/iOS/Etc/"/>
     
     
       <category term="iOS" scheme="http://monibu1548.github.io/tags/iOS/"/>
@@ -717,48 +765,6 @@ Jav
       <category term="토스트루키" scheme="http://monibu1548.github.io/tags/%ED%86%A0%EC%8A%A4%ED%8A%B8%EB%A3%A8%ED%82%A4/"/>
     
       <category term="기술교육" scheme="http://monibu1548.github.io/tags/%EA%B8%B0%EC%88%A0%EA%B5%90%EC%9C%A1/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Travis CI를 이용한 빌드 테스트</title>
-    <link href="http://monibu1548.github.io/2017/01/14/TravisCI/"/>
-    <id>http://monibu1548.github.io/2017/01/14/TravisCI/</id>
-    <published>2017-01-14T04:44:47.000Z</published>
-    <updated>2018-04-25T14:26:17.214Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="Travis-CI"><a href="#Travis-CI" class="headerlink" title="Travis CI"></a>Travis CI</h1><h3 id="Travis-CI-란"><a href="#Travis-CI-란" class="headerlink" title="Travis CI 란?"></a>Travis CI 란?</h3><p><img src="../../../../images/travis/travisci.jpg" alt=""></p><p>Travis CI는 오픈소스 커뮤니티를 위한 지속적 통합 서비스이다. Github의 README.md 파일을 보면 build/passing 같은 뱃지를 볼 수 있다. 이것이 travis의 CI의 결과를 쉽게 알 수 있는 기능이다.</p><h3 id="Travis-CI-서비스-가입하기"><a href="#Travis-CI-서비스-가입하기" class="headerlink" title="Travis CI 서비스 가입하기"></a>Travis CI 서비스 가입하기</h3><ul><li>Travis CI 서비스 홈페이지</li></ul><p><a href="https://travis-ci.org/" target="_blank" rel="noopener">https://travis-ci.org/</a></p><ul><li>서비스 가입은 Github 계정으로만 가입할 수 있다.</li></ul><h3 id="Repository-연동하기"><a href="#Repository-연동하기" class="headerlink" title="Repository 연동하기"></a>Repository 연동하기</h3><p>로그인 후 우측 상단의 계정을 클릭하여 [Account] 메뉴로 진입할 수 있다.</p><p>이 페이지에서 본인의 Repository가 체크박스 형태로 나열되어 있으며 CI를 On/Off 할 수 있다.</p><p><strong>Repository에 .travis.yml 파일이 있어야 한다</strong></p><h3 id="travis-yml"><a href="#travis-yml" class="headerlink" title=".travis.yml"></a>.travis.yml</h3><ul><li><p>.travis.yml 설정 파일을 통해 테스트 환경을 설정할 수 있다.</p></li><li><p>Repository의 가장 최상위 디렉토리에 작성한다.</p></li></ul><p><em>Maven 프로젝트라면 다음과 같은 간단한 .travis.yml로 CI를 연결할 수 있다.</em></p><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">language:</span> <span class="string">java</span></span><br></pre></td></tr></table></figure><p><em>mvn test 결과에 따라 build 성공 여부를 알려준다</em></p><p><strong>Makefile 스크립트로 테스트 코드를 작성하고 .travis.yml 에서 script: 로 실행하여 다양한 테스트를 진행할 수 있다.</strong></p><h3 id="Travis-Badge-설치하기"><a href="#Travis-Badge-설치하기" class="headerlink" title="Travis Badge 설치하기"></a>Travis Badge 설치하기</h3><ul><li>대부분의 Github 오픈소스에서 README.md에 build/passing 이라는 초록 뱃지를 볼 수 있다.</li></ul><p><img src="../../../../../images/travis/ex1.png" alt=""></p><p>Travis CI 홈페이지에서 My Repository에 들어가면 레포 이름 옆에 뱃지를  볼 수 있다.</p><p>이 뱃지를 클릭하면</p><p>[Status Image] 라는 대화상자가 뜨며 이미지의 링크가 뜬다.!! 여기에서 branch 도 설정 가능하다..!!</p><p><strong>Travis CI를 통해 쉽게 빌드 테스트를 진행할 수 있으며 Branch뿐만 아니라 PR에 대해서도 검사를 진행하므로 더 생산적인 코딩을 할 수 있지 않을까!!!</strong></p>]]></content>
-    
-    <summary type="html">
-    
-      Travis CI
-Travis CI 란?
-
-
-Travis CI는 오픈소스 커뮤니티를 위한 지속적 통합 서비스이다. Github의 README.md 파일을 보면 build/passing 같은 뱃지를 볼 수 있다. 이것이 travis의 CI의 결과를 쉽게 알 수 있는 기능이다.
-
-Travis CI 서비스 가입하기
- * Travis CI 서비스 홈페이지
-
-https://travis-ci.org/
-
- * 서비스 가입은 Github 계정으로만 가입할 수 있다.
-
-Repository 연동하기
-로그인 후 우측 상단의 계정을 클릭하여 [Accou
-    
-    </summary>
-    
-      <category term="ETC" scheme="http://monibu1548.github.io/categories/ETC/"/>
-    
-    
-      <category term="CI" scheme="http://monibu1548.github.io/tags/CI/"/>
-    
-      <category term="java" scheme="http://monibu1548.github.io/tags/java/"/>
-    
-      <category term="maven" scheme="http://monibu1548.github.io/tags/maven/"/>
-    
-      <category term="jenkins" scheme="http://monibu1548.github.io/tags/jenkins/"/>
     
   </entry>
   

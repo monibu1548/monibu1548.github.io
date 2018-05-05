@@ -2,9 +2,51 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://monibu1548.github.io/2018/04/25/xcode-server-intro/</loc>
+    
+    <lastmod>2018-05-05T19:10:04.291Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://monibu1548.github.io/2018/04/15/apple-development/</loc>
+    
+    <lastmod>2018-05-05T19:09:34.924Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://monibu1548.github.io/2018/04/16/cocoapods-prompt/</loc>
+    
+    <lastmod>2018-05-05T19:09:28.705Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://monibu1548.github.io/2018/04/15/apple-development-2/</loc>
+    
+    <lastmod>2018-05-05T19:09:27.385Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://monibu1548.github.io/2018/04/16/cocoapods/</loc>
+    
+    <lastmod>2018-05-05T19:08:54.947Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://monibu1548.github.io/2018/05/03/iboutlet-strong-weak/</loc>
     
-    <lastmod>2018-05-03T12:37:34.851Z</lastmod>
+    <lastmod>2018-05-05T19:08:53.563Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://monibu1548.github.io/2018/05/06/ios-admob/</loc>
+    
+    <lastmod>2018-05-05T19:08:15.995Z</lastmod>
     
   </url>
   
@@ -23,13 +65,6 @@
   </url>
   
   <url>
-    <loc>http://monibu1548.github.io/2018/04/16/cocoapods/</loc>
-    
-    <lastmod>2018-04-25T14:26:17.753Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://monibu1548.github.io/2017/01/14/TravisCI/</loc>
     
     <lastmod>2018-04-25T14:26:17.214Z</lastmod>
@@ -44,13 +79,6 @@
   </url>
   
   <url>
-    <loc>http://monibu1548.github.io/2018/04/25/xcode-server-intro/</loc>
-    
-    <lastmod>2018-04-25T14:26:16.081Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://monibu1548.github.io/2018/04/25/GCD-singleton/</loc>
     
     <lastmod>2018-04-25T13:28:44.176Z</lastmod>
@@ -61,27 +89,6 @@
     <loc>http://monibu1548.github.io/2018/04/18/swift-enum/</loc>
     
     <lastmod>2018-04-25T13:27:45.679Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://monibu1548.github.io/2018/04/16/cocoapods-prompt/</loc>
-    
-    <lastmod>2018-04-16T15:36:49.473Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://monibu1548.github.io/2018/04/15/apple-development-2/</loc>
-    
-    <lastmod>2018-04-15T14:29:17.569Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://monibu1548.github.io/2018/04/15/apple-development/</loc>
-    
-    <lastmod>2018-04-15T12:16:29.714Z</lastmod>
     
   </url>
   
