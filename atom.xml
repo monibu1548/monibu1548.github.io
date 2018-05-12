@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://monibu1548.github.io/"/>
-  <updated>2018-05-05T19:08:15.995Z</updated>
+  <updated>2018-05-12T08:33:21.252Z</updated>
   <id>http://monibu1548.github.io/</id>
   
   <author>
@@ -15,6 +15,47 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[Swift] Optional이란? 옵셔널 이해하기</title>
+    <link href="http://monibu1548.github.io/2018/05/12/swift-optional/"/>
+    <id>http://monibu1548.github.io/2018/05/12/swift-optional/</id>
+    <published>2018-05-12T06:41:46.000Z</published>
+    <updated>2018-05-12T08:33:21.252Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Optional"><a href="#Optional" class="headerlink" title="Optional"></a>Optional</h2><p>Swift가 갖는 Optional이라는 개념은 변수의 값이 <code>nil</code>일 수 있다는 것을 표현하는 건데요, 반대로 Optional이 아니라면(non-optional) 해당 값은 <code>nil</code>이 될 수 없음을 의미합니다. Objective-C를 사용해왔다면 Optional이라는 표현이 너무나도 당연해보일 수 있지만, Swift에서는 Optional은 말 그대로 <code>옵션(선택적)</code> 이며 기본값은 non-Optional 입니다.</p><h2 id="선언"><a href="#선언" class="headerlink" title="선언"></a>선언</h2><p>Optional 변수의 선언은 <code>?</code> 키워드를 사용합니다<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name: <span class="type">String</span>?</span><br></pre></td></tr></table></figure></p><p>Optional의 디폴트 값은 <code>nil</code>로 name은 <code>nil</code>을 갖게 됩니다.</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name: <span class="type">String</span> <span class="comment">// 컴파일에러</span></span><br><span class="line"><span class="keyword">var</span> name = <span class="literal">nil</span> <span class="comment">// 컴파일에러</span></span><br></pre></td></tr></table></figure><p>만약 Optional 키워드를 사용하지 않았다면 값을 입력하라는 에러가 발생하고, 그 이후에라도 nil을 넣으려하면 컴파일에러가 발생합니다.<br>여기에서 Swift가 기본적으로 non-optional을 지원하면서 갖는 <code>엄청난 장점</code>을 느낄 수 있습니다.<br>nil에 대한 컴파일 에러를 통해 개발자는 nil에 대해 명확한 예외처리가 강제되며, 런타임에 nil로 인한 문제를 <code>컴파일 단계</code>에서 예방할 수 있습니다.</p><p>그래서 Swift가 잠재적 오류에 대해 안전하다고 표현하는 글도 많이 있습니다.</p><h2 id="Optional-변수의-이용"><a href="#Optional-변수의-이용" class="headerlink" title="Optional 변수의 이용"></a>Optional 변수의 이용</h2><p>Optional변수는 <code>nil</code>을 가질 수 있는 특별한 변수입니다. Optional 변수를 이용해서 작업할 때 Optional을 해제하는 과정이 추가적으로 필요합니다.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var number1:Int? = 20</span><br><span class="line">var number2:Int = 100</span><br><span class="line"></span><br><span class="line">number1 + number2</span><br></pre></td></tr></table></figure></p><p>Int(optional)와 Int(non-optional)의 연산을 시도하면<br><code>Value of optional type &#39;Int?&#39; not unwrapped; did you mean to use &#39;!&#39; or &#39;?&#39;?</code></p><p>위 컴파일 에러가 발생합니다.<br>number1은 Optional로 nil값을 가질 <code>가능성</code>이 있기 때문에 컴파일 단계에서 에러를 발생시킵니다. 연산을 수행하기 위해서는 <code>unwrapping</code> 또는 <code>binding</code> 과정이 필요합니다.</p><h3 id="Optional-Unwrapping-옵셔널-해제"><a href="#Optional-Unwrapping-옵셔널-해제" class="headerlink" title="Optional Unwrapping (옵셔널 해제)"></a>Optional Unwrapping (옵셔널 해제)</h3><p>Optional Unwrapping이란 Optional 변수에서 Optional 껍데기를 벗겨내는 작업입니다. </p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> number1:<span class="type">Int</span>? = <span class="number">20</span></span><br><span class="line"><span class="keyword">var</span> number2:<span class="type">Int</span> = <span class="number">100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> number1 &#123;</span><br><span class="line">    <span class="keyword">let</span> sum = number1! + number1!</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>if 로 optional 변수의 값이 nil이 아닌지 판별 후 <code>!</code> unwrapping 키워드를 통해 강제로 값을 꺼내옵니다. 만약 if로 nil 체크를 하지 않고 <code>!</code>을 사용한다면 런타임 오류가 발생할 수 있습니다.</p><h3 id="Optional-Binding-옵셔널-바인딩"><a href="#Optional-Binding-옵셔널-바인딩" class="headerlink" title="Optional Binding (옵셔널 바인딩)"></a>Optional Binding (옵셔널 바인딩)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var number1:Int? = 20</span><br><span class="line">var number2:Int = 100</span><br><span class="line"></span><br><span class="line">if let nonOptionalNumber1 = number1 &#123;</span><br><span class="line">    let sum = nonOptionalNumber1 + number2</span><br></pre></td></tr></table></figure><p>Optional Unwrapping과 비슷하지만 Optional 값을 새로운 상수로 받고, 그 이후로 non-optional값을 사용한다는 차이점이 있다.<br>새로 선언된 nonOptionalNumber1은 이미 non-optional로 연산에 사용할 때 <code>!</code> 키워드를 사용할 필요가 없다.</p><h2 id="Optional-Chaining-옵셔널-체이닝"><a href="#Optional-Chaining-옵셔널-체이닝" class="headerlink" title="Optional Chaining (옵셔널 체이닝)"></a>Optional Chaining (옵셔널 체이닝)</h2><p>여러 객체를 혼합해서 사용하다보면 Optional끼리의 연산이 필요한 경우가 있습니다. 이 경우에 객체마다 옵셔널 바인딩을 사용하게 되면, if문이 꽤나 복잡해지겠죠<br>Optional Chaining을 통해서 좀 더 간단하게 Optional 예외처리를 할 수 있습니다.</p><p>swift에서 <code>.</code> 을 통해 클래스의 프로퍼티에 접근이 가능합다는 점을 이용합니다.</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> b:<span class="type">B</span>?</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> <span class="built_in">c</span>:<span class="type">String</span>?</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>이 경우 A의 프로퍼티 b의 c에 접근할 때, b에대한 옵셔널, c에대한 옵셔널, 2번의 바인딩이 필요합니다.<br>이 경우에 옵셔널 체이닝을 통해 한줄로 옵셔널 바인딩이 가능합니다.</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a:<span class="type">A</span> = <span class="type">A</span>()</span><br><span class="line"><span class="keyword">if</span> a.b?.<span class="built_in">c</span> &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><code>a.b?.c</code> 를 통해 b의 옵셔널, c의 옵셔널 바인딩을 모두 처리가능합니다.</p><h2 id="Optional이-점점-불편해-보이는데-왜-사용할까"><a href="#Optional이-점점-불편해-보이는데-왜-사용할까" class="headerlink" title="Optional이 점점 불편해 보이는데 왜 사용할까?"></a>Optional이 점점 불편해 보이는데 왜 사용할까?</h2><p>Objective-C에는 아직 <code>nil</code>타입이 존재하며 하나의 프로젝트에서 obj-c와 swift를 혼용해서 사용할 수 있습니다. 따라서 obj-c와의 상호운용성을 위해 사용합니다.</p>]]></content>
+    
+    <summary type="html">
+    
+      Optional
+Swift가 갖는 Optional이라는 개념은 변수의 값이 nil일 수 있다는 것을 표현하는 건데요, 반대로 Optional이 아니라면(non-optional) 해당 값은 nil이 될 수 없음을 의미합니다. Objective-C를 사용해왔다면 Optional이라는 표현이 너무나도 당연해보일 수 있지만, Swift에서는 Optional은 말 그대로 옵션(선택적) 이며 기본값은 non-Optional 입니다.
+
+선언
+Optional 변수의 선언은 ? 키워드를 사용합니다
+1
+
+
+var name: String?
+
+
+
+
+Op
+    
+    </summary>
+    
+      <category term="iOS" scheme="http://monibu1548.github.io/categories/iOS/"/>
+    
+      <category term="Swift" scheme="http://monibu1548.github.io/categories/iOS/Swift/"/>
+    
+    
+      <category term="iOS" scheme="http://monibu1548.github.io/tags/iOS/"/>
+    
+      <category term="Swift" scheme="http://monibu1548.github.io/tags/Swift/"/>
+    
+      <category term="스위프트" scheme="http://monibu1548.github.io/tags/%EC%8A%A4%EC%9C%84%ED%94%84%ED%8A%B8/"/>
+    
+  </entry>
   
   <entry>
     <title>iOS 앱에서 광고 수익 얻기 (Admob 애드몹 설치, 부착)</title>
@@ -732,39 +773,6 @@ WEB은 static 파일 서비스에 유리하고, WAS는 동적인 서비스를 �
       <category term="웹" scheme="http://monibu1548.github.io/tags/%EC%9B%B9/"/>
     
       <category term="배포" scheme="http://monibu1548.github.io/tags/%EB%B0%B0%ED%8F%AC/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>NHN 토스트루키 기술교육 2주차 회고</title>
-    <link href="http://monibu1548.github.io/2017/01/22/rooke2week/"/>
-    <id>http://monibu1548.github.io/2017/01/22/rooke2week/</id>
-    <published>2017-01-22T05:04:30.000Z</published>
-    <updated>2018-04-15T05:27:43.484Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="Toast-Rookie-기술교육-2주차"><a href="#Toast-Rookie-기술교육-2주차" class="headerlink" title="Toast-Rookie 기술교육 2주차"></a>Toast-Rookie 기술교육 2주차</h1><h2 id="투표-서비스-‘신의-한-수’-개발-시작"><a href="#투표-서비스-‘신의-한-수’-개발-시작" class="headerlink" title="투표 서비스 ‘신의 한 수’ 개발 시작"></a>투표 서비스 ‘신의 한 수’ 개발 시작</h2><p>2주차부터 본격적으로 개발을 시작했다. git이나 태스크 관리 등 규칙 정하는데 하루를 모두 소비했다. 그 후 Repo 등록하고 Spring Framework프로젝트 생성 후 첫 Initial Commit을 날렸다.<br>2주차에는 DB -&gt; DAO -&gt; Service 까지 개발하기로 했다. 그래야 다음주에 UI를 할 수 있으니..<br>2주차가 끝나는 오늘 아직 Service가 개발중이다. 중간에 DB를 갈아엎은게 영향이 컸다.</p><h2 id="방명록-이후의-spring"><a href="#방명록-이후의-spring" class="headerlink" title="방명록 이후의 spring"></a>방명록 이후의 spring</h2><p>Java는 안드로이드로만 접했고 웹은 node로만 했었는데.. 생소한 Spring Framework로 자바웹을 하게 될 줄이야…<br>그나마 사전과제 방명록 개발하면서 Spring에 익숙해진 덕분에 초기 개발환경 설정이나 구조를 이해하는데 도움이 많이 되었다.</p><h2 id="DB-삽질"><a href="#DB-삽질" class="headerlink" title="DB 삽질"></a>DB 삽질</h2><p>학부 데이터베이스 과목을 열심히 듣지 않았던 것을 매우 후회했다. 결국 DAO, DTO 다 구현해놓고 밤새 갈아엎어버리는 대참사가 발생했다. 프로젝트 개발 전 데이터베이스 검증을 진짜 잘 해야 나중에 고생을 안하겠구나..싶었다.</p><h2 id="TDD"><a href="#TDD" class="headerlink" title="TDD"></a>TDD</h2><p>말로만 들었던 TDD을 적용해보기로 했다. Service 레벨에서 각 필요한 기능을 정의하고 해당 기능에서 발생할 수 있는 예외를 미리 예측하고 테스트케이스를 만들어 실제 서비스가 진행될 때 정의되지 않은 예외가 발생할 가능성을 줄일수 있을 것 같다.<br>물론 TDD할 때도 테스트 케이스를 테스트하는 어처구니 없는 삽질을 하고야 말았다. 많이 연습하고 익숙해져야겠다.</p><h2 id="토비의-스프링"><a href="#토비의-스프링" class="headerlink" title="토비의 스프링"></a>토비의 스프링</h2><p>워낙 유명한 책이라 이름은 많이 들어봤지만, 자바웹에는 1도 관심이 없었기에 볼 생각은 한번도 안했다. Spring을 접하면서 읽게 되었는데 스프링 프레임워크에 대한 지식 뿐 아니라 일반적인 Java 개발에 도움이 되는 지식이 정말 많았다. 지금까지 java 개발을 하면서 의문을 가졌던 부분에 대해서 가장 정석적인, 효율적인 방법을 소개해주는게 제일 마음에 들었다. 붕 떠있던 지식들이 용어와 함께 정리되는 느낌! 또한 다른 오픈소스를 보면서 왜 저런구조인지 이해를 못했던 것도 토비의 스프링을 통해 알게 되었다.</p><p>예를 들면</p><ul><li>Exception 처리를 발생 지점에서 바로 처리할지, 그냥 위로 throw 해버릴지에 대한 고민을 해결했다</li><li>ARCUS DB 오픈소스 공부할때 왜 각 Method 단위가 클래스로 되어있었는지.. 알고보니 전략패턴</li></ul><h2 id="아직도-남는-의문-앞으로-해결해야-할-질문들"><a href="#아직도-남는-의문-앞으로-해결해야-할-질문들" class="headerlink" title="아직도 남는 의문. 앞으로 해결해야 할 질문들"></a>아직도 남는 의문. 앞으로 해결해야 할 질문들</h2><ul><li>Spring은 MVC구조로 되어있다. View를 Spring 에서 만들어서 던져준다.. 요즘은 Front에서 ajax로 구현하는 SPA가 많지 않나..? 그런거에는 적합하지 않은 프레임워크인가?</li><li>Spring 이랑 Catalina. 구조. 동작 순서</li></ul>]]></content>
-    
-    <summary type="html">
-    
-      Toast-Rookie 기술교육 2주차
-투표 서비스 ‘신의 한 수’ 개발 시작
-2주차부터 본격적으로 개발을 시작했다. git이나 태스크 관리 등 규칙 정하는데 하루를 모두 소비했다. 그 후 Repo 등록하고 Spring Framework프로젝트 생성 후 첫 Initial Commit을 날렸다.
-2주차에는 DB -&gt; DAO -&gt; Service 까지 개발하기로 했다. 그래야 다음주에 UI를 할 수 있으니..
-2주차가 끝나는 오늘 아직 Service가 개발중이다. 중간에 DB를 갈아엎은게 영향이 컸다.
-
-방명록 이후의 spring
-Jav
-    
-    </summary>
-    
-      <category term="NHN ent." scheme="http://monibu1548.github.io/categories/NHN-ent/"/>
-    
-    
-      <category term="NHN" scheme="http://monibu1548.github.io/tags/NHN/"/>
-    
-      <category term="토스트루키" scheme="http://monibu1548.github.io/tags/%ED%86%A0%EC%8A%A4%ED%8A%B8%EB%A3%A8%ED%82%A4/"/>
-    
-      <category term="기술교육" scheme="http://monibu1548.github.io/tags/%EA%B8%B0%EC%88%A0%EA%B5%90%EC%9C%A1/"/>
     
   </entry>
   
