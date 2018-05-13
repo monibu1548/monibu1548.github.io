@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://monibu1548.github.io/"/>
-  <updated>2018-05-12T08:33:21.252Z</updated>
+  <updated>2018-05-13T11:18:55.431Z</updated>
   <id>http://monibu1548.github.io/</id>
   
   <author>
@@ -15,6 +15,55 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[Swift] Date to String, Date &lt;=&gt; String 객체간 변환</title>
+    <link href="http://monibu1548.github.io/2018/05/13/string-date-convert/"/>
+    <id>http://monibu1548.github.io/2018/05/13/string-date-convert/</id>
+    <published>2018-05-13T11:05:40.000Z</published>
+    <updated>2018-05-13T11:18:55.431Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="String과-Date의-객체간-변환"><a href="#String과-Date의-객체간-변환" class="headerlink" title="String과 Date의 객체간 변환"></a>String과 Date의 객체간 변환</h1><p>Date와 String의 변환은 매우 자주 사용하면서도 할 때마다 뭐였지 하고 다시 찾아보곤 합니다.<br>또 Obj-C만 사용하다가 Swift로 넘어오면서 한번 정리하고 갑니다. 참고로 swift4 입니다</p><h2 id="String-gt-Date"><a href="#String-gt-Date" class="headerlink" title="String -&gt; Date"></a>String -&gt; Date</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">let</span> dateString:<span class="type">String</span> = <span class="string">"2018-05-13 15:05:40"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> dateFormatter = <span class="type">DateFormatter</span>()</span><br><span class="line"></span><br><span class="line">dateFormatter.dateFormat = <span class="string">"yyyy-MM-dd HH:mm:ss"</span></span><br><span class="line">dateFormatter.timeZone = <span class="type">NSTimeZone</span>(name: <span class="string">"UTC"</span>) <span class="keyword">as</span> <span class="type">TimeZone</span>?</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> date:<span class="type">Date</span> = dateFormatter.date(from: dateString)!</span><br></pre></td></tr></table></figure><p>Obj-C 와 마찬가지로 <code>DateFormatter</code>를 이용합니다.<br>DateFormatter에 날짜 형식화 타임존을 설정 후 String을 dateFormatter의 <code>date</code> 메소드를 이용해 변환합니다.</p><h2 id="Date-gt-String"><a href="#Date-gt-String" class="headerlink" title="Date -&gt; String"></a>Date -&gt; String</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> date:<span class="type">Date</span> = <span class="type">Date</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> dateFormatter = <span class="type">DateFormatter</span>()</span><br><span class="line">dateFormatter.dateFormat = <span class="string">"yyyy-MM-dd HH:mm:ss"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> dateString:<span class="type">Date</span> dateFormatter.string(from: date)</span><br></pre></td></tr></table></figure><p>DateFormatter의 <code>string</code> 메소드를 사용하여 변환 가능합니다.</p>]]></content>
+    
+    <summary type="html">
+    
+      String과 Date의 객체간 변환
+Date와 String의 변환은 매우 자주 사용하면서도 할 때마다 뭐였지 하고 다시 찾아보곤 합니다.
+또 Obj-C만 사용하다가 Swift로 넘어오면서 한번 정리하고 갑니다. 참고로 swift4 입니다
+
+String -&gt; Date
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+
+
+let dateString:String = &quot;2018-05-13 15:05:40&quot;
+
+let dateFormatter = DateFormatter()
+
+dateFormatter.dateFormat = &quot;yyyy-MM-dd HH:mm:
+    
+    </summary>
+    
+      <category term="iOS" scheme="http://monibu1548.github.io/categories/iOS/"/>
+    
+      <category term="Swift" scheme="http://monibu1548.github.io/categories/iOS/Swift/"/>
+    
+    
+      <category term="iOS" scheme="http://monibu1548.github.io/tags/iOS/"/>
+    
+      <category term="Swift" scheme="http://monibu1548.github.io/tags/Swift/"/>
+    
+      <category term="스위프트" scheme="http://monibu1548.github.io/tags/%EC%8A%A4%EC%9C%84%ED%94%84%ED%8A%B8/"/>
+    
+  </entry>
   
   <entry>
     <title>[Swift] Optional이란? 옵셔널 이해하기</title>
@@ -739,40 +788,6 @@ WEB은 static 파일 서비스에 유리하고, WAS는 동적인 서비스를 �
       <category term="스프링 프레임워크" scheme="http://monibu1548.github.io/tags/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC/"/>
     
       <category term="Spring Framework" scheme="http://monibu1548.github.io/tags/Spring-Framework/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>WAR(웹 어플리케이션) 배포</title>
-    <link href="http://monibu1548.github.io/2017/01/22/web-deploy/"/>
-    <id>http://monibu1548.github.io/2017/01/22/web-deploy/</id>
-    <published>2017-01-22T06:04:50.000Z</published>
-    <updated>2018-04-15T06:06:16.619Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Tomcat의-주요-디렉토리-구조"><a href="#Tomcat의-주요-디렉토리-구조" class="headerlink" title="Tomcat의 주요 디렉토리 구조"></a>Tomcat의 주요 디렉토리 구조</h2><table><thead><tr><th>디렉토리</th><th>설명</th></tr></thead><tbody><tr><td>bin</td><td>tomcat 실행에 필요한 바이너리</td></tr><tr><td>conf</td><td>설정파일 &lt;- 중요하다!!</td></tr><tr><td>webapps</td><td>웹앱들의 루트 폴더</td></tr><tr><td>work</td><td>jsp파일을 서블릿 형태로 변환한 java파일</td></tr></tbody></table><h2 id="톰캣-환경설정-server-xml"><a href="#톰캣-환경설정-server-xml" class="headerlink" title="톰캣 환경설정 ( server.xml )"></a>톰캣 환경설정 ( server.xml )</h2><ul><li>server.xml 을 보면 몇가지 태그로 정보를 구분할 수 있다.</li></ul><table><thead><tr><th>태그</th><th>설명</th></tr></thead><tbody><tr><td>Service</td><td>tomcat의 구성요소를 정의한다. 기본적으로 Catalina로 되어 있다</td></tr><tr><td>Connector</td><td>서비스 요청이 왔을 때 Engine에게 넘겨주는 역할. 포트번호와 프로토콜을 설정한다</td></tr><tr><td>Engine</td><td>servlet의 인스턴스 단위. Engine으로부터 넘겨받은 요청을 처리하는 단위</td></tr><tr><td>Host</td><td>Engine에 관련된 가상호스트를 정의한다. 호스트 이름이 무엇인지, war파일의 기본 디렉토리 등의 설정이 가능하다</td></tr><tr><td><strong>Host</strong></td><td>Engine에 관련된 가상호스트를 정의한다. 호스트 이름이 무엇인지, war파일의 기본 디렉토리 등의 설정이 가능하다. 개인적으로 가장 중요한 부분이라고 생각한다</td></tr></tbody></table><h2 id="WAR"><a href="#WAR" class="headerlink" title="WAR"></a>WAR</h2><p>mvn package 명령어를 통해 프로젝트의 WAR파일을 생성할 수 있다. WAR파일의 이름은 [프로젝트명]-버전-빌드-스냅샷.war 로 매우 길다. 하지만 tomcat 경로에 배치할 때는 줄이겠지 당연히!!<br>pom.xml에서 mvn package의 결과로 생성할 WAR파일의 이름을 미리 지정할 수 있으니 알아두는 것이 좋을것 같다.</p><h2 id="주의해야-할-사항"><a href="#주의해야-할-사항" class="headerlink" title="주의해야 할 사항"></a>주의해야 할 사항</h2><p><strong>간혹 소스코드 내에 host를 포함한 상대 경로가 들어가는 경우가 있다. server.xml 설정에 따라 다르겠지만 <a href="http://localhost/project/" target="_blank" rel="noopener">http://localhost/project/</a> 가 될 수도 있고 <a href="http://localhost/" target="_blank" rel="noopener">http://localhost/</a> 로 끝나는 경우도 있다. 이 경우에 따라 프로젝트가 정상적으로 실행되지 않을 수 있으니 참고!!!!!!</strong></p><p>[출처] <a href="http://okky.kr/article/115423" target="_blank" rel="noopener">http://okky.kr/article/115423</a></p><p>[출처] <a href="http://jang8584.tistory.com/72" target="_blank" rel="noopener">http://jang8584.tistory.com/72</a></p>]]></content>
-    
-    <summary type="html">
-    
-      Tomcat의 주요 디렉토리 구조
-디렉토리설명bintomcat 실행에 필요한 바이너리conf설정파일 &lt;- 중요하다!!webapps웹앱들의 루트 폴더workjsp파일을 서블릿 형태로 변환한 java파일톰캣 환경설정 ( server.xml )
- * server.xml 을 보면 몇가지 태그로 정보를 구분할 수 있다.
-
-태그설명Servicetomcat의 구성요소를 정의한다. 기본적으로 Catalina로 되어 있다Connector서비스 요청이 왔을 때 Engine에게 넘겨주는 역할. 포트번호와 프로토콜을 설정한다Engineservlet의 인
-    
-    </summary>
-    
-      <category term="Spring Framework" scheme="http://monibu1548.github.io/categories/Spring-Framework/"/>
-    
-    
-      <category term="스프링 프레임워크" scheme="http://monibu1548.github.io/tags/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC/"/>
-    
-      <category term="Spring Framework" scheme="http://monibu1548.github.io/tags/Spring-Framework/"/>
-    
-      <category term="Web" scheme="http://monibu1548.github.io/tags/Web/"/>
-    
-      <category term="웹" scheme="http://monibu1548.github.io/tags/%EC%9B%B9/"/>
-    
-      <category term="배포" scheme="http://monibu1548.github.io/tags/%EB%B0%B0%ED%8F%AC/"/>
     
   </entry>
   
