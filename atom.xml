@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://monibu1548.github.io/"/>
-  <updated>2018-05-13T15:35:21.217Z</updated>
+  <updated>2018-05-14T13:02:54.914Z</updated>
   <id>http://monibu1548.github.io/</id>
   
   <author>
@@ -15,6 +15,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>iOS앱 고도화 - Firebase Remote Config를 사용한 앱 운영방법</title>
+    <link href="http://monibu1548.github.io/2018/05/14/firebase-config/"/>
+    <id>http://monibu1548.github.io/2018/05/14/firebase-config/</id>
+    <published>2018-05-14T12:14:04.000Z</published>
+    <updated>2018-05-14T13:02:54.914Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Firebase-Remote-Config"><a href="#Firebase-Remote-Config" class="headerlink" title="Firebase Remote Config"></a>Firebase Remote Config</h2><p>Firebase Remote Config란, 앱 업데이트를 게시하지 않고도 앱의 동작과 모양을 변경할 수 있도록 도와주는 서비스입니다. 앱의 실행시점에 서버에서 Config를 읽어오는 비교적 쉬운 개념이지만. 이를 활용해서 다양한 응용동작을 할 수 있습니다.</p><p>비슷한 서비스로는 NHN Entertainment의 Toast Cloud - Launching이 있습니다.</p><ol><li>최신 업데이트 버전을 가져와 현재 설치된 버전과 비교하여 업데이트를 유도할 수 있습니다.</li><li>공지사항 팝업을 띄울 수 있습니다.</li><li>Color 값을 전달하면 앱의 전반전인 테마 컬러 변경이 가능합니다.</li><li>static한 문구들 (연도, 전화번호)을 변경할 때 앱을 새로 빌드할 필요가 없습니다.</li></ol><p>이 기능을 구현하려면 Config 정보를 내려줄 서버가 필요합니다. 하지만 단일 앱 개발자에게 서버는 사치죠ㅜㅠ</p><p>고맙게도 Google의 Firebase에서 이러한 기능을 제공합니다. <code>Remote Config</code> 라는 이름으로 위 기능을 제공하고 있습니다.</p><h2 id="Firebase-시작하기"><a href="#Firebase-시작하기" class="headerlink" title="Firebase 시작하기"></a>Firebase 시작하기</h2><p><a href="https://firebase.google.com/?authuser=0" target="_blank" rel="noopener">Google Firebase 홈페이지</a></p><p><img src="../../../../images/firebaseconfig/1.png" alt=""></p><p>프로젝트 생성 후 <code>Remote Config</code> 시작하기를 클릭합니다.</p><p><img src="../../../../images/firebaseconfig/2.png" alt=""><br>이제 매개변수를 설정할 수 있습니다.</p><p><img src="../../../../images/firebaseconfig/3.png" alt=""><br>버전, 광고 실행 유무 등, 앱애서 사용할 매개변수들을 추가합니다.</p><p><img src="../../../../images/firebaseconfig/4.png" alt=""><br><code>변경사항 개시</code> 버튼을 클릭하여 해당 내용을 배포합니다.</p><h2 id="iOS에서-Firebase-Remote-Config-설정하기"><a href="#iOS에서-Firebase-Remote-Config-설정하기" class="headerlink" title="iOS에서 Firebase Remote Config 설정하기"></a>iOS에서 Firebase Remote Config 설정하기</h2><p><a href="https://firebase.google.com/docs/remote-config/use-config-ios?authuser=0" target="_blank" rel="noopener">공식 가이드 문서 링크</a></p><h2 id="GoogleService-Info-plist"><a href="#GoogleService-Info-plist" class="headerlink" title="GoogleService-Info.plist"></a>GoogleService-Info.plist</h2><p>iOS앱에서 Firebase에 연결하기 위해서는 <code>GoogleService-Info.plist</code> 가 필요하며. 이 파일은 Firebase에서 제공합니다.</p><p><img src="../../../../images/firebaseconfig/5.png" alt=""><br>Firebase에서 프로젝트를 생성합니다.</p><p><img src="../../../../images/firebaseconfig/6.png" alt=""><br>프로젝트에서 사용하고있는 Firebase 서비스의 정보를 담긴 <code>GoogleService-Info.plist</code>를 다운받습니다.<br>나중에 Cloude Message 등 다른 추가기능 사용을 선택하면 <code>GoogleService-Info.plist</code> 업데이트도 필요합니다.</p><h3 id="Pod-설치"><a href="#Pod-설치" class="headerlink" title="Pod 설치"></a>Pod 설치</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod &apos;Firebase/RemoteConfig&apos;</span><br></pre></td></tr></table></figure><p>Podfile에 추가 후 설치합니다.</p><h3 id="AppDelegate-설정"><a href="#AppDelegate-설정" class="headerlink" title="AppDelegate 설정"></a>AppDelegate 설정</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Firebase/RemoteConfig</span><br></pre></td></tr></table></figure><p>사용하고 있는 AppDelegate에 RemoteConfig 모듈을 추가합니다.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -&gt; Bool &#123;</span><br><span class="line">        FirebaseApp.configure()</span><br><span class="line">        return true</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure><p><code>didFinishLaunchingWithOptions</code> 메소드에  Firebase.configure()를 추가하여 공유 인스턴스를 구성합니다.</p>]]></content>
+    
+    <summary type="html">
+    
+      Firebase Remote Config
+Firebase Remote Config란, 앱 업데이트를 게시하지 않고도 앱의 동작과 모양을 변경할 수 있도록 도와주는 서비스입니다. 앱의 실행시점에 서버에서 Config를 읽어오는 비교적 쉬운 개념이지만. 이를 활용해서 다양한 응용동작을 할 수 있습니다.
+
+비슷한 서비스로는 NHN Entertainment의 Toast Cloud - Launching이 있습니다.
+
+ 1. 최신 업데이트 버전을 가져와 현재 설치된 버전과 비교하여 업데이트를 유도할 수 있습니다.
+ 2. 공지사항 팝업을 띄울 
+    
+    </summary>
+    
+      <category term="iOS" scheme="http://monibu1548.github.io/categories/iOS/"/>
+    
+    
+      <category term="iOS" scheme="http://monibu1548.github.io/tags/iOS/"/>
+    
+      <category term="Firebase" scheme="http://monibu1548.github.io/tags/Firebase/"/>
+    
+      <category term="앱 고도화" scheme="http://monibu1548.github.io/tags/%EC%95%B1-%EA%B3%A0%EB%8F%84%ED%99%94/"/>
+    
+  </entry>
   
   <entry>
     <title>Storyboard autolayout 환경에서 Keyboard Event로 Height 처리하기</title>
@@ -589,9 +621,9 @@ HOOK을 통해서 자동으로 업무 등록, 댓글등록이 가능해요
       <category term="NHN ent." scheme="http://monibu1548.github.io/categories/NHN-ent/"/>
     
     
-      <category term="Dooray" scheme="http://monibu1548.github.io/tags/Dooray/"/>
-    
       <category term="NHN" scheme="http://monibu1548.github.io/tags/NHN/"/>
+    
+      <category term="Dooray" scheme="http://monibu1548.github.io/tags/Dooray/"/>
     
   </entry>
   
@@ -732,43 +764,6 @@ js, css등의 파일을 압축 전송하여 좀 더 빠르게 사용자에게 �
 
 mod_deflate
 gzip 압축전송을 하기 위해서는 apache의 mod
-    
-    </summary>
-    
-      <category term="Spring Framework" scheme="http://monibu1548.github.io/categories/Spring-Framework/"/>
-    
-    
-      <category term="스프링 프레임워크" scheme="http://monibu1548.github.io/tags/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC/"/>
-    
-      <category term="Spring Framework" scheme="http://monibu1548.github.io/tags/Spring-Framework/"/>
-    
-      <category term="Web" scheme="http://monibu1548.github.io/tags/Web/"/>
-    
-      <category term="웹" scheme="http://monibu1548.github.io/tags/%EC%9B%B9/"/>
-    
-      <category term="최적화" scheme="http://monibu1548.github.io/tags/%EC%B5%9C%EC%A0%81%ED%99%94/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>웹 최적화 (WEB과 WAS의 분리)</title>
-    <link href="http://monibu1548.github.io/2017/02/26/web-optimize-1/"/>
-    <id>http://monibu1548.github.io/2017/02/26/web-optimize-1/</id>
-    <published>2017-02-26T05:32:07.000Z</published>
-    <updated>2018-04-15T05:35:52.690Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="WEB과-WAS의-분리-Apache와-Tomcat-분리"><a href="#WEB과-WAS의-분리-Apache와-Tomcat-분리" class="headerlink" title="WEB과 WAS의 분리, (Apache와 Tomcat 분리)"></a>WEB과 WAS의 분리, (Apache와 Tomcat 분리)</h1><p>Apache (웹 서버) 는 static한 파일 (js, img, css) 등 변동이 없는 파일을 서비스하기 위해 사용되어 왔다. Tomcat (웹 어플리케이션 서버, 이하 WAS) 는 사용자의 요청 등에 따라 유동적인 서비스를 제공하기 위해 사용한다.</p><p>WEB은 static 파일 서비스에 유리하고, WAS는 동적인 서비스를 제공하는데 유리하다.</p><p>현재까지 구현한 웹 서비스에서는 WEB은 WAS로 proxy 기능만 하고있다. 즉 WEB의 장점을 사용하지 못하고 있었다.</p><p>구글신에게 WAS와 WEB의 분리라는 키워드로 두시간 정도 검색하고 자료를 모아본 결과 크게 2가지 결론을 구할 수 있었다.</p><ol><li>apache의 mod_jk를 이용한 정적 파일 서비스</li></ol><ul><li><p>mod_jk 설정에서 어떤 url을 was로 던질지 결정한다. 즉 was에서 처리해야 할 것만 was로 던지고 나머지는 apache가 처리한다.</p></li><li><p>여기서 흥미로웠던 사실! .nhn .do 등 url에 이상한 확장자 느낌? 으로 사용하는 웹 서비스들을 자주 봐왔다. 저게 뭔가 했더니 알고보니 mod_jk 설정에 의해 WAS로 처리하라는 명시적인 기호였다.</p></li></ul><ol start="2"><li>apache의 mod_proxy를 이용한 정적 파일 서비스</li></ol><ul><li>별도의 CDN이나 정적 파일 서버가 존재할 때 유용한 방법이다. /static 또는 /content 등 정적파일용 uri router를 만들고 해당 url로 접근시 정적 파일 서버로 proxy 하는 방법으로 사용할 수 있다.</li></ul><ol start="3"><li>내가 내린 결론</li></ol><ul><li>어렵지 않아야 한다<br>=&gt; 메이븐 라이프 사이클에 끝나야 한다. 메이븐 라이프 사이클 밖에서 파일을 옮기고 하는 작업은 다른 서버에서는 어떻게 동작할지 확신할 수 없으니 최대한 피해야 한다.</li></ul><p>이런 고민을 통해 다음과 같은 결과를 얻을 수 있었다.</p><blockquote><p>httpd.conf 에서 Proxy만 잘 하면 war파일 상태 그대로 js, css만 apache가 서비스할 수 있을 것이다.</p></blockquote><p>이게 고민 끝에 내린 답.</p><p><img src="../../../../images/web-optimize/httpd-conf.PNG" alt=""></p><p>ProxyPass를 보면</p><p>ROOT 로 접근하면 127.0.0.1:9001, 즉 WAS 서비스 포트로 Proxy한다.</p><p>resources/img 로 접근하면 proxy를 사용하지 않겠다는 “!” 가 있다.</p><p>마찬가지로</p><p>resources/js</p><p>resources/css</p><p>도 proxy 를 사용하지 않는다는 뜻이다.</p><p>proxy를 사용하지 않는다는 것은 apache의 DocumentRoot 로 부터 파일을 찾게 한다는 뜻이다.</p><p>DocumentRoot를 현재 서비스하고 있는 war의 디렉토리로 설정하면 proxy를 제거한 부분은 apache가 서비스 하게 된다. 경로를 끼워맞추는 느낌?</p><h2 id="한번에-잘-될리가-없지"><a href="#한번에-잘-될리가-없지" class="headerlink" title="한번에 잘 될리가 없지"></a>한번에 잘 될리가 없지</h2><p>브라우저에서 base url을 입력해서 웹 서비스 화면으로 이동해보자. js와 css가 제대로 불러와지고 있나 확인. 크롬 개발자 도구에서 쉽게 볼 수 있다.</p><h3 id="403-권한-관련-에러가-발생하는-경우"><a href="#403-권한-관련-에러가-발생하는-경우" class="headerlink" title="403 권한 관련 에러가 발생하는 경우"></a>403 권한 관련 에러가 발생하는 경우</h3><p>tomcat의 server.xml 설정에 따라 다르겠지만 기본적으로는 ${TOMCAT_HOME}/webapps 디렉토리 밑에 배포가 된다. 서비스하고 있는 디렉토리부터 js, css파일까지의 권한이 없어서 발생하는 문제로 해당 경로를 따라가며 others 가 read, excute 할 수 있는 권한을 준다. 나는 755를 부여했다.</p><h3 id="404-Not-Found-에러가-발생하는-경우"><a href="#404-Not-Found-에러가-발생하는-경우" class="headerlink" title="404 Not Found 에러가 발생하는 경우"></a>404 Not Found 에러가 발생하는 경우</h3><p>경로문제. 처음부터 다시 경로를 잘 살펴봐야 한다.</p><h2 id="이번엔-진짜-잘-되나-보자"><a href="#이번엔-진짜-잘-되나-보자" class="headerlink" title="이번엔 진짜 잘 되나 보자"></a>이번엔 진짜 잘 되나 보자</h2><p>다시 웹 서비스 화면으로 이동한다. js와 css가 정상적으로 로드되어 문제 없이 서비스 되어야 한다</p><h3 id="진짜-잘-된건가-apache가-아니라-그냥-tomcat이-파일-주는거-아냐"><a href="#진짜-잘-된건가-apache가-아니라-그냥-tomcat이-파일-주는거-아냐" class="headerlink" title="진짜 잘 된건가? apache가 아니라 그냥 tomcat이 파일 주는거 아냐?"></a>진짜 잘 된건가? apache가 아니라 그냥 tomcat이 파일 주는거 아냐?</h3><p>원래 WAS로 js, css 줄 때도 잘 됐으니 이 js,css를 apache가 주는건지 tomcat이 주는건지 어떻게 알아.</p><h3 id="테스트해보면-알지"><a href="#테스트해보면-알지" class="headerlink" title="테스트해보면 알지"></a>테스트해보면 알지</h3><p>ex) <a href="http://baseurl/resources/img/plus.PNG" target="_blank" rel="noopener">http://baseurl/resources/img/plus.PNG</a></p><p>내 서비스 경로에는 다음과 같은 이미지 하나가 있다. 접속해보면</p><p><img src="../../../../images/web-optimize/example.PNG" alt=""></p><p>이미지가 잘 나온다. 이제 파일명을 이상하게 수정해보자. 없는 파일로! 에러메세지를 볼꺼니까!</p><p>ex) <a href="http://baseurl/resources/img/plus-hahahahahahhahahahahah.PNG" target="_blank" rel="noopener">http://baseurl/resources/img/plus-hahahahahahhahahahahah.PNG</a></p><p>이런 에러 화면을 볼 수 있다.</p><p><img src="../../../../images/web-optimize/apache-error.PNG" alt=""></p><p>웹 개발하면서 자주 보던 톰캣의 Internal server 500 error 화면이랑 다르다는걸 느껴야한다!</p><p>얘는 apache가 주는 에러창이니까!! apache가 이 파일을 찾고 있다!!! 잘 되고 있다!!</p><p>만약 proxy 설정이 잘못되어 WAS가 아직도 static 파일을 서비스 하고 있었다면</p><p>이 에러페이지는</p><p>tomcat의 404 에러 메세지가 떴을것이다. 이런식으로</p><p><img src="../../../../images/web-optimize/tomcat-error.PNG" alt=""></p><p>이로써 WAS와 WEB이 각자 제 역할을 부여받았다.</p><p><strong> 곧 업데이트할 웹 최적화 시리즈 </strong></p><ul><li>정적 파일 배포 버전관리</li><li>쿼리스트링을 이용한 웹 캐싱 방지</li></ul>]]></content>
-    
-    <summary type="html">
-    
-      WEB과 WAS의 분리, (Apache와 Tomcat 분리)
-Apache (웹 서버) 는 static한 파일 (js, img, css) 등 변동이 없는 파일을 서비스하기 위해 사용되어 왔다. Tomcat (웹 어플리케이션 서버, 이하 WAS) 는 사용자의 요청 등에 따라 유동적인 서비스를 제공하기 위해 사용한다.
-
-WEB은 static 파일 서비스에 유리하고, WAS는 동적인 서비스를 제공하는데 유리하다.
-
-현재까지 구현한 웹 서비스에서는 WEB은 WAS로 proxy 기능만 하고있다. 즉 WEB의 장점을 사용하지 못하고 있었다.
-
-
     
     </summary>
     
