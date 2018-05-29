@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://monibu1548.github.io/"/>
-  <updated>2018-05-21T14:11:10.206Z</updated>
+  <updated>2018-05-29T12:01:08.023Z</updated>
   <id>http://monibu1548.github.io/</id>
   
   <author>
@@ -17,11 +17,47 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>iOS Push certificate 푸시 인증서 발급받기</title>
+    <link href="http://monibu1548.github.io/2018/05/29/push-cert/"/>
+    <id>http://monibu1548.github.io/2018/05/29/push-cert/</id>
+    <published>2018-05-29T11:49:03.000Z</published>
+    <updated>2018-05-29T12:01:08.023Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="푸시-인증서-발급받기"><a href="#푸시-인증서-발급받기" class="headerlink" title="푸시 인증서 발급받기"></a>푸시 인증서 발급받기</h2><p>iOS에서 Push 기능을 사용하기 위해서 Push Certificate, 푸시 인증서가 필요합니다. 푸시 인증서를 발급받는 방법은 개발 인증서 발급과정과 비슷합니다.</p><h3 id="Apple-Developers"><a href="#Apple-Developers" class="headerlink" title="Apple Developers"></a>Apple Developers</h3><p><img src="../../../../images/push-cert/1.png" alt=""><br><a href="https://developer.apple.com/account/ios/certificate/" target="_blank" rel="noopener">애플 개발자센터</a>에 로그인합니다.</p><p><code>+</code> 버튼을 눌러줍니다.</p><p><img src="../../../../images/push-cert/2.png" alt=""><br>개발용 인증서 발급페이지와 동일합니다. 빨간색으로 표시한 부분이 Push 인증서입니다.<br>개발용 인증서와 마찬가지로 Development(개발용)와 Production(앱스토어용) 으로 분리되어 있으며 필요에 따라 생성하면 됩니다.<br>우선 Development용을 발급받습니다.</p><p><img src="../../../../images/push-cert/3.png" alt=""><br>어떤 앱의 Push 인증서를 만들 것인지 선택합니다.</p><p><img src="../../../../images/push-cert/4.png" alt=""><br>CSR(Certificate Signing Request)가 필요하다는 안내 페이지입니다.<br>CSR발급은 앱 인증서 발급 과정을 참고해주세요.</p>]]></content>
+    
+    <summary type="html">
+    
+      푸시 인증서 발급받기
+iOS에서 Push 기능을 사용하기 위해서 Push Certificate, 푸시 인증서가 필요합니다. 푸시 인증서를 발급받는 방법은 개발 인증서 발급과정과 비슷합니다.
+
+Apple Developers
+
+애플 개발자센터에 로그인합니다.
+
++ 버튼을 눌러줍니다.
+
+
+개발용 인증서 발급페이지와 동일합니다. 빨간색으로 표시한 부분이 Push 인증서입니다.
+개발용 인증서와 마찬가지로 Development(개발용)와 Production(앱스토어용) 으로 분리되어 있으며 필요에 따라 생성하면 됩니다.
+우선 Developme
+    
+    </summary>
+    
+      <category term="iOS" scheme="http://monibu1548.github.io/categories/iOS/"/>
+    
+      <category term="Etc" scheme="http://monibu1548.github.io/categories/iOS/Etc/"/>
+    
+    
+      <category term="iOS" scheme="http://monibu1548.github.io/tags/iOS/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Content Mode : Scale to Fill, Aspect Fit, Aspect Fill 차이 정리</title>
     <link href="http://monibu1548.github.io/2018/05/21/scalemode/"/>
     <id>http://monibu1548.github.io/2018/05/21/scalemode/</id>
     <published>2018-05-21T13:50:52.000Z</published>
-    <updated>2018-05-21T14:11:10.206Z</updated>
+    <updated>2018-05-29T12:01:08.666Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Scale-To-Fill-기본값"><a href="#Scale-To-Fill-기본값" class="headerlink" title="Scale To Fill (기본값)"></a>Scale To Fill (기본값)</h2><p><img src="../../../../images/scale/1.png" alt=""></p><ul><li>비율 무시! 귀여운 고양이가 옆으로 퍼져버렸습니다.</li><li>ImageView의 Width와 height에 이미지를 늘리고 우겨넣습니다.</li><li>디자인 가이드로 정해진 레이아웃과 이미지가 아니면 이렇게 이미지를 괴롭히면 안돼요.</li></ul><h2 id="Aspect-To-Fit"><a href="#Aspect-To-Fit" class="headerlink" title="Aspect To Fit"></a>Aspect To Fit</h2><p><img src="../../../../images/scale/2.png" alt=""></p><ul><li>비율 유지! 원본의 비율을 그대로 유지합니다.</li><li>이미지는 <code>절대</code> ImageView 밖으로 나가지 않습니다.</li><li>ImageView 내부에서 밖으로 나가지 않는 선에서 최대치의 값을 갖습니다.</li><li>비율이 맞지 않는경우 내부에 <code>여백</code> 이 생기게 됩니다.</li></ul><h2 id="Aspect-To-Fill"><a href="#Aspect-To-Fill" class="headerlink" title="Aspect To Fill"></a>Aspect To Fill</h2><p><img src="../../../../images/scale/3.png" alt=""></p><ul><li>비율 유지! 원본의 비율을 그대로 유지합니다… 만 이미지가 짤리죠</li><li>위 사진에서 짤리는 부분이 없어보이지만 자세히 보면 이미지가 ImageView 영역 밖으로 나갔음을 알 수 있습니다. (Clip to Bounds) 값을 YES로 하면 짤려서 나오지 않습니다.</li><li>ImageView의 내부에 <code>여백</code>이 절대 생기지 않습니다.</li><li>대신 이미지의 일부가 짤려보일 수 있으므로 인물, 동물 사진에는 적합하지 않을 수 있습니다.</li></ul>]]></content>
     
@@ -46,7 +82,7 @@ Aspect To Fit
     
       <category term="iOS" scheme="http://monibu1548.github.io/categories/iOS/"/>
     
-      <category term="ETC" scheme="http://monibu1548.github.io/categories/iOS/ETC/"/>
+      <category term="Etc" scheme="http://monibu1548.github.io/categories/iOS/Etc/"/>
     
     
       <category term="iOS" scheme="http://monibu1548.github.io/tags/iOS/"/>
@@ -128,7 +164,7 @@ iOS앱을 만들어서 많은 사용자를 보유하려면 사용자가 어떤 �
     <link href="http://monibu1548.github.io/2018/05/14/firebase-config/"/>
     <id>http://monibu1548.github.io/2018/05/14/firebase-config/</id>
     <published>2018-05-14T12:14:04.000Z</published>
-    <updated>2018-05-14T13:32:52.564Z</updated>
+    <updated>2018-05-29T12:01:07.447Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Firebase-Remote-Config"><a href="#Firebase-Remote-Config" class="headerlink" title="Firebase Remote Config"></a>Firebase Remote Config</h2><p>Firebase Remote Config란, 앱 업데이트를 게시하지 않고도 앱의 동작과 모양을 변경할 수 있도록 도와주는 서비스입니다. 앱의 실행시점에 서버에서 Config를 읽어오는 비교적 쉬운 개념이지만. 이를 활용해서 다양한 응용동작을 할 수 있습니다.</p><p>비슷한 서비스로는 NHN Entertainment의 Toast Cloud - Launching이 있습니다.</p><ol><li>최신 업데이트 버전을 가져와 현재 설치된 버전과 비교하여 업데이트를 유도할 수 있습니다.</li><li>공지사항 팝업을 띄울 수 있습니다.</li><li>Color 값을 전달하면 앱의 전반전인 테마 컬러 변경이 가능합니다.</li><li>static한 문구들 (연도, 전화번호)을 변경할 때 앱을 새로 빌드할 필요가 없습니다.</li></ol><p>이 기능을 구현하려면 Config 정보를 내려줄 서버가 필요합니다. 하지만 단일 앱 개발자에게 서버는 사치죠ㅜㅠ</p><p>고맙게도 Google의 Firebase에서 이러한 기능을 제공합니다. <code>Remote Config</code> 라는 이름으로 위 기능을 제공하고 있습니다.</p><h2 id="Firebase-시작하기"><a href="#Firebase-시작하기" class="headerlink" title="Firebase 시작하기"></a>Firebase 시작하기</h2><p><a href="https://firebase.google.com/?authuser=0" target="_blank" rel="noopener">Google Firebase 홈페이지</a></p><p><img src="../../../../images/firebaseconfig/1.png" alt=""></p><p>프로젝트 생성 후 <code>Remote Config</code> 시작하기를 클릭합니다.</p><p><img src="../../../../images/firebaseconfig/2.png" alt=""><br>이제 매개변수를 설정할 수 있습니다.</p><p><img src="../../../../images/firebaseconfig/3.png" alt=""><br>버전, 광고 실행 유무 등, 앱애서 사용할 매개변수들을 추가합니다.</p><p><img src="../../../../images/firebaseconfig/4.png" alt=""><br><code>변경사항 개시</code> 버튼을 클릭하여 해당 내용을 배포합니다.</p><h2 id="iOS에서-Firebase-Remote-Config-설정하기"><a href="#iOS에서-Firebase-Remote-Config-설정하기" class="headerlink" title="iOS에서 Firebase Remote Config 설정하기"></a>iOS에서 Firebase Remote Config 설정하기</h2><p><a href="https://firebase.google.com/docs/remote-config/use-config-ios?authuser=0" target="_blank" rel="noopener">공식 가이드 문서 링크</a></p><h2 id="GoogleService-Info-plist"><a href="#GoogleService-Info-plist" class="headerlink" title="GoogleService-Info.plist"></a>GoogleService-Info.plist</h2><p>iOS앱에서 Firebase에 연결하기 위해서는 <code>GoogleService-Info.plist</code> 가 필요하며. 이 파일은 Firebase에서 제공합니다.</p><p><img src="../../../../images/firebaseconfig/5.png" alt=""><br>Firebase에서 프로젝트를 생성합니다.</p><p><img src="../../../../images/firebaseconfig/6.png" alt=""><br>프로젝트에서 사용하고있는 Firebase 서비스의 정보를 담긴 <code>GoogleService-Info.plist</code>를 다운받습니다.<br>나중에 Cloude Message 등 다른 추가기능 사용을 선택하면 <code>GoogleService-Info.plist</code> 업데이트도 필요합니다.</p><h3 id="Pod-설치"><a href="#Pod-설치" class="headerlink" title="Pod 설치"></a>Pod 설치</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod &apos;Firebase/RemoteConfig&apos;</span><br></pre></td></tr></table></figure><p>Podfile에 추가 후 설치합니다.</p><h3 id="AppDelegate-설정"><a href="#AppDelegate-설정" class="headerlink" title="AppDelegate 설정"></a>AppDelegate 설정</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Firebase/RemoteConfig</span><br></pre></td></tr></table></figure><p>사용하고 있는 AppDelegate에 RemoteConfig 모듈을 추가합니다.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -&gt; Bool &#123;</span><br><span class="line">        FirebaseApp.configure()</span><br><span class="line">        return true</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure><p><code>didFinishLaunchingWithOptions</code> 메소드에  Firebase.configure()를 추가하여 공유 인스턴스를 구성합니다.</p><p><img src="../../../../images/firebaseconfig/7.png" alt=""></p><p>fetch 과정을 통해 Firebase에 등록했던 매개변수들이 정상적으로 내려오는지 확인해봅니다.</p>]]></content>
     
@@ -146,6 +182,8 @@ Firebase Remote Config란, 앱 업데이트를 게시하지 않고도 앱의 동
     
       <category term="iOS" scheme="http://monibu1548.github.io/categories/iOS/"/>
     
+      <category term="Etc" scheme="http://monibu1548.github.io/categories/iOS/Etc/"/>
+    
     
       <category term="iOS" scheme="http://monibu1548.github.io/tags/iOS/"/>
     
@@ -160,7 +198,7 @@ Firebase Remote Config란, 앱 업데이트를 게시하지 않고도 앱의 동
     <link href="http://monibu1548.github.io/2018/05/14/keyboard-autolayout-event/"/>
     <id>http://monibu1548.github.io/2018/05/14/keyboard-autolayout-event/</id>
     <published>2018-05-13T15:03:38.000Z</published>
-    <updated>2018-05-17T11:26:28.844Z</updated>
+    <updated>2018-05-29T12:01:09.327Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Text-Input이-필요한-화면에서-고려할점"><a href="#Text-Input이-필요한-화면에서-고려할점" class="headerlink" title="Text Input이 필요한 화면에서 고려할점"></a>Text Input이 필요한 화면에서 고려할점</h2><p>TextView 또는 TextField를 이용해 사용자로부터 텍스트를 입력받는 화면에서는 <code>키보드</code>가 나타납니다.<br><code>키보드</code>가 나타나면 그만큼 컨텐츠를 보여줄 수 있는 화면의 Height는 줄어들게 되고 그 중 일부는 키보드 밑으로 말려들어가 보이지 않게 되는 문제가 생길 수 있습니다.<br>따라서 키보드가 나타날 때 아래의 뷰를 키보드 위로 올려주는 구현이 필요합니다.</p><h2 id="왜-키보드는-Autolayout-Bottom-Layout에-걸리지-않는가…"><a href="#왜-키보드는-Autolayout-Bottom-Layout에-걸리지-않는가…" class="headerlink" title="왜 키보드는 Autolayout Bottom Layout에 걸리지 않는가…"></a>왜 키보드는 Autolayout Bottom Layout에 걸리지 않는가…</h2><p>스토리보드와 오토레이아웃을 사용하면서 iOS 11 이후 등장한 <code>SafeArea</code>에 대한 대응이 편해졌습니다.<br>처음에는 당연히 키보드가 나타날 때 <code>Bottom Layout Guide</code>가 올라오면서 자동으로 대응이 될 거라고 생각했지만…. 중요한 문구, 버튼들이 키보드 밑으로 말려들어가는 대참사가 발생했습니다.</p><h2 id="Notification과-Autolayout을-이용해-간단하게-해결"><a href="#Notification과-Autolayout을-이용해-간단하게-해결" class="headerlink" title="Notification과 Autolayout을 이용해 간단하게 해결"></a>Notification과 Autolayout을 이용해 간단하게 해결</h2><p>iOS가 오토레이아웃을 해주지 않는다면 Keyboard 사이즈의 View를 직접 넣어 Autolayout으로 동작하게 만들고,<br>Notification을 이용해 keyboard 상태를 받아 Keyboard layout을 대신하는 View의 Height를 조작함으로써 수정했습니다.</p><p><img src="../../../../images/keyboard/1.png" alt=""></p><p>Keyboard가 나타날 수 있는 ViewController의 가장 하단에 View를 하나 끼워넣습니다.<br>이 View는 키보드의 show, dismiss 동일한 타이밍, 사이즈로 동작하게 만들겁니다.</p><p>Contraint를 이용해 topAnchor를 기존에 가장 하단에 있던 뷰의 bottomAnchor에 연결하고, bottomAnchor는 viewController의 root view의 bottom layout guide에 연결해줍니다.<br>그리고 height는 키보드와 동일한 값을 갖게 할거고 초기값은 0으로 설정해줍니다.(키보드 없는상태)</p><p>이제 <code>Notification</code>을 이용해 이 View의 height를 조절하면 됩니다.</p><h2 id="Keyboard-Notification-Register"><a href="#Keyboard-Notification-Register" class="headerlink" title="Keyboard Notification Register"></a>Keyboard Notification Register</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">TranslationViewController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">initializeKeyboardEvent</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="type">NotificationCenter</span>.<span class="keyword">default</span>.addObserver(<span class="keyword">self</span>, selector: #selector(keyBoardWillShow(notification:)), name: .<span class="type">UIKeyboardWillShow</span>, object: <span class="literal">nil</span>)</span><br><span class="line">        <span class="type">NotificationCenter</span>.<span class="keyword">default</span>.addObserver(<span class="keyword">self</span>, selector: #selector(keyBoardWillHide(notification:)), name: .<span class="type">UIKeyboardWillHide</span>, object: <span class="literal">nil</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">removeKeyboardEvent</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="type">NotificationCenter</span>.<span class="keyword">default</span>.removeObserver(<span class="keyword">self</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@objc</span> <span class="function"><span class="keyword">func</span> <span class="title">keyBoardWillShow</span><span class="params">(notification: NSNotification)</span></span> &#123;</span><br><span class="line">        <span class="keyword">let</span> userInfo:<span class="type">NSDictionary</span> = notification.userInfo! <span class="keyword">as</span> <span class="type">NSDictionary</span></span><br><span class="line">        <span class="keyword">let</span> keyboardFrame:<span class="type">NSValue</span> = userInfo.value(forKey: <span class="type">UIKeyboardFrameEndUserInfoKey</span>) <span class="keyword">as</span>! <span class="type">NSValue</span></span><br><span class="line">        <span class="keyword">let</span> keyboardRectangle = keyboardFrame.cgRectValue</span><br><span class="line">        <span class="keyword">let</span> keyboardHeight = keyboardRectangle.height</span><br><span class="line"></span><br><span class="line">        <span class="keyword">self</span>.keyboardHeightConstraint.constant = keyboardHeight</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@objc</span> <span class="function"><span class="keyword">func</span> <span class="title">keyBoardWillHide</span><span class="params">(notification: NSNotification)</span></span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.keyboardHeightConstraint.constant = <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>위 코드는 Keyboard Notification 관련 로직을 처리하기 위해 extension으로 분리한 controller입니다.</p><ul><li>initializeKeyboardEvent : Keyboard의 Show, Hide 이벤트를 받기위해 Notification Center에 옵저버를 등록합니다.</li><li>keyBoardWillShow : Keyboard가 나타날때 호출되며 notification 객체에서 keyboard height 가져올 수 있습니다. </li><li>keyBoardWillHide : Keyboard가 사라질때 호출됩니다.</li><li>removeKeyboardEvent : Notification을 더 이상 사용하지 않을 때 옵저버를 제거합니다.</li></ul><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TranslationViewController</span>: <span class="title">UIViewController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.viewDidLoad()</span><br><span class="line">        <span class="keyword">self</span>.initializeKeyboardEvent()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">deinit</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.removeKeyboardEvent()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>extension에서 구현했던 Nofitication관련 메소드들을 호출하는 메인 뷰컨트롤러입니다.</p><p>키보드를 사용하는 뷰 컨트롤러가 많지는 않지만, 추가될 때마다 이 작업을 계속해야 할 텐데, 아예 상속받을 뷰 컨트롤러을 하나 만들어 주는 것도 좋을 것 같습니다.</p>]]></content>
     
@@ -178,7 +216,7 @@ TextView 또는 TextField를 이용해 사용자로부터 텍스트를 입력받
     
       <category term="iOS" scheme="http://monibu1548.github.io/categories/iOS/"/>
     
-      <category term="ETC" scheme="http://monibu1548.github.io/categories/iOS/ETC/"/>
+      <category term="Etc" scheme="http://monibu1548.github.io/categories/iOS/Etc/"/>
     
     
       <category term="iOS" scheme="http://monibu1548.github.io/tags/iOS/"/>
@@ -733,54 +771,6 @@ HOOK을 통해서 자동으로 업무 등록, 댓글등록이 가능해요
       <category term="Dooray" scheme="http://monibu1548.github.io/tags/Dooray/"/>
     
       <category term="NHN" scheme="http://monibu1548.github.io/tags/NHN/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>웹 js, css 정적 파일 버전관리 방법</title>
-    <link href="http://monibu1548.github.io/2017/03/10/web-optimize-3/"/>
-    <id>http://monibu1548.github.io/2017/03/10/web-optimize-3/</id>
-    <published>2017-03-10T05:57:20.000Z</published>
-    <updated>2018-04-15T06:00:07.019Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="js-css-정적-파일-버전-관리"><a href="#js-css-정적-파일-버전-관리" class="headerlink" title="js, css 정적 파일 버전 관리"></a>js, css 정적 파일 버전 관리</h1><p>WAS가 1개일때는 문제가 없지만 2개, 3개 … N개가 되면 새로운 문제가 발생한다.</p><p>크게 2가지 문제로 구분할 수 있다.</p><ol><li><p>최신 Back-End와 구 Front-End 의 만남</p></li><li><p>브라우저 캐싱 &lt;- 사실 WAS가 1개일때도 문제</p></li></ol><h2 id="두가지-문제점은-어떤-이슈를-발생시키나"><a href="#두가지-문제점은-어떤-이슈를-발생시키나" class="headerlink" title="두가지 문제점은 어떤 이슈를 발생시키나??"></a>두가지 문제점은 어떤 이슈를 발생시키나??</h2><p>깨진다. 웹페이지가 깨진다. 바스락. 와장창. js 또는 css를 제대로 가져오지 못하기 때문.</p><h2 id="원인은"><a href="#원인은" class="headerlink" title="원인은?"></a>원인은?</h2><p>L4로 묶여있는 웹 서버 집단에서 의도적으로 점진적 배포 혹은 일반 배포 단계에서 각 서버의 버전이 불일치 하는 현상이 생긴다. 이 시점에서 HTML과 js, css 요청 서버가 달라지면 서로 호환되지 않아 깨짐현상이 발생한다.</p><h2 id="해결방법은"><a href="#해결방법은" class="headerlink" title="해결방법은?"></a>해결방법은?</h2><h3 id="최신-Back-End와-구-Front-End-의-만남-gt-정적-파일-버전-관리"><a href="#최신-Back-End와-구-Front-End-의-만남-gt-정적-파일-버전-관리" class="headerlink" title="최신 Back-End와 구 Front-End 의 만남  =&gt;  정적 파일 버전 관리"></a>최신 Back-End와 구 Front-End 의 만남  =&gt;  정적 파일 버전 관리</h3><p>정적 파일 선배포 및 버전관리 후 Back-End 배포하여 배포 당시 시점의 css, js를 정확히 호출하게 한다.</p><h4 id="Spring에서의-설정"><a href="#Spring에서의-설정" class="headerlink" title="Spring에서의 설정"></a>Spring에서의 설정</h4><p>Spring 프로젝트에 현재 정적파일의 버전 정보가 추가되어야 한다.</p><p><img src="../../../../images/versioning/tree.PNG" alt=""></p><p>version.properties에서 관리하기로 한다.</p><p><img src="../../../../images/versioning/version-properties.PNG" alt=""></p><p>version.number로 정적 파일의 빌드 버전을 관리한다. 밑의 version.date는 아래의 브라우저 캐싱에서 소개한다.</p><p>이제 jsp에서 정적파일 버전을 결정할 수 있도록 path에 추가한다.</p><p><img src="../../../../images/versioning/resource-version.PNG" alt=""></p><p>이제 js, css를 수정했을 경우 version.properties에서 version.number 값을 증가시켜서 배포하면 된다</p><h4 id="배포-서버에서의-설정"><a href="#배포-서버에서의-설정" class="headerlink" title="배포 서버에서의 설정"></a>배포 서버에서의 설정</h4><p>버전관리를 위해 Spring에서 Resource 경로를 /{버전번호}/resources 를 참조하도록 변경했다.<br>그러려면 서버에서는 수동으로 version number 디렉토리 만들고 정적파일들 cp로 옮기고 권한 부여하고 뭐하고 뭐하고 뭐하고…..   ===&gt;&gt; 자동화하자</p><p>정적 파일이 존재하는 디렉토리를 다음과 같이 구성한다</p><p><img src="../../../../images/versioning/build-dir.PNG" alt=""></p><p>BIULD_NUMBER는 현재 사용하고 있는 정적파일의 버전을 갖고 있는다</p><p><img src="../../../../images/versioning/build-version.PNG" alt=""></p><p>그러면 이제 스크립트를 통해 한방에 빠르게!! 정적파일만 선배포 할 준비가 끝났다</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/web-resource</span><br><span class="line"></span><br><span class="line">bn=$(&lt;BUILD_NUMBER)</span><br><span class="line">bn=$((bn+1))</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$bn</span>&gt;BUILD_NUMBER</span><br><span class="line">mkdir <span class="variable">$bn</span></span><br><span class="line"></span><br><span class="line">mkdir temp</span><br><span class="line">unzip -d temp asog_recent.zip</span><br><span class="line">mv  temp/asog-1.0.0-BUILD-SNAPSHOT/resources <span class="variable">$bn</span>/</span><br><span class="line">chmod -R 0755 <span class="variable">$bn</span></span><br><span class="line">rm -rf temp</span><br><span class="line">rm -rf asog_recent.zip</span><br></pre></td></tr></table></figure><p>BUILD_NUMBER 에서 현재 빌드 번호를 가져오고 + 1 해서 새로운 버전의 디렉토리를 만든다.</p><p>이렇게 되면 배포시점에 HTML과 js,css 등 정적파일 매칭이 이루어지기 때문에 구서버, 신서버가 L4아래 함께있어도 호환 가능하다.</p><h2 id="이거로-문제가-다-해결되나"><a href="#이거로-문제가-다-해결되나" class="headerlink" title="이거로 문제가 다 해결되나?"></a>이거로 문제가 다 해결되나?</h2><p>그렇지 않다. 서버에서 버전에 맞는 css, js파일을 골라서 전해준다고 해도 클라이언트에서 요청하지 않으면 줄리가 없지.</p><p>브라우저에는 캐싱기능이 있다.</p><p>브라우저는 http://서비스주소/파일명.js 이렇게 다운받고 보관하고있다가 같은 URL 요청시 새로 요청을 하지 않는다. 그 기간과 상세부분은 브라우저마다 다를 수 있다.</p><h3 id="서버가-새로운-버전으로-업데이트-되었지만-파일명이-그대로라면"><a href="#서버가-새로운-버전으로-업데이트-되었지만-파일명이-그대로라면" class="headerlink" title="서버가 새로운 버전으로 업데이트 되었지만 파일명이 그대로라면?"></a>서버가 새로운 버전으로 업데이트 되었지만 파일명이 그대로라면?</h3><p>js, css의 URL이 그대로다. 브라우저는 새로 바뀐걸 모른다. 안받는다 =&gt; 와장창</p><h3 id="서버는-이-파일이-업데이트-되었는지-어떻게-클라이언트에게-알려줘야할까"><a href="#서버는-이-파일이-업데이트-되었는지-어떻게-클라이언트에게-알려줘야할까" class="headerlink" title="서버는 이 파일이 업데이트 되었는지 어떻게 클라이언트에게 알려줘야할까?"></a>서버는 이 파일이 업데이트 되었는지 어떻게 클라이언트에게 알려줘야할까?</h3><p>브라우저는 URL을 기준으로 갖는다. 즉 URL이 다르면 새로 받는다.</p><p>그렇다면 서버를 업데이트 할 때마다 정적 파일들을 새로운 버전의 디렉토리에 넣어야하나?</p><p>변수명을 바꾸고 공백을 지우고 정말 사소한건데도 리소스가 증가해야만하나!?</p><p>편한 방법으로 클라이언트가 새로운 파일을 요청하도록 하게 하려면 어떻게 해야할까</p><h3 id="쿼리스트링을-통해-배포-이후-웹-서비스-접근시-css-js를-새로-내려받도록-한다"><a href="#쿼리스트링을-통해-배포-이후-웹-서비스-접근시-css-js를-새로-내려받도록-한다" class="headerlink" title="쿼리스트링을 통해 배포 이후 웹 서비스 접근시 css, js를 새로 내려받도록 한다."></a>쿼리스트링을 통해 배포 이후 웹 서비스 접근시 css, js를 새로 내려받도록 한다.</h3><p>기존의 URL이 http://서비스주소/파일명.js 이렇게 생겼다고 할 때</p><p>기존 URL 대신 http://서비스주소/파일명.js?param=JingyuJung 이렇게 요청을 보내면 어떻게 될까?</p><p>파일명.js 라는 같은 파일을 요청하지만 뒤에 파라미터로 URL이 추가되었다.</p><p>=&gt; 파일이 수정되었을 때 param={값} 이부분을 수정하면 파일명의 변경 없이도 클라이언트가 파일을 새로 받게 할 수 있지 않을까?</p><h3 id="무슨-값을-넣어야-할까"><a href="#무슨-값을-넣어야-할까" class="headerlink" title="무슨 값을 넣어야 할까?"></a>무슨 값을 넣어야 할까?</h3><p>HTML과 js, css가 매칭되는 시점은 maven 빌드타이밍이 적절하다고 생각한다.</p><p>그렇다면 파라미터에 maven 빌드타임을 넣으면 좋을 것 같다.</p><p>메이븐 빌드타임 정보를 가져오기 위해 pom.xml에 다음의 플러그인과 설정을 추가한다.</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.keyboardsamurais.maven<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-timestamp-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">phase</span>&gt;</span>package<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">goal</span>&gt;</span>create<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">querystring</span>&gt;</span>$&#123;maven.build.timestamp&#125;<span class="tag">&lt;/<span class="name">querystring</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">maven.build.timestamp.format</span>&gt;</span>yyyyMMdd<span class="tag">&lt;/<span class="name">maven.build.timestamp.format</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br></pre></td></tr></table></figure><p>이렇게 하면 <querystring> 은 이제 아래의 format에 맞는 timestamp값을 갖는다.</querystring></p><p>이제 version.properties에 다음의 정보를 추가할 수 있다.</p><p><img src="../../../../images/versioning/queryString.PNG" alt=""></p><p>${quertstring} 은 mvn package 타임에 yyyMMdd 형태의 날짜 데이터로 변환된다.</p><p>그러면 이제 spring context 타이밍에 쿼리스트링을 붙을 차례다</p><p><img src="../../../../images/versioning/qs.PNG" alt=""></p><p>정적 파일뒤에 spring tag를 이용해 쿼리스트링을 추가해준다.</p><h2 id="참고-spring-태그를-사용하기-위해서는-다음과-같은-라인을-jsp에-추가해야-한다"><a href="#참고-spring-태그를-사용하기-위해서는-다음과-같은-라인을-jsp에-추가해야-한다" class="headerlink" title="참고!! : spring 태그를 사용하기 위해서는 다음과 같은 라인을 jsp에 추가해야 한다"></a>참고!! : spring 태그를 사용하기 위해서는 다음과 같은 라인을 jsp에 추가해야 한다</h2><p><img src="../../../../images/versioning/springtag.PNG" alt=""></p><h2 id="두가지-방법이-차이가-뭔지-모르겠고-하나만-써도-되는거-아닌가"><a href="#두가지-방법이-차이가-뭔지-모르겠고-하나만-써도-되는거-아닌가" class="headerlink" title="두가지 방법이 차이가 뭔지 모르겠고 하나만 써도 되는거 아닌가?"></a>두가지 방법이 차이가 뭔지 모르겠고 하나만 써도 되는거 아닌가?</h2><p>둘 다 써야 한다.</p><p>두 가지의 차이점을 구분하려면 기준을 잘 정해야 한다.</p><ul><li>하위 호환이 가능하다 *</li></ul><p>수정한 js, css의 내용이 구버전과 신버전이 호환이 가능하다면 쿼리스트링으로 충분하기도 하다.</p><p>하위 호환이 불가능하다면 무조건 새로운 버전의 js, css가 필요하기 때문에 다른 디렉토리에 새로운 js, css를 복사해야하며 클라이언트가 새로운 파일을 받도록 쿼리스트링을 붙인다.</p><p>즉, 새로 WAS 배포시</p><p>쿼리스트링(필수) + 정적 파일 버전 업(옵션) 이라고 생각하면 될 것 같다.</p>]]></content>
-    
-    <summary type="html">
-    
-      js, css 정적 파일 버전 관리
-WAS가 1개일때는 문제가 없지만 2개, 3개 … N개가 되면 새로운 문제가 발생한다.
-
-크게 2가지 문제로 구분할 수 있다.
-
- 1. 최신 Back-End와 구 Front-End 의 만남
-    
-    
- 2. 브라우저 캐싱 &lt;- 사실 WAS가 1개일때도 문제
-    
-    
-
-두가지 문제점은 어떤 이슈를 발생시키나??
-깨진다. 웹페이지가 깨진다. 바스락. 와장창. js 또는 css를 제대로 가져오지 못하기 때문.
-
-원인은?
-L4로 묶여있는 웹 서버 집단에서 의도적으로 점진적 배포 혹은 일반
-    
-    </summary>
-    
-      <category term="Spring Framework" scheme="http://monibu1548.github.io/categories/Spring-Framework/"/>
-    
-    
-      <category term="스프링 프레임워크" scheme="http://monibu1548.github.io/tags/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC/"/>
-    
-      <category term="Spring Framework" scheme="http://monibu1548.github.io/tags/Spring-Framework/"/>
-    
-      <category term="Web" scheme="http://monibu1548.github.io/tags/Web/"/>
-    
-      <category term="웹" scheme="http://monibu1548.github.io/tags/%EC%9B%B9/"/>
-    
-      <category term="버전 관리" scheme="http://monibu1548.github.io/tags/%EB%B2%84%EC%A0%84-%EA%B4%80%EB%A6%AC/"/>
-    
-      <category term="쿼리스트링" scheme="http://monibu1548.github.io/tags/%EC%BF%BC%EB%A6%AC%EC%8A%A4%ED%8A%B8%EB%A7%81/"/>
     
   </entry>
   

@@ -3,6 +3,29 @@
   
     
     <entry>
+      <title>iOS Push certificate 푸시 인증서 발급받기</title>
+      <link href="/2018/05/29/push-cert/"/>
+      <url>/2018/05/29/push-cert/</url>
+      <content type="html"><![CDATA[<h2 id="푸시-인증서-발급받기"><a href="#푸시-인증서-발급받기" class="headerlink" title="푸시 인증서 발급받기"></a>푸시 인증서 발급받기</h2><p>iOS에서 Push 기능을 사용하기 위해서 Push Certificate, 푸시 인증서가 필요합니다. 푸시 인증서를 발급받는 방법은 개발 인증서 발급과정과 비슷합니다.</p><h3 id="Apple-Developers"><a href="#Apple-Developers" class="headerlink" title="Apple Developers"></a>Apple Developers</h3><p><img src="../../../../images/push-cert/1.png" alt=""><br><a href="https://developer.apple.com/account/ios/certificate/" target="_blank" rel="noopener">애플 개발자센터</a>에 로그인합니다.</p><p><code>+</code> 버튼을 눌러줍니다.</p><p><img src="../../../../images/push-cert/2.png" alt=""><br>개발용 인증서 발급페이지와 동일합니다. 빨간색으로 표시한 부분이 Push 인증서입니다.<br>개발용 인증서와 마찬가지로 Development(개발용)와 Production(앱스토어용) 으로 분리되어 있으며 필요에 따라 생성하면 됩니다.<br>우선 Development용을 발급받습니다.</p><p><img src="../../../../images/push-cert/3.png" alt=""><br>어떤 앱의 Push 인증서를 만들 것인지 선택합니다.</p><p><img src="../../../../images/push-cert/4.png" alt=""><br>CSR(Certificate Signing Request)가 필요하다는 안내 페이지입니다.<br>CSR발급은 앱 인증서 발급 과정을 참고해주세요.</p>]]></content>
+      
+      <categories>
+          
+          <category> iOS </category>
+          
+          <category> Etc </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> iOS </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>Content Mode : Scale to Fill, Aspect Fit, Aspect Fill 차이 정리</title>
       <link href="/2018/05/21/scalemode/"/>
       <url>/2018/05/21/scalemode/</url>
@@ -12,7 +35,7 @@
           
           <category> iOS </category>
           
-          <category> ETC </category>
+          <category> Etc </category>
           
       </categories>
       
@@ -91,6 +114,8 @@
           
           <category> iOS </category>
           
+          <category> Etc </category>
+          
       </categories>
       
       
@@ -116,7 +141,7 @@
           
           <category> iOS </category>
           
-          <category> ETC </category>
+          <category> Etc </category>
           
       </categories>
       
