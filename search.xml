@@ -3,6 +3,33 @@
   
     
     <entry>
+      <title>Firebase Cloud Messaging, Notification (Firebase를 이용한 iOS Push 전송)</title>
+      <link href="/2018/05/31/firebase-push/"/>
+      <url>/2018/05/31/firebase-push/</url>
+      <content type="html"><![CDATA[<h2 id="Firebase-Cloud-Messaging"><a href="#Firebase-Cloud-Messaging" class="headerlink" title="Firebase Cloud Messaging"></a>Firebase Cloud Messaging</h2><p>지난 포스팅에서는 iOS 앱의 Push Notification 기능을 추가하는 내용을 다뤘습니다.<br><a href="http://monibu1548.github.io/2018/05/29/push-cert/">iOS APN, Push Noticifation tutorial (Push 인증서 발급, 테스트 과정)</a></p><p>이제 이 기능을 실제 서비스에서 사용하기 위해 Firebase 를 사용하는 방법을 소개합니다.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pod &apos;Firebase/Core&apos;</span><br><span class="line">pod &apos;Firebase/Messaging&apos;</span><br></pre></td></tr></table></figure><p>Podfile에 Cloud Messaging 기능을 사용하기 위해 위 2pod을 설치합니다.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod install</span><br></pre></td></tr></table></figure><p><img src="../../../../images/firebase-push/1.png" alt=""><br>Firebase 앱 설정에서 APN 키를 등록해야합니다.<br>지난 포스팅에서는 Push 인증서를 만든것이고 APN 인증키는 따로있습니다. </p><h2 id="APN-인증키-발급받기"><a href="#APN-인증키-발급받기" class="headerlink" title="APN 인증키 발급받기"></a>APN 인증키 발급받기</h2><p><img src="../../../../images/firebase-push/2.png" alt=""><br><a href="https://developer.apple.com/account/ios/authkey/" target="_blank" rel="noopener">애플 개발자센터</a>에 들어갑니다.</p><p><img src="../../../../images/firebase-push/3.png" alt=""><br>Key 이름은 적당히 적고 APNs 선택 후 Continue~!</p><p><img src="../../../../images/firebase-push/4.png" alt=""><br>쨘! APN Key가 쉽게 생성됩니다. 여기서 <code>.p8</code> APN 인증서를 다운받습니다. <code>잘 챙겨주세요!</code></p><p>자 이제 다시 Firebase로 돌아옵니다.<br><img src="../../../../images/firebase-push/5.png" alt=""><br>다운받은 APN 인증키를 넣고<br>키 ID 는 인증키 파일 뒤 suffix입니다.<br>앱 ID prefix는 teamID 입니다.</p><p><img src="../../../../images/firebase-push/6.png" alt=""><br>APN Key가 정상적으로 등록된 것을 볼 수 있습니다.</p><h2 id="XCode-에서-Firebase-Push-사용할-수-있도록-설정하기"><a href="#XCode-에서-Firebase-Push-사용할-수-있도록-설정하기" class="headerlink" title="XCode 에서 Firebase Push 사용할 수 있도록 설정하기"></a>XCode 에서 Firebase Push 사용할 수 있도록 설정하기</h2><p>AppDelegate에서 Firebase 설정하기</p><p>Appdelegate.swift 파일에 Firebase 모듈을 import 합니다</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Firebase</span><br></pre></td></tr></table></figure><p><code>application:didFinishLaunchingWithOptions:</code> 메소드에서 Firebase 모듈을 초기화합니다.<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">FirebaseApp</span>.configure()</span><br></pre></td></tr></table></figure></p><p>Push Notification을 등록할 위치에 다음 코드를 삽입합니다<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> #available(iOS <span class="number">10.0</span>, *) &#123;</span><br><span class="line">  <span class="comment">// For iOS 10 display notification (sent via APNS)</span></span><br><span class="line">  <span class="type">UNUserNotificationCenter</span>.current().delegate = <span class="keyword">self</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> authOptions: <span class="type">UNAuthorizationOptions</span> = [.alert, .badge, .sound]</span><br><span class="line">  <span class="type">UNUserNotificationCenter</span>.current().requestAuthorization(</span><br><span class="line">    options: authOptions,</span><br><span class="line">    completionHandler: &#123;<span class="number">_</span>, <span class="number">_</span> <span class="keyword">in</span> &#125;)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> settings: <span class="type">UIUserNotificationSettings</span> =</span><br><span class="line">  <span class="type">UIUserNotificationSettings</span>(types: [.alert, .badge, .sound], categories: <span class="literal">nil</span>)</span><br><span class="line">  application.registerUserNotificationSettings(settings)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">application.registerForRemoteNotifications()</span><br></pre></td></tr></table></figure></p><p>후후 그럼 끝났습니다.</p><h2 id="Firebase에서-Push-Notification-보내기"><a href="#Firebase에서-Push-Notification-보내기" class="headerlink" title="Firebase에서 Push Notification 보내기"></a>Firebase에서 Push Notification 보내기</h2><p><img src="../../../../images/firebase-push/7.png" alt=""><br>메세지 내용에 Push 내용을 입력합니다.</p><p>앱 드랍다운 버튼을 클릭하면 Firebase에 등록한 프로젝트들이 뜨는데요, 이 중에서 Push 보낼 앱을 선택합니다.</p><p>그리고 <code>메세지 보내기</code> 클릭!</p><p>그러면 아이폰에 remote Notification 이 뙇!</p><p>메세지를 보낼때 예약도 가능합니다.</p><p>시간대별로 적절한 푸시를 통해 사용자 진입을 늘릴 수 있습니다!</p>]]></content>
+      
+      <categories>
+          
+          <category> iOS </category>
+          
+          <category> 공통 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> iOS </tag>
+            
+            <tag> Firebase </tag>
+            
+            <tag> 앱 고도화 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>iOS APN, Push Noticifation tutorial (Push 인증서 발급, 테스트 과정)</title>
       <link href="/2018/05/29/push-cert/"/>
       <url>/2018/05/29/push-cert/</url>
@@ -752,7 +779,7 @@
       
       <categories>
           
-          <category> ETC </category>
+          <category> Etc </category>
           
       </categories>
       
