@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://monibu1548.github.io/2017/03/03/grafana/</loc>
+    
+    <lastmod>2018-10-11T13:01:05.326Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://monibu1548.github.io/2017/01/14/TravisCI/</loc>
+    
+    <lastmod>2018-10-11T13:00:16.317Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://monibu1548.github.io/2018/10/11/rxswift-observable/</loc>
     
     <lastmod>2018-10-11T12:48:13.682Z</lastmod>
@@ -44,13 +58,6 @@
   </url>
   
   <url>
-    <loc>http://monibu1548.github.io/2017/01/14/TravisCI/</loc>
-    
-    <lastmod>2018-05-31T11:45:46.944Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://monibu1548.github.io/2018/05/29/push-cert/</loc>
     
     <lastmod>2018-05-29T13:55:10.348Z</lastmod>
@@ -61,13 +68,6 @@
     <loc>http://monibu1548.github.io/2018/04/25/GCD-singleton/</loc>
     
     <lastmod>2018-05-29T12:22:45.863Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://monibu1548.github.io/2017/03/03/grafana/</loc>
-    
-    <lastmod>2018-05-29T12:22:43.818Z</lastmod>
     
   </url>
   
