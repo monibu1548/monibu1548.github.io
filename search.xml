@@ -3,6 +3,27 @@
   
     
     <entry>
+      <title>[띵킹노트] Firebase Auth &lt;=&gt; DB 연동에 대한 고민</title>
+      <link href="/2019/01/20/dev-2019-01-20/"/>
+      <url>/2019/01/20/dev-2019-01-20/</url>
+      <content type="html"><![CDATA[<p><img src="../../../../images/dev/1.png" alt=""></p><p><img src="../../../../images/dev/2.png" alt=""></p><ul><li>100% 백앤드 없이 서비스 하나 만들기는 어려워 보인다. 아무리 Firebase 라도..</li><li>현재 선택지는 2가지, Firebase Cloud Function을 이용하거나 NodeJS 하나 호스팅하거나. 갑자기 스케일이 매우 커진다.</li></ul>]]></content>
+      
+      <categories>
+          
+          <category> 띵킹노트 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 띵킹노트 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>iOS앱 고도화 - Firebase Authentication 적용하기 첫번째 (이메일/비밀번호 회원가입, 로그인)</title>
       <link href="/2019/01/13/firebase-auth-1/"/>
       <url>/2019/01/13/firebase-auth-1/</url>
