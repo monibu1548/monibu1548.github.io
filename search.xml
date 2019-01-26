@@ -3,6 +3,27 @@
   
     
     <entry>
+      <title>[띵킹노트] MVVM패턴을 공부하면서, 기존 MVC패턴의 프로젝트와 비교</title>
+      <link href="/2019/01/26/dev-2019-01-26/"/>
+      <url>/2019/01/26/dev-2019-01-26/</url>
+      <content type="html"><![CDATA[<p><img src="../../../../images/dev/3.png" alt=""></p>]]></content>
+      
+      <categories>
+          
+          <category> 띵킹노트 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 띵킹노트 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>[띵킹노트] Firebase Auth &lt;=&gt; DB 연동에 대한 고민</title>
       <link href="/2019/01/20/dev-2019-01-20/"/>
       <url>/2019/01/20/dev-2019-01-20/</url>

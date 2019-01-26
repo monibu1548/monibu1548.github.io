@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://monibu1548.github.io/"/>
-  <updated>2019-01-20T14:30:59.552Z</updated>
+  <updated>2019-01-26T14:18:27.635Z</updated>
   <id>http://monibu1548.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[띵킹노트] MVVM패턴을 공부하면서, 기존 MVC패턴의 프로젝트와 비교</title>
+    <link href="http://monibu1548.github.io/2019/01/26/dev-2019-01-26/"/>
+    <id>http://monibu1548.github.io/2019/01/26/dev-2019-01-26/</id>
+    <published>2019-01-26T14:16:28.000Z</published>
+    <updated>2019-01-26T14:18:27.635Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="../../../../images/dev/3.png" alt=""></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;img src=&quot;../../../../images/dev/3.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+      <category term="띵킹노트" scheme="http://monibu1548.github.io/categories/%EB%9D%B5%ED%82%B9%EB%85%B8%ED%8A%B8/"/>
+    
+    
+      <category term="띵킹노트" scheme="http://monibu1548.github.io/tags/%EB%9D%B5%ED%82%B9%EB%85%B8%ED%8A%B8/"/>
+    
+  </entry>
   
   <entry>
     <title>[띵킹노트] Firebase Auth &lt;=&gt; DB 연동에 대한 고민</title>
@@ -699,46 +725,6 @@ Op
       <category term="Swift" scheme="http://monibu1548.github.io/tags/Swift/"/>
     
       <category term="스위프트" scheme="http://monibu1548.github.io/tags/%EC%8A%A4%EC%9C%84%ED%94%84%ED%8A%B8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>iOS 앱에서 광고 수익 얻기 (Admob 애드몹 설치, 부착, 예제)</title>
-    <link href="http://monibu1548.github.io/2018/05/06/ios-admob/"/>
-    <id>http://monibu1548.github.io/2018/05/06/ios-admob/</id>
-    <published>2018-05-05T18:30:43.000Z</published>
-    <updated>2018-05-29T12:05:04.263Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="앱을-다-만들었다면-수익에-도전해보자"><a href="#앱을-다-만들었다면-수익에-도전해보자" class="headerlink" title="앱을 다 만들었다면 수익에 도전해보자"></a>앱을 다 만들었다면 수익에 도전해보자</h2><p>모바일 어플리케이션에 광고를 부착할 수 있는 다양한 플랫폼이 있다. 그중에서도 Google의 Admob을 이용한 방법을 소개합니다.</p><h2 id="Admob-가입하기"><a href="#Admob-가입하기" class="headerlink" title="Admob 가입하기"></a>Admob 가입하기</h2><p><a href="https://www.google.co.kr/admob" target="_blank" rel="noopener">https://www.google.co.kr/admob</a> 구글 애드몹 페이지</p><p>구글 계정으로 로그인 할 수 있습니다.</p><h2 id="광고-생성하기"><a href="#광고-생성하기" class="headerlink" title="광고 생성하기"></a>광고 생성하기</h2><p>우선 애드몹 페이지에서 광고를 붙일 앱을 설정합니다. <code>앱 추가</code> 버튼을 통해 추가할 수 있습니다.</p><p><img src="../../../../images/admob/1.png" alt=""><br>광고를 부착할 앱이 기존에 스토어에 등록되어있던 앱인지, 새로 만들 앱인지 선택합니다. 저는 아직 스토어에 업로드 하지 않아서 <code>아니요</code>를 선택했습니다.</p><p><img src="../../../../images/admob/2.png" alt=""><br>앱의 이름(스토어에 노출되는 이름은 아니고, Admob에서 구분하기 위한 별명같은 용도로 사용됩니다.)과 플랫폼을 선택합니다.</p><p><img src="../../../../images/admob/3.png" alt=""><br>앱을 생성하면 앱 리스트에 노출되며, 앱이름을 클릭해서 더 상세한 설정을 할 수 있습니다.</p><p><img src="../../../../images/admob/4.png" alt=""><br>광고 단위 만들기 버튼을 통해 광고 단위를 생성합니다.</p><p><img src="../../../../images/admob/5.png" alt=""><br>현재 배너, 전면, 리워드 이렇게 3가지 광고 타입을 제공합니다. 앱의 사용성을 선택해서 선택하면 되는데, 저는 배너를 사용했습니다.</p><p><img src="../../../../images/admob/6.png" alt=""><br>광고 단위 이름을 입력해줍니다.</p><p><img src="../../../../images/admob/7.png" alt=""><br>광고 단위가 생성되었습니다. 이제 AppID와 UnitID를 통해 앱에 광고를 부착할 수 있습니다.<br>이 페이지에서 2개의 ID값을 볼 수 있는데요, 위에가 AppID, 아래가 UnitID입니다.</p><ul><li>AppID : 앱의 Identifier, AppDelegate.m 에서 설정에 필요</li><li>UnitID : 배너 광고를 띄울 뷰컨트롤러 설정에 필요</li></ul><h2 id="CocoaPods-설치"><a href="#CocoaPods-설치" class="headerlink" title="CocoaPods 설치"></a>CocoaPods 설치</h2><p>이제 앱에 배너광고를 설치합니다.<br><code>Podfile</code>에 아래 Pod를 추가하고 <code>Pod install</code>을 통해 SDK를 설치합니다.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod &apos;Google-Mobile-Ads-SDK&apos;</span><br></pre></td></tr></table></figure><h2 id="App-Delegate-설정"><a href="#App-Delegate-설정" class="headerlink" title="App Delegate 설정"></a>App Delegate 설정</h2><p>AppDelegate.m 파일을 열어주세요.</p><figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">&lt;GoogleAnalytics/GAI.h&gt;</span></span></span><br></pre></td></tr></table></figure><p>위 헤더파일이 필요합니다.</p><p>아래 코드와 같이 <code>didFinishLaunchingWithOptions</code> 메소드에 애드몹을 설정하는 코드를 추가합니다.</p><figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="built_in">NSDictionary</span> *)launchOptions &#123;</span><br><span class="line">    <span class="comment">// Override point for customization after application launch.</span></span><br><span class="line">    </span><br><span class="line">    [GADMobileAds configureWithApplicationID:<span class="string">@"애드몹AppId"</span>];</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="Banner-영역-설정하기"><a href="#Banner-영역-설정하기" class="headerlink" title="Banner 영역 설정하기"></a>Banner 영역 설정하기</h2><p><img src="../../../../images/admob/8.png" alt=""></p><p>스토리보드에서 Banner영역을 잡아줍니다.<br>저는 화면 아래쪽에 배치했습니다. Banner의 Size는 <code>320 * 50</code>으로 지정해주셔야합니다. 그리고 그 View 의 CustomClass를 <code>GADBannerView</code>로 설정합니다.</p><p>이제 코드영역에서 해당 뷰에 UnitID를 지정해줘야 합니다. 이 작업은 <code>ViewDidLoad</code> 에서 작업합니다.</p><figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">self</span>.bannerView.adUnitID = admobBannerUnitId;</span><br><span class="line"><span class="keyword">self</span>.bannerView.rootViewController = <span class="keyword">self</span>;</span><br><span class="line">[<span class="keyword">self</span>.bannerView loadRequest:[GADRequest request]];</span><br></pre></td></tr></table></figure><p>여기에서 self.bannerView는 스토리보드에서 IBOutlet으로 가져온 GADBannerView 입니다.<br><code>admobBannerUnitId</code> 을 발급받은 UnitID로 변경합니다.</p><ul><li>추가적으로, bannerView에 델리게이트를 지정하여 광고를 성공적으로 가져왔는지, 문제가 있는지 등의 결과를 받을 수 있습니다. 해당내용은 아래에 링크합니다.<br><a href="https://developers.google.com/admob/ios/banner" target="_blank" rel="noopener">https://developers.google.com/admob/ios/banner</a></li></ul><h2 id="Test-광고-붙여보기"><a href="#Test-광고-붙여보기" class="headerlink" title="Test 광고 붙여보기"></a>Test 광고 붙여보기</h2><p>위 과정까지 진행하고 앱을 실행시켜보면 광고가 뜨지 않습니다. 왜냐하면 <code>Debug</code> 모드에서는 광고가 노출되지 않기 때문이죠. 그러면 어떻게 광고가 잘 노출되는지 확인할 수 있을까요.<br>ADMob에서는 테스트 광고를 제공합니다.</p><p>발급받은 AppID와 UnitID중에서 UnitID를 <code>ca-app-pub-3940256099942544/6300978111</code> 로 변경합니다.</p><p>위 테스트 UnitID는 배너 타입의 광고에만 유효하며 그 외 타입은 다음 링크를 참고해주세요.<br><a href="https://developers.google.com/admob/android/test-ads" target="_blank" rel="noopener">https://developers.google.com/admob/android/test-ads</a></p><p>이제 앱을 다시 실행해보면 테스트 광고가 노출되는 것을 확인할 수 있습니다.</p><ul><li>빌드 과정에서 <code>Release</code> config로 빌드하는 경우 실제 UnitID를 사용하고, <code>Debug</code>로 빌드하는 경우 테스트용 UnitID를 사용하게 설정해두면 편합니다!</li></ul><h2 id="더-나아가서"><a href="#더-나아가서" class="headerlink" title="더 나아가서"></a>더 나아가서</h2><p>ADMob에서는 더 다양한 기능을 제공합니다.<br>예를들면 광고를 불러오기 전까지는 배너 영역을 갖고있지 않다가, 광고를 받아오면 해당 배너영역을 확장시켜 보여줄 수도 있습니다.</p>]]></content>
-    
-    <summary type="html">
-    
-      앱을 다 만들었다면 수익에 도전해보자
-모바일 어플리케이션에 광고를 부착할 수 있는 다양한 플랫폼이 있다. 그중에서도 Google의 Admob을 이용한 방법을 소개합니다.
-
-Admob 가입하기
-https://www.google.co.kr/admob 구글 애드몹 페이지
-
-구글 계정으로 로그인 할 수 있습니다.
-
-광고 생성하기
-우선 애드몹 페이지에서 광고를 붙일 앱을 설정합니다. 앱 추가 버튼을 통해 추가할 수 있습니다.
-
-
-광고를 부착할 앱이 기존에 스토어에 등록되어있던 앱인지, 새로 만들 앱인지 선택합니다. 저는 아직 스토어에 업로드
-    
-    </summary>
-    
-      <category term="iOS" scheme="http://monibu1548.github.io/categories/iOS/"/>
-    
-      <category term="공통" scheme="http://monibu1548.github.io/categories/iOS/%EA%B3%B5%ED%86%B5/"/>
-    
-    
-      <category term="iOS" scheme="http://monibu1548.github.io/tags/iOS/"/>
-    
-      <category term="Admob" scheme="http://monibu1548.github.io/tags/Admob/"/>
-    
-      <category term="애드몹" scheme="http://monibu1548.github.io/tags/%EC%95%A0%EB%93%9C%EB%AA%B9/"/>
     
   </entry>
   
