@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://monibu1548.github.io/"/>
-  <updated>2019-02-08T14:51:57.763Z</updated>
+  <updated>2019-02-09T07:07:14.567Z</updated>
   <id>http://monibu1548.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[iOS] Touch Event가 View를 통해 전달되는 과정 (hitTest)</title>
+    <link href="http://monibu1548.github.io/2019/02/09/hittest/"/>
+    <id>http://monibu1548.github.io/2019/02/09/hittest/</id>
+    <published>2019-02-09T06:09:24.192Z</published>
+    <updated>2019-02-09T07:07:14.567Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="hitTest-를-통해-View-계층구조를-따라-Touch가-전달되는-과정을-살펴보자"><a href="#hitTest-를-통해-View-계층구조를-따라-Touch가-전달되는-과정을-살펴보자" class="headerlink" title="hitTest:: 를 통해 View 계층구조를 따라 Touch가 전달되는 과정을 살펴보자"></a>hitTest:: 를 통해 View 계층구조를 따라 Touch가 전달되는 과정을 살펴보자</h1><h2 id="서론"><a href="#서론" class="headerlink" title="서론"></a>서론</h2><p>앱을 개발하다보면 복잡한 View Hierachy를 만나게 됩니다. 거기에 Button, tableViewCell, CollectionViewCell 등 UserInteraction을 받는 View들이 겹치게 되면 기대와 달리 터치 이벤트를 받지 못하는 오류를 만날 수 있습니다.<br>이번 포스팅을 통해 iOS에서 Touch 이벤트가 Subview에게 전달되는 과정을 이해함으로써 좀 더 나은 앱을 만들 수 있었으면 합니다.</p><h2 id="사용자-입장에서의-터치-iOS-시스템-입장에서의-터치"><a href="#사용자-입장에서의-터치-iOS-시스템-입장에서의-터치" class="headerlink" title="사용자 입장에서의 터치, iOS 시스템 입장에서의 터치"></a>사용자 입장에서의 터치, iOS 시스템 입장에서의 터치</h2><h3 id="사용자-입장"><a href="#사용자-입장" class="headerlink" title="사용자 입장"></a>사용자 입장</h3><p>당연한 이야기이지만 사용자와 Interaction하는 View(UIButton, UIScrollView 등…)들은 사용자에게 보이기 위해 디바이스 화면상에서 가장 최상단에 위치합니다. 사용자들은 눈에 보이는 Button을 직접 누르고, 스크롤을 직접 내리는 것으로 인식합니다.</p><h3 id="iOS-시스템-입장"><a href="#iOS-시스템-입장" class="headerlink" title="iOS 시스템 입장"></a>iOS 시스템 입장</h3><p>iOS 시스템은 사용자의 입장과 반대로 동작합니다. 사용자의 터치는 iOS 시스템이 입력받아 UIApplicaion 에게 전달, UIWindow를 통해 View Hierachy를 따라 Top-down으로 전달됩니다. 따라서 View의 Insteraction을 개발할 때는 iOS 시스템 입장에서 접근해야합니다.</p><h2 id="HitTest"><a href="#HitTest" class="headerlink" title="HitTest::"></a>HitTest::</h2><p>UIView에는 HitTest:: 라는 함수가 있습니다. 이 함수를 통해 최종적으로 어떤 View가 사용자의 이벤트를 처리할 지 결정합니다. 이 과정을 이해하면 오류 수정 및 커스텀 뷰 개발을 더 잘 할 수 있습니다!</p><h3 id="직접-테스트해보자"><a href="#직접-테스트해보자" class="headerlink" title="직접 테스트해보자"></a>직접 테스트해보자</h3><p>아래의 그림처럼 View Hierachy를 만든 후 각 번호의 위치를 클릭하여 최종적으로 사용자 이벤트를 처리하는 View를 찾아보겠습니다.</p><p><img src="../../../../images/hittest/1.png" alt=""></p><ul><li><code>1</code>번 위치 클릭 : View1</li><li><code>2</code>번 위치 클릭 : View2</li><li><code>3</code>번 위치 클릭 : nil<ul><li>View2는 View1의 SubView이지만 3번 위치는 View1의 외부에 존재합니다. 따라서 View1, View2 모두 이벤트를 받지 못해 nil이 리턴됩니다.</li></ul></li><li><code>4</code>번 위치 클릭 : View5</li><li><code>5</code>번 위치 클릭 : View1<ul><li>View3은 userInteractionEnabled 옵션을 NO로 지정했습니다. 따라서 interaction을 받지도, subview로 전달하지도 못하고 최종적으로 View1이 리턴됩니다.</li></ul></li><li><code>6</code>번 위치 클릭 : View4<ul><li>View4는 View3위에 있는것처럼 보이지만 View Hierachy로 보면 View1의 Subview입니다. View3과는 무관하게 hitTest에 통과하여 View4를 리턴합니다.</li></ul></li><li><code>7</code>번 위치 클릭 : View4</li><li><code>8</code>번 위치 클릭 : View1<ul><li>View6은 UserInteraction을 받지 못하는 View3의 Subview입니다. 최종적으로 hitTest를 통과한 View1이 리턴됩니다.</li></ul></li></ul><h2 id="hitTest-View-Hierachy-순회-순서"><a href="#hitTest-View-Hierachy-순회-순서" class="headerlink" title="hitTest View Hierachy 순회 순서"></a>hitTest View Hierachy 순회 순서</h2><p>DFS방식으로 순회합니다. 가장 최 상단의 View1을 먼저 순회합니다.<br>View2, View3, View4는 동일 계층입니다. 동일 계층에서는 index가 큰 순서부터 순회합니다. (화면 상에서 가장 가까이 보이는 순서)<br>순회 도중 Subview를 소유하고 있다면 Subview의 hitTest를 진행합니다.</p><h2 id="HitTest-에-통과하는-Touch-를-받는-조건"><a href="#HitTest-에-통과하는-Touch-를-받는-조건" class="headerlink" title="HitTest:: 에 통과하는 (Touch 를 받는) 조건"></a>HitTest:: 에 통과하는 (Touch 를 받는) 조건</h2><ol><li>Hidden = NO</li><li>Alpha &gt; 0.01</li><li>userInteractionEnabled = YES</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      hitTest:: 를 통해 View 계층구조를 따라 Touch가 전달되는 과정을 살펴보자
+서론
+앱을 개발하다보면 복잡한 View Hierachy를 만나게 됩니다. 거기에 Button, tableViewCell, CollectionViewCell 등 UserInteraction을 받는 View들이 겹치게 되면 기대와 달리 터치 이벤트를 받지 못하는 오류를 만날 수 있습니다.
+이번 포스팅을 통해 iOS에서 Touch 이벤트가 Subview에게 전달되는 과정을 이해함으로써 좀 더 나은 앱을 만들 수 있었으면 합니다.
+
+사용자 입장에서의 
+    
+    </summary>
+    
+      <category term="iOS" scheme="http://monibu1548.github.io/categories/iOS/"/>
+    
+      <category term="기타" scheme="http://monibu1548.github.io/categories/iOS/%EA%B8%B0%ED%83%80/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>iOS의 View, ViewController Layout Cycle</title>
@@ -668,55 +695,6 @@ TextView 또는 TextField를 이용해 사용자로부터 텍스트를 입력받
       <category term="iOS" scheme="http://monibu1548.github.io/tags/iOS/"/>
     
       <category term="오토레이아웃" scheme="http://monibu1548.github.io/tags/%EC%98%A4%ED%86%A0%EB%A0%88%EC%9D%B4%EC%95%84%EC%9B%83/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[Swift] Date to String, Date &lt;=&gt; String 객체간 변환</title>
-    <link href="http://monibu1548.github.io/2018/05/13/string-date-convert/"/>
-    <id>http://monibu1548.github.io/2018/05/13/string-date-convert/</id>
-    <published>2018-05-13T11:05:40.000Z</published>
-    <updated>2018-05-13T11:18:55.431Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="String과-Date의-객체간-변환"><a href="#String과-Date의-객체간-변환" class="headerlink" title="String과 Date의 객체간 변환"></a>String과 Date의 객체간 변환</h1><p>Date와 String의 변환은 매우 자주 사용하면서도 할 때마다 뭐였지 하고 다시 찾아보곤 합니다.<br>또 Obj-C만 사용하다가 Swift로 넘어오면서 한번 정리하고 갑니다. 참고로 swift4 입니다</p><h2 id="String-gt-Date"><a href="#String-gt-Date" class="headerlink" title="String -&gt; Date"></a>String -&gt; Date</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">let</span> dateString:<span class="type">String</span> = <span class="string">"2018-05-13 15:05:40"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> dateFormatter = <span class="type">DateFormatter</span>()</span><br><span class="line"></span><br><span class="line">dateFormatter.dateFormat = <span class="string">"yyyy-MM-dd HH:mm:ss"</span></span><br><span class="line">dateFormatter.timeZone = <span class="type">NSTimeZone</span>(name: <span class="string">"UTC"</span>) <span class="keyword">as</span> <span class="type">TimeZone</span>?</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> date:<span class="type">Date</span> = dateFormatter.date(from: dateString)!</span><br></pre></td></tr></table></figure><p>Obj-C 와 마찬가지로 <code>DateFormatter</code>를 이용합니다.<br>DateFormatter에 날짜 형식화 타임존을 설정 후 String을 dateFormatter의 <code>date</code> 메소드를 이용해 변환합니다.</p><h2 id="Date-gt-String"><a href="#Date-gt-String" class="headerlink" title="Date -&gt; String"></a>Date -&gt; String</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> date:<span class="type">Date</span> = <span class="type">Date</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> dateFormatter = <span class="type">DateFormatter</span>()</span><br><span class="line">dateFormatter.dateFormat = <span class="string">"yyyy-MM-dd HH:mm:ss"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> dateString:<span class="type">Date</span> dateFormatter.string(from: date)</span><br></pre></td></tr></table></figure><p>DateFormatter의 <code>string</code> 메소드를 사용하여 변환 가능합니다.</p>]]></content>
-    
-    <summary type="html">
-    
-      String과 Date의 객체간 변환
-Date와 String의 변환은 매우 자주 사용하면서도 할 때마다 뭐였지 하고 다시 찾아보곤 합니다.
-또 Obj-C만 사용하다가 Swift로 넘어오면서 한번 정리하고 갑니다. 참고로 swift4 입니다
-
-String -&gt; Date
-1
-2
-3
-4
-5
-6
-7
-8
-9
-
-
-
-let dateString:String = &quot;2018-05-13 15:05:40&quot;
-
-let dateFormatter = DateFormatter()
-
-dateFormatter.dateFormat = &quot;yyyy-MM-dd HH:mm:
-    
-    </summary>
-    
-      <category term="iOS" scheme="http://monibu1548.github.io/categories/iOS/"/>
-    
-      <category term="Swift" scheme="http://monibu1548.github.io/categories/iOS/Swift/"/>
-    
-    
-      <category term="iOS" scheme="http://monibu1548.github.io/tags/iOS/"/>
-    
-      <category term="Swift" scheme="http://monibu1548.github.io/tags/Swift/"/>
-    
-      <category term="스위프트" scheme="http://monibu1548.github.io/tags/%EC%8A%A4%EC%9C%84%ED%94%84%ED%8A%B8/"/>
     
   </entry>
   
