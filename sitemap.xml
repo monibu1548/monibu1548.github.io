@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://monibu1548.github.io/2019/11/17/wkwebview-memory-leak/</loc>
+    
+    <lastmod>2019-11-17T06:42:35.129Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://monibu1548.github.io/2019/10/06/ios-http-status-code/</loc>
     
     <lastmod>2019-10-06T01:38:52.182Z</lastmod>
