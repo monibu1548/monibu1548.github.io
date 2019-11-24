@@ -1,10 +1,406 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="baidu-site-verification" content="1EB8XoOl0C"><meta name="google-site-verification" content="u1mTB5JWczvR8aazOKgWjreaUB1ssIwuGy2FtZnfj68"><title> [띵킹노트] MVVM패턴을 공부하면서, 기존 MVC패턴의 프로젝트와 비교 · JingyuJung's Blog</title><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="[띵킹노트] MVVM패턴을 공부하면서, 기존 MVC패턴의 프로젝트와 비교 - Jingyu Jung"><meta name="keywords"><meta name="author" content="Jingyu Jung"><link rel="short icon" href="/images/favicon.ico"><link rel="stylesheet" href="/css/bubuzou.css"><link rel="search" type="application/opensearchdescription+xml" href="http://monibu1548.github.io/atom.xml" title="JingyuJung's Blog"><script aync src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script></head><body><header><div class="header row"> <a href="/" class="logo-link"><img src="/images/logo.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" data-hover="POSTS" class="nav-list-link">POSTS</a></li><li class="nav-list-item"><a href="/archives/" target="_self" data-hover="ARCHIVES" class="nav-list-link">ARCHIVES</a></li></ul><div class="search"><a id="search_btn" href="#search"></a></div></div></header><div class="row scroll-con"><section class="container"><ins style="display:block" data-ad-client="ca-pub-1405208574064220" data-ad-slot="7872165136" data-ad-format="auto" class="adsbygoogle"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({})</script><!-- for archive page--><div id="postAr" class="post"><article class="post-block"><h1 class="post-title">[띵킹노트] MVVM패턴을 공부하면서, 기존 MVC패턴의 프로젝트와 비교</h1><div class="post-info">2019-01-26<p class="visit"><i data-hk-page="current">-</i><span>읽음</span></p></div><div class="post-content"><p><img src="../../../../images/dev/3.png" alt=""></p>
-</div></article></div><div class="right-container"><div class="widget"><div class="category"><h4>카테고리</h4><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NHN-ent/">NHN ent.</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Framework/">Spring Framework</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a><span class="category-list-count">36</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/Firebase/">Firebase</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/Objective-C/">Objective-C</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/RxSwift/">RxSwift</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/Swift/">Swift</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/XCodeServer/">XCodeServer</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/공통/">공통</a><span class="category-list-count">20</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/띵킹노트/">띵킹노트</a><span class="category-list-count">2</span></li></ul></div></div><div class="widget"><div class="tagcloud"><h4>태그</h4><a href="/tags/Admob/" style="font-size: 10px;">Admob</a> <a href="/tags/Apple/" style="font-size: 12px;">Apple</a> <a href="/tags/AutoLayout/" style="font-size: 10px;">AutoLayout</a> <a href="/tags/BestPractice/" style="font-size: 10px;">BestPractice</a> <a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/CocoaPods/" style="font-size: 12px;">CocoaPods</a> <a href="/tags/Database/" style="font-size: 10px;">Database</a> <a href="/tags/Dooray/" style="font-size: 10px;">Dooray</a> <a href="/tags/Firebase/" style="font-size: 16px;">Firebase</a> <a href="/tags/GCD/" style="font-size: 10px;">GCD</a> <a href="/tags/HitTest/" style="font-size: 10px;">HitTest</a> <a href="/tags/Interface-Builder/" style="font-size: 10px;">Interface Builder</a> <a href="/tags/Jasypt/" style="font-size: 10px;">Jasypt</a> <a href="/tags/NHN/" style="font-size: 12px;">NHN</a> <a href="/tags/NSXMLParser/" style="font-size: 10px;">NSXMLParser</a> <a href="/tags/Reflection/" style="font-size: 12px;">Reflection</a> <a href="/tags/RemoteConfig/" style="font-size: 10px;">RemoteConfig</a> <a href="/tags/Runtime/" style="font-size: 10px;">Runtime</a> <a href="/tags/RxSwift/" style="font-size: 14px;">RxSwift</a> <a href="/tags/SQLite3/" style="font-size: 10px;">SQLite3</a> <a href="/tags/Spring-Framework/" style="font-size: 18px;">Spring Framework</a> <a href="/tags/Storyboard/" style="font-size: 10px;">Storyboard</a> <a href="/tags/Swift/" style="font-size: 14px;">Swift</a> <a href="/tags/Web/" style="font-size: 16px;">Web</a> <a href="/tags/XCode/" style="font-size: 12px;">XCode</a> <a href="/tags/XCodeServer/" style="font-size: 12px;">XCodeServer</a> <a href="/tags/XML-Parser/" style="font-size: 10px;">XML Parser</a> <a href="/tags/Xcode/" style="font-size: 12px;">Xcode</a> <a href="/tags/grafana/" style="font-size: 10px;">grafana</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/influxDB/" style="font-size: 10px;">influxDB</a> <a href="/tags/java/" style="font-size: 12px;">java</a> <a href="/tags/jenkins/" style="font-size: 10px;">jenkins</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/구글-애널리틱스/" style="font-size: 10px;">구글 애널리틱스</a> <a href="/tags/기술교육/" style="font-size: 10px;">기술교육</a> <a href="/tags/띵킹노트/" style="font-size: 12px;">띵킹노트</a> <a href="/tags/모니터링/" style="font-size: 10px;">모니터링</a> <a href="/tags/배포/" style="font-size: 10px;">배포</a> <a href="/tags/버전-관리/" style="font-size: 10px;">버전 관리</a> <a href="/tags/생산성/" style="font-size: 12px;">생산성</a> <a href="/tags/성능-튜닝/" style="font-size: 10px;">성능 튜닝</a> <a href="/tags/스위프트/" style="font-size: 14px;">스위프트</a> <a href="/tags/스터디/" style="font-size: 10px;">스터디</a> <a href="/tags/스프링-프레임워크/" style="font-size: 18px;">스프링 프레임워크</a> <a href="/tags/심화/" style="font-size: 14px;">심화</a> <a href="/tags/애드몹/" style="font-size: 10px;">애드몹</a> <a href="/tags/앱-고도화/" style="font-size: 14px;">앱 고도화</a> <a href="/tags/업데이트/" style="font-size: 10px;">업데이트</a> <a href="/tags/오토레이아웃/" style="font-size: 10px;">오토레이아웃</a> <a href="/tags/웹/" style="font-size: 16px;">웹</a> <a href="/tags/지표수집/" style="font-size: 10px;">지표수집</a> <a href="/tags/최적화/" style="font-size: 12px;">최적화</a> <a href="/tags/쿼리스트링/" style="font-size: 10px;">쿼리스트링</a> <a href="/tags/토스트루키/" style="font-size: 10px;">토스트루키</a></div></div><div class="widget"><div class="recent"><h4>최근 포스트</h4><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/11/18/signin-apple/">애플로그인 구현하기 (Firebase와 Apple Sign with Apple)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/17/darkmode/">iOS13 다크모드를 지원하는 앱 개발하기 (How to support dark mode)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/17/wkwebview-memory-leak/">wkwebview message handler memory leak(쉽게 실수하는 WKWebView 메모리 누수 수정)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/06/ios-http-status-code/">[iOS] iOS개발 시 주의해야 할 http status code (클라이언트 개발자도 http를 잘 알아야한다)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/31/database-versioning/">[iOS] SQLite3 Database 스키마 버전 관리의 필요성 및 방법 소개</a></li></ul></div></div><div class="widget"><div id="arAnchorBar"></div></div></div></section></div><div class="right-menu"></div><div class="modal search-modal"><div class="input-field"><input type="text" id="search_input"><label for="search-input">검색</label></div><div id="search_result" class="search-result"></div></div><div class="blog-overlay"></div><footer class="row"><div class="footer-con"><div class="paginator"><a href="/2019/02/08/layout-cycle/" class="prev">PREV</a><a href="/2019/01/20/dev-2019-01-20/" class="next">NEXT</a></div><ins style="display:block" data-ad-client="ca-pub-1405208574064220" data-ad-slot="8456857214" data-ad-format="auto" class="adsbygoogle"></ins><!-- Google Adsense--><script>(adsbygoogle = window.adsbygoogle || []).push({})</script><div id="disqus_thread"></div><script>var disqus_shortname = 'jingyujung';
-var disqus_identifier = '2019/01/26/dev-2019-01-26/';
-var disqus_title = '[띵킹노트] MVVM패턴을 공부하면서, 기존 MVC패턴의 프로젝트와 비교';
-var disqus_url = 'http://monibu1548.github.io/2019/01/26/dev-2019-01-26/';
-(function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-})();</script><script id="dsq-count-scr" src="//jingyujung.disqus.com/count.js" async></script><!-- 푸터 광고 --><ins style="display:block" data-ad-client="ca-pub-1405208574064220" data-ad-slot="1718675585" data-ad-format="auto" class="adsbygoogle"></ins><!-- Google Adsense--><script>(adsbygoogle = window.adsbygoogle || []).push({})</script><div class="copyright"><p>© 2017 - 2019 <a target="_blank">Jingyu Jung</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> <br> and <a href="https://github.com/Bulandent/hexo-theme-bubuzou" target="_blank">hexo-theme-bubuzou</a></p></div><div class="totop"><i></i></div></div></footer><script async src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><script src="http://apps.bdimg.com/libs/jquery/1.8.2/jquery.min.js"></script><script src="https://cdn1.lncld.net/static/js/av-mini-0.6.10.js"></script><script src="/scripts/hit-kounter-lc-0.2.0.js"></script><script src="/scripts/arAnchor.js"></script><script src="/scripts/main.js"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-117570529-1",'auto');ga('send','pageview');</script></body></html>
+
+<!DOCTYPE html>
+<html lang="" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>[띵킹노트] MVVM패턴을 공부하면서, 기존 MVC패턴의 프로젝트와 비교 - JingyuJung&#39;s Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="TriDiamond Obsidian,"> 
+    <meta name="description" content="
+"> 
+    <meta name="author" content="Jingyu Jung"> 
+    <link rel="alternative" href="atom.xml" title="JingyuJung&#39;s Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link href="https://fonts.loli.net/css?family=Roboto+Mono|Rubik&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+    <link rel="stylesheet" href="/css/obsidian.css">
+    <link rel="stylesheet" href="/css/ball-atom.min.css">
+</head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">JingyuJung&#39;s Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="http://monibu1548.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">[띵킹노트] MVVM패턴을 공부하면서, 기존 MVC패턴의 프로젝트와 비교</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg);">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="/categories/띵킹노트"><b>「
+                    </b>띵킹노트<b> 」</b></a>
+                
+                January 26, 2019
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2019/01/26/dev-2019-01-26/" title="[띵킹노트] MVVM패턴을 공부하면서, 기존 MVC패턴의 프로젝트와 비교">[띵킹노트] MVVM패턴을 공부하면서, 기존 MVC패턴의 프로젝트와 비교</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>Words count</i>
+                    55
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                    1 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>Read count</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/띵킹노트/">띵킹노트</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <p><img src="../../../../images/dev/3.png" alt=""></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/chengdu.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+    <div id='gitalk-container' class="comment link"
+        data-ae='true'
+        data-ci='ec894e2b66f752e8b7fb'
+        data-cs='3ccc2e92bb350688fe2c2dc2930189b62622bfb1'
+        data-r='blog-comments'
+        data-o='TriDiamond'
+        data-a='TriDiamond'
+        data-d=''
+    >Comments</div>
+
+
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="https://res.cloudinary.com/tridiamond/image/upload/v1573019751/TriDiamond_logo_ui_xeublz.jpg" height=300 width=300></img>
+                    <p>Jingyu Jung</p>
+                    <span>Think like an artist, develop like an artisan</span>
+                    <dl>
+                        <dd><a href="https://github.com/TriDiamond" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="https://twitter.com/TriDiamond6" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="https://stackoverflow.com/users/7602324/tridiamond?tab=profile" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">48 <p>Articles</p></a></li>
+                    <li><a href="/categories">11 <p>Categories</p></a></li>
+                    <li><a href="/tags">55 <p>Tags</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2019
+        <span class="gradient-text">
+            Jingyu Jung
+        </span>.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.3" target="_blank" rel="noopener">v1.4.3</a></small>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.css">
+    <script src="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+
+    <script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+
+    <script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+
+    <script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+
+    <script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+
+    <script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+
+    <script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+
+    <script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+
+    <script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+
+
+
+    <script src="/js/busuanzi.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            if ($('span[id^="busuanzi_"]').length) {
+                initialBusuanzi();
+            }
+        });
+    </script>
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-149874671-1');
+    </script>
+
+
+
+
+
+<script>
+    function initialTyped () {
+        var typedTextEl = $('.typed-text');
+        if (typedTextEl && typedTextEl.length > 0) {
+            var typed = new Typed('.typed-text', {
+                strings: ["Think like an artist, develop like an artisan", "艺术家思维去思考问题，工匠创造精神去开发"],
+                typeSpeed: 90,
+                loop: true,
+                loopCount: Infinity,
+                backSpeed: 20,
+            });
+        }
+    }
+
+    if ($('.article-header') && $('.article-header').length) {
+        $(document).ready(function () {
+            initialTyped();
+        });
+    }
+</script>
+
+
+
+
+</html>
