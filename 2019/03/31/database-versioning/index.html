@@ -52,7 +52,7 @@
                 <div class="share">
                     
                         <a href="javascript:;" class="iconfont icon-share1"></a>
-                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                        <div class="share-component-cc" data-disabled="douban,diandian,tencent"></div>
                     
                 </div>
             </div>
@@ -85,13 +85,13 @@
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>Words count</i>
-                    10k
+                    4.8k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
-                    9 mins.
+                    4 mins.
                 </span>
                 
                 
@@ -131,10 +131,17 @@
 <p>이번 v1.7 에서는 각 근무에 대한 특이사항 및 근무지 등 사용자가 다양하게 사용할 수 있도록 하기위해 <code>메모</code> 기능을 추가 예정입니다. 따라서 새로운 테이블은 아래와 갖은 구조를 가져야 합니다.</p>
 <p><img src="../../../../images/sqlite3-versioning/2.png" alt=""></p>
 <h2 id="생각만큼-구현이-쉽지-않다"><a href="#생각만큼-구현이-쉽지-않다" class="headerlink" title="생각만큼 구현이 쉽지 않다"></a>생각만큼 구현이 쉽지 않다</h2><p>앱이 실행되고 Database를 관리하는 Singleton의 객체가 초기화 될 때 DB를 초기화하고 Table이 없으면 새로 생성하는 로직은 이미 기존 코드에서 갖고 있습니다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> sqlite3_exec(db, <span class="string">"CREATE TABLE IF NOT EXISTS WorkingTimes (id INTEGER PRIMARY KEY AUTOINCREMENT, start INTEGER, end INTEGER)"</span>, <span class="literal">nil</span>, <span class="literal">nil</span>, <span class="literal">nil</span>) != <span class="type">SQLITE_OK</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> errmsg = <span class="type">String</span>(cString: sqlite3_errmsg(db)!)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"error creating table: <span class="subst">\(errmsg)</span>"</span>)</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-<p>Table을 생성하는 SQL문<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> WorkingTimes (<span class="keyword">id</span> <span class="built_in">INTEGER</span> PRIMARY <span class="keyword">KEY</span> AUTOINCREMENT, <span class="keyword">start</span> <span class="built_in">INTEGER</span>, <span class="keyword">end</span> <span class="built_in">INTEGER</span></span><br></pre></td></tr></table></figure></p>
+<pre><code class="Swift">if sqlite3_exec(db, &quot;CREATE TABLE IF NOT EXISTS WorkingTimes (id INTEGER PRIMARY KEY AUTOINCREMENT, start INTEGER, end INTEGER)&quot;, nil, nil, nil) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print(&quot;error creating table: \(errmsg)&quot;)
+        }
+</code></pre>
+<p>Table을 생성하는 SQL문</p>
+<pre><code class="SQL">CREATE TABLE IF NOT EXISTS WorkingTimes (id INTEGER PRIMARY KEY AUTOINCREMENT, start INTEGER, end INTEGER
+</code></pre>
 <p>를 </p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> WorkingTimes (<span class="keyword">id</span> <span class="built_in">INTEGER</span> PRIMARY <span class="keyword">KEY</span> AUTOINCREMENT, <span class="keyword">start</span> <span class="built_in">INTEGER</span>, <span class="keyword">end</span> <span class="built_in">INTEGER</span>, memo <span class="built_in">TEXT</span></span><br></pre></td></tr></table></figure>
+<pre><code class="SQL">CREATE TABLE IF NOT EXISTS WorkingTimes (id INTEGER PRIMARY KEY AUTOINCREMENT, start INTEGER, end INTEGER, memo TEXT
+</code></pre>
 <p>로 변경하면 쉽게 끝날 것 같지만, 큰 문제가 발생합니다.</p>
 <p>앱을 처음 설치하는 유저의 경우 Table이 정상적으로 생성되고 앱 사용에 문제가 없지만, 기존 v1.6을 사용하던 유저들은 <code>memo</code> Column 이 없는 WorkingTime Table을 사용하게 되므로 UI상에서는 메모를 입력하고 수정하고 저장하지만, 저장도, 불러올 수도 없는 문제가 생깁니다.</p>
 <p>앱 버전관리와 마찬가지로 DB도 버전관리가 필요함을 알 수 있습니다. 앱 버전관리에 대한 필요성은 <a href="http://monibu1548.github.io/2018/05/19/remote-config-forced-update/">iOS 앱 업데이트 (강제 업데이트, 선택 업데이트) 기능 구현 예제</a> 에서 포스팅했습니다.</p>
@@ -145,12 +152,46 @@
 <li>마이그레이션 방법</li>
 </ol>
 <p>따라서 버전관리를 구현함에 있어서 스키마 버전을 관리할 수 있도록 UserDefault를 사용하게 되며 DB 초기화 로직에서 버전에 따라 마이그레이션을 진행하면 됩니다.</p>
-<h3 id="DB-버전-관리"><a href="#DB-버전-관리" class="headerlink" title="DB 버전 관리"></a>DB 버전 관리</h3><p>UserDefaultManager 에 아래 메소드를 추가합니다.<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">databaseSchemaVersion</span><span class="params">()</span></span> -&gt; <span class="type">NSInteger</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="type">UserDefaults</span>.standard.integer(forKey: <span class="string">"databaseSchemaVersion"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">setDatabaseSchemaVersion</span><span class="params">(version: NSInteger)</span></span> &#123;</span><br><span class="line">    <span class="type">UserDefaults</span>.standard.<span class="keyword">set</span>(version, forKey: <span class="string">"databaseSchemaVersion"</span>)</span><br></pre></td></tr></table></figure></p>
+<h3 id="DB-버전-관리"><a href="#DB-버전-관리" class="headerlink" title="DB 버전 관리"></a>DB 버전 관리</h3><p>UserDefaultManager 에 아래 메소드를 추가합니다.</p>
+<pre><code class="Swift">    static public func databaseSchemaVersion() -&gt; NSInteger {
+        return UserDefaults.standard.integer(forKey: &quot;databaseSchemaVersion&quot;)
+    }
+
+    static public func setDatabaseSchemaVersion(version: NSInteger) {
+        UserDefaults.standard.set(version, forKey: &quot;databaseSchemaVersion&quot;)
+</code></pre>
 <p>이전 버전에서는 “databaseSchemaVersion” 을 key로 Set된 데이터가 없기 때문에 기존의 스키마를 0으로 사용할 수 있습니다.</p>
-<h3 id="DB-초기화"><a href="#DB-초기화" class="headerlink" title="DB 초기화"></a>DB 초기화</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">initialize</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">let</span> databaseSchemaVersion = <span class="type">UserDefaultManager</span>.databaseSchemaVersion()</span><br><span class="line"></span><br><span class="line">        <span class="comment">// ... 생략</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> sqlite3_exec(db, <span class="string">"CREATE TABLE IF NOT EXISTS WorkingTimes (id INTEGER PRIMARY KEY AUTOINCREMENT, start INTEGER, end INTEGER, memo TEXT)"</span>, <span class="literal">nil</span>, <span class="literal">nil</span>, <span class="literal">nil</span>) != <span class="type">SQLITE_OK</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> errmsg = <span class="type">String</span>(cString: sqlite3_errmsg(db)!)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"error creating table: <span class="subst">\(errmsg)</span>"</span>)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="type">UserDefaultManager</span>.setDatabaseSchemaVersion(version: <span class="number">1</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// ... 생략</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="DB-초기화"><a href="#DB-초기화" class="headerlink" title="DB 초기화"></a>DB 초기화</h3><pre><code class="Swift">public func initialize() {
+        let databaseSchemaVersion = UserDefaultManager.databaseSchemaVersion()
+
+        // ... 생략
+
+        if sqlite3_exec(db, &quot;CREATE TABLE IF NOT EXISTS WorkingTimes (id INTEGER PRIMARY KEY AUTOINCREMENT, start INTEGER, end INTEGER, memo TEXT)&quot;, nil, nil, nil) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print(&quot;error creating table: \(errmsg)&quot;)
+        } else {
+            UserDefaultManager.setDatabaseSchemaVersion(version: 1)
+        }
+
+        // ... 생략
+    }
+
+</code></pre>
 <p>신규 유저를 위해 WorkingTime Table을 생성하는 Query를 업데이트 하며 정상적으로 Table이 생성되면 UserDefaultManager를 통해 현재 DB Schema 버전을 1로 저장합니다.</p>
-<h3 id="마이그레이션"><a href="#마이그레이션" class="headerlink" title="마이그레이션"></a>마이그레이션</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public func initialize() &#123;</span><br><span class="line">        let databaseSchemaVersion = UserDefaultManager.databaseSchemaVersion()</span><br><span class="line">        </span><br><span class="line">        // ... 생략</span><br><span class="line">        </span><br><span class="line">        if (databaseSchemaVersion == 0) &#123;</span><br><span class="line">            if sqlite3_exec(db, &quot;ALTER TABLE WorkingTimes ADD COLUMN memo TEXT;&quot;, nil, nil, nil) == SQLITE_OK &#123;</span><br><span class="line">                UserDefaultManager.setDatabaseSchemaVersion(version: 1)</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>DB초기화 시점에서 현재 SchemaVersion을 확인하여 최신(1)이 아닌 (0)인 경우에 최신버전의 Schema로 맞춰주기 위해 <code>ADD COLUMN</code> Query를 실행합니다. 경우에 따라서는 더 복잡한 코드도 필요할 수 있습니다.</p>
+<h3 id="마이그레이션"><a href="#마이그레이션" class="headerlink" title="마이그레이션"></a>마이그레이션</h3><pre><code>public func initialize() {
+        let databaseSchemaVersion = UserDefaultManager.databaseSchemaVersion()
+
+        // ... 생략
+
+        if (databaseSchemaVersion == 0) {
+            if sqlite3_exec(db, &quot;ALTER TABLE WorkingTimes ADD COLUMN memo TEXT;&quot;, nil, nil, nil) == SQLITE_OK {
+                UserDefaultManager.setDatabaseSchemaVersion(version: 1)
+            } else {
+
+            }
+        }
+    }
+</code></pre><p>DB초기화 시점에서 현재 SchemaVersion을 확인하여 최신(1)이 아닌 (0)인 경우에 최신버전의 Schema로 맞춰주기 위해 <code>ADD COLUMN</code> Query를 실행합니다. 경우에 따라서는 더 복잡한 코드도 필요할 수 있습니다.</p>
 <h2 id="한계점"><a href="#한계점" class="headerlink" title="한계점"></a>한계점</h2><p>결국 마이그레이션 코드는 레거시로 남게 됩니다. 새로운 스키마가 나올때마다 기존 유저들 대응을 위한 마이그레이션 코드가 지속적으로 추가되어야만 하는 한계가 있습니다.</p>
 <h2 id="한계-대응"><a href="#한계-대응" class="headerlink" title="한계 대응"></a>한계 대응</h2><p>그럼 위에서 설명한 한계를 극복하기 위해서는 어떤 방법이 있을까요. <code>지표 수집</code>을 통해서 현재 사용자들의 어떤 버전의 앱들을 주로 사용하고 있는지 확인하며 사용자가 적은 버전은 강제 업데이트 최소 지원 버전 제한 정책을 통해 제한합니다. 앱 버전을 제한하게 되면 해당 버전에서 사용하던 과거 스키마 버전의 마이그레이션 코드는 지울 수 있게 됩니다.</p>
 
@@ -178,7 +219,7 @@
                     <p>Jingyu Jung</p>
                     <span>iOS Engineer 정진규</span>
                     <dl>
-                        <dd><a href="https://github.com/TriDiamond" target="_blank"><span
+                        <dd><a href="https://monibu1548.github.io" target="_blank"><span
                                     class=" iconfont icon-github"></span></a></dd>
                         <dd><a href="https://twitter.com/TriDiamond6" target="_blank"><span
                                     class=" iconfont icon-twitter"></span></a></dd>

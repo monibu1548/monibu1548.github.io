@@ -64,7 +64,7 @@ Key-Value의 쌍,">
                 <div class="share">
                     
                         <a href="javascript:;" class="iconfont icon-share1"></a>
-                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                        <div class="share-component-cc" data-disabled="douban,diandian,tencent"></div>
                     
                 </div>
             </div>
@@ -97,13 +97,13 @@ Key-Value의 쌍,">
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>Words count</i>
-                    9.6k
+                    7.9k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
-                    9 mins.
+                    7 mins.
                 </span>
                 
                 
@@ -168,7 +168,29 @@ Key-Value의 쌍,">
 </tr>
 </tbody>
 </table>
-<h2 id="Reflection-API를-이용하여-매개변수로-넘어온-클래스의-종류-및-메소드-목록을-출력하는-메소드"><a href="#Reflection-API를-이용하여-매개변수로-넘어온-클래스의-종류-및-메소드-목록을-출력하는-메소드" class="headerlink" title="Reflection API를 이용하여 매개변수로 넘어온 클래스의 종류 및 메소드 목록을 출력하는 메소드"></a>Reflection API를 이용하여 매개변수로 넘어온 클래스의 종류 및 메소드 목록을 출력하는 메소드</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printClassInfo</span><span class="params">(Object object)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">		Class c = object.getClass();</span><br><span class="line">		String className = c.getName();</span><br><span class="line">		String classCanonicalName = c.getCanonicalName();</span><br><span class="line">		String classSimpleName= c.getSimpleName();</span><br><span class="line"></span><br><span class="line">		System.out.println(<span class="string">"Class name : "</span> + className);</span><br><span class="line">		System.out.println(<span class="string">"Class canonical name : "</span> + classCanonicalName);</span><br><span class="line">		System.out.println(<span class="string">"Class simple name : "</span> + classSimpleName);</span><br><span class="line"></span><br><span class="line">		Field[] fields = c.getFields();</span><br><span class="line">		System.out.println(<span class="string">"## "</span> + className + <span class="string">" fields"</span>);</span><br><span class="line">		<span class="keyword">for</span> (Field field : fields) &#123;</span><br><span class="line">			System.out.println(field);</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.println(<span class="string">"## "</span> + className + <span class="string">" methods"</span>);</span><br><span class="line">		Method[] methods = c.getMethods();</span><br><span class="line">		<span class="keyword">for</span> (Method method : methods) &#123;</span><br><span class="line">			System.out.println(method);</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Reflection-API를-이용하여-매개변수로-넘어온-클래스의-종류-및-메소드-목록을-출력하는-메소드"><a href="#Reflection-API를-이용하여-매개변수로-넘어온-클래스의-종류-및-메소드-목록을-출력하는-메소드" class="headerlink" title="Reflection API를 이용하여 매개변수로 넘어온 클래스의 종류 및 메소드 목록을 출력하는 메소드"></a>Reflection API를 이용하여 매개변수로 넘어온 클래스의 종류 및 메소드 목록을 출력하는 메소드</h2><pre><code class="java">public void printClassInfo(Object object){
+
+        Class c = object.getClass();
+        String className = c.getName();
+        String classCanonicalName = c.getCanonicalName();
+        String classSimpleName= c.getSimpleName();
+
+        System.out.println(&quot;Class name : &quot; + className);
+        System.out.println(&quot;Class canonical name : &quot; + classCanonicalName);
+        System.out.println(&quot;Class simple name : &quot; + classSimpleName);
+
+        Field[] fields = c.getFields();
+        System.out.println(&quot;## &quot; + className + &quot; fields&quot;);
+        for (Field field : fields) {
+            System.out.println(field);
+        }
+        System.out.println(&quot;## &quot; + className + &quot; methods&quot;);
+        Method[] methods = c.getMethods();
+        for (Method method : methods) {
+            System.out.println(method);
+        }
+}
+</code></pre>
 <h3 id="Java-Collection"><a href="#Java-Collection" class="headerlink" title="Java Collection"></a>Java Collection</h3><h2 id="SAX와-DOM-파서의-특징-및-장단점"><a href="#SAX와-DOM-파서의-특징-및-장단점" class="headerlink" title="SAX와 DOM 파서의 특징 및 장단점"></a>SAX와 DOM 파서의 특징 및 장단점</h2><table>
 <thead>
 <tr>
@@ -300,7 +322,7 @@ Key-Value의 쌍,">
                     <p>Jingyu Jung</p>
                     <span>iOS Engineer 정진규</span>
                     <dl>
-                        <dd><a href="https://github.com/TriDiamond" target="_blank"><span
+                        <dd><a href="https://monibu1548.github.io" target="_blank"><span
                                     class=" iconfont icon-github"></span></a></dd>
                         <dd><a href="https://twitter.com/TriDiamond6" target="_blank"><span
                                     class=" iconfont icon-twitter"></span></a></dd>

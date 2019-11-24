@@ -54,7 +54,7 @@ iOS11.3을 사용하고 있는 iPhone7 에서의 Widget 화면입니다. 앱 서
                 <div class="share">
                     
                         <a href="javascript:;" class="iconfont icon-share1"></a>
-                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                        <div class="share-component-cc" data-disabled="douban,diandian,tencent"></div>
                     
                 </div>
             </div>
@@ -87,13 +87,13 @@ iOS11.3을 사용하고 있는 iPhone7 에서의 Widget 화면입니다. 앱 서
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>Words count</i>
-                    5.9k
+                    3.2k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
-                    5 mins.
+                    3 mins.
                 </span>
                 
                 
@@ -157,7 +157,33 @@ iOS11.3을 사용하고 있는 iPhone7 에서의 Widget 화면입니다. 앱 서
 <p>이걸 빌드하면</p>
 <p><img src="../../../../images/widget/7.jpeg" alt=""></p>
 <p>이렇게 나옵니다!!</p>
-<h2 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"><span class="keyword">import</span> NotificationCenter</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WidgetViewController</span>: <span class="title">UIViewController</span>, <span class="title">NCWidgetProviding</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.viewDidLoad()</span><br><span class="line">        <span class="comment">// Do any additional setup after loading the view from its nib.</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">didReceiveMemoryWarning</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.didReceiveMemoryWarning()</span><br><span class="line">        <span class="comment">// Dispose of any resources that can be recreated.</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">widgetPerformUpdate</span><span class="params">(completionHandler: <span class="params">(@escaping <span class="params">(NCUpdateResult)</span></span></span></span> -&gt; <span class="type">Void</span>)) &#123;</span><br><span class="line">        <span class="comment">// Perform any setup necessary in order to update the view.</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">// If an error is encountered, use NCUpdateResult.Failed</span></span><br><span class="line">        <span class="comment">// If there's no update required, use NCUpdateResult.NoData</span></span><br><span class="line">        <span class="comment">// If there's an update, use NCUpdateResult.NewData</span></span><br><span class="line">        </span><br><span class="line">        completionHandler(<span class="type">NCUpdateResult</span>.newData)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h2><pre><code class="swift">import UIKit
+import NotificationCenter
+
+class WidgetViewController: UIViewController, NCWidgetProviding {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view from its nib.
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
+    func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -&gt; Void)) {
+        // Perform any setup necessary in order to update the view.
+
+        // If an error is encountered, use NCUpdateResult.Failed
+        // If there&#39;s no update required, use NCUpdateResult.NoData
+        // If there&#39;s an update, use NCUpdateResult.NewData
+
+        completionHandler(NCUpdateResult.newData)
+    }
+
+}
+</code></pre>
 <p>위 코드는 XCode에서 TodayExtension Target 생성시 자동으로 생성되는 템플릿 코드입니다.<br>viewDidLoad와 didReceiveMemoryWarning의 경우 일반 뷰컨트롤러와 별다를게 없습니다.</p>
 <p>중요한건 <code>widgetPerformUpdate</code> 메소드 입니다. 위젯 페이지에서의 스크롤 등 위젯 업데이트가 필요한 경우 호출됩니다.<br>위 메소드에서 위젯 뷰에서 보여줄 내용을 업데이트 하면 됩니다.</p>
 <p>자 그러면, 이제 WidgetViewController에서 기존 앱에서 사용하던 모듈을 가져와서 UI를 업데이트 작업을 하면 될 것 같은데..?</p>
@@ -193,7 +219,7 @@ iOS11.3을 사용하고 있는 iPhone7 에서의 Widget 화면입니다. 앱 서
                     <p>Jingyu Jung</p>
                     <span>iOS Engineer 정진규</span>
                     <dl>
-                        <dd><a href="https://github.com/TriDiamond" target="_blank"><span
+                        <dd><a href="https://monibu1548.github.io" target="_blank"><span
                                     class=" iconfont icon-github"></span></a></dd>
                         <dd><a href="https://twitter.com/TriDiamond6" target="_blank"><span
                                     class=" iconfont icon-twitter"></span></a></dd>

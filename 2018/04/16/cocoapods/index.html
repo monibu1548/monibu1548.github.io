@@ -52,7 +52,7 @@
                 <div class="share">
                     
                         <a href="javascript:;" class="iconfont icon-share1"></a>
-                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                        <div class="share-component-cc" data-disabled="douban,diandian,tencent"></div>
                     
                 </div>
             </div>
@@ -85,13 +85,13 @@
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>Words count</i>
-                    3.2k
+                    2.6k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
-                    3 mins.
+                    2 mins.
                 </span>
                 
                 
@@ -128,17 +128,22 @@
             <h2 id="Cocoapods"><a href="#Cocoapods" class="headerlink" title="Cocoapods?"></a>Cocoapods?</h2><p>iOS 앱을 개발하면서 외부 라이브러리의 필요성을 느끼게 되고, 여러 라이브러리를 사용하다보면 서로 의존성이 꼬이는 문제가 발생할 수 있다.이런 문제를 해결하기 위해 자바에서는 Maven이나 Gradle등의 의존성 관리 툴을 사용한다.<br>iOS 생태계에도 감사하게 <code>CocoaPods</code>이라는 의존성 관리 툴이 있다.</p>
 <p><code>CocoaPods</code> 외에도 <code>Carthage</code> 라는 툴이 있지만, 사용해본 적 없고 사용중인 프로젝트를 본적이 아직 없다.</p>
 <h2 id="Cocoapods-설치"><a href="#Cocoapods-설치" class="headerlink" title="Cocoapods 설치"></a>Cocoapods 설치</h2><p>맥 사용자라면 일단 <code>HomeBrew</code>는 설치되어 있겠지!<br>아직 <code>HomeBrew</code>를 설치하지 않았다면?</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo gem install cocoapods</span><br><span class="line">pod setup</span><br></pre></td></tr></table></figure>
+<pre><code class="bash">sudo gem install cocoapods
+pod setup
+
+</code></pre>
 <p>터미널에 위 명령어를 입력하면 끝!</p>
 <h2 id="XCode-프로젝트에-적용하기"><a href="#XCode-프로젝트에-적용하기" class="headerlink" title="XCode 프로젝트에 적용하기"></a>XCode 프로젝트에 적용하기</h2><h3 id="XCode-프로젝트-위치로-이동"><a href="#XCode-프로젝트-위치로-이동" class="headerlink" title="XCode 프로젝트 위치로 이동"></a>XCode 프로젝트 위치로 이동</h3><p>터미널에서 XCode 프로젝트 위치로 이동한다<br><img src="../../../../images/cocoapods/make1.png" alt=""></p>
-<h3 id="Podfile-생성"><a href="#Podfile-생성" class="headerlink" title="Podfile 생성"></a>Podfile 생성</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod init</span><br></pre></td></tr></table></figure>
+<h3 id="Podfile-생성"><a href="#Podfile-생성" class="headerlink" title="Podfile 생성"></a>Podfile 생성</h3><pre><code class="bash">pod init
+</code></pre>
 <p><code>pod init</code> 명령어를 통해 Podfile 을 생성한다.<br><img src="../../../../images/cocoapods/make2.png" alt=""></p>
 <p>이 Podfile은 이렇게 생겼다.</p>
 <p><img src="../../../../images/cocoapods/make3.png" alt=""></p>
 <p>이제 사용할 pods 들을 넣는다. 네트워크를 위한 <code>AFNetworking</code>은 거의 필수고,<br>이번 프로젝트에는 RXSwift를 공부 해보고 싶어서 Podsfile 에 RXSwift를 넣었다.<br><img src="../../../../images/cocoapods/make4.png" alt=""></p>
 <p>이렇게 만들고 저장!!</p>
 <h3 id="Pods-설치"><a href="#Pods-설치" class="headerlink" title="Pods 설치"></a>Pods 설치</h3><p>Podfile이 완성되었으면 아래 명령어로 <code>Pods</code> 들을 설치한다.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod install</span><br></pre></td></tr></table></figure>
+<pre><code class="bash">pod install
+</code></pre>
 <p>Pods 가 설치된다.<br><img src="../../../../images/cocoapods/make5.png" alt=""></p>
 <p>Pods가 모두 설치되고 나면 <code>Podfile.lock</code>, <code>Pods</code>, <code>{프로젝트명}.xcworkspace</code> 3개의 파일 또는 디렉토리가 생성된다.<br><img src="../../../../images/cocoapods/make6.png" alt=""></p>
 <ul>
@@ -174,7 +179,7 @@
                     <p>Jingyu Jung</p>
                     <span>iOS Engineer 정진규</span>
                     <dl>
-                        <dd><a href="https://github.com/TriDiamond" target="_blank"><span
+                        <dd><a href="https://monibu1548.github.io" target="_blank"><span
                                     class=" iconfont icon-github"></span></a></dd>
                         <dd><a href="https://twitter.com/TriDiamond6" target="_blank"><span
                                     class=" iconfont icon-twitter"></span></a></dd>

@@ -135,13 +135,13 @@
             
             <span>
                 <b class="iconfont icon-text2"></b> <i>Words count</i>
-                33k
+                14k
             </span>
             
             
             <span>
                 <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
-                30 mins.
+                12 mins.
             </span>
             
             
@@ -243,13 +243,13 @@
                 
                     <span>
                         <b class="iconfont icon-text2"></b> <i>Words count</i>
-                        11k
+                        4.6k
                     </span>
                 
                 
                     <span>
                         <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
-                        10 mins.
+                        4 mins.
                     </span>
                 
                 
@@ -337,13 +337,13 @@
                 
                     <span>
                         <b class="iconfont icon-text2"></b> <i>Words count</i>
-                        10k
+                        4.8k
                     </span>
                 
                 
                     <span>
                         <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
-                        9 mins.
+                        4 mins.
                     </span>
                 
                 
@@ -529,13 +529,13 @@
                 
                     <span>
                         <b class="iconfont icon-text2"></b> <i>Words count</i>
-                        8.4k
+                        5.2k
                     </span>
                 
                 
                     <span>
                         <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
-                        8 mins.
+                        5 mins.
                     </span>
                 
                 
@@ -548,7 +548,8 @@
             
                 <p>UITableViewDelegate를 구현하다 =&gt; UITableView에서 필요한 기능을 대신 구현하다<br>라는 느낌으로 AppDelegate는 App( Application ) 이 해야할 일을 대신 구현한다는 의미입니다.</p>
 <p>여기에서 App이 해야할 일이란, Background 진입, Foreground 진입, 외부에서의 요청 (apns) 등을 말합니다.</p>
-<h3 id="UIApplicationMain-은-뭘까요"><a href="#UIApplicationMain-은-뭘까요" class="headerlink" title="@UIApplicationMain 은 뭘까요?"></a>@UIApplicationMain 은 뭘까요?</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@UIApplicationMain</span></span><br><span class="line"><span class="class"><span class="keyword">class...</span></span></span></pre></td></tr></table></figure>
+<h3 id="UIApplicationMain-은-뭘까요"><a href="#UIApplicationMain-은-뭘까요" class="headerlink" title="@UIApplicationMain 은 뭘까요?"></a>@UIApplicationMain 은 뭘까요?</h3><pre><code class="swift">@UIApplicationMain
+class ...</code></pre>
             
             <span class="read-more"><a href="/2018/08/28/appdelegate/" title="Read article" class="posttitle">Read article</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
         </div>
@@ -577,13 +578,13 @@
                 
                     <span>
                         <b class="iconfont icon-text2"></b> <i>Words count</i>
-                        5.9k
+                        3.2k
                     </span>
                 
                 
                     <span>
                         <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
-                        5 mins.
+                        3 mins.
                     </span>
                 
                 
@@ -609,9 +610,504 @@
 </div>
 
 
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover.jpg);">
     </div>
-    
-    <div id="pager"><a href="/categories/iOS/공통/page/2/" class="more" data-loading="Loading..." data-load-more="Load more">Load more</a></div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/iOS">
+                  <b>「 </b>IOS<b> 」</b>
+                </a>
+            
+            May 29, 2018
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2018/05/29/push-cert/" title="iOS APN, Push Noticifation tutorial (Push 인증서 발급, 테스트 과정)" class="posttitle">iOS APN, Push Noticifation tutorial (Push 인증서 발급, 테스트 과정)</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>Words count</i>
+                        6.5k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                        6 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/iOS/">iOS</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p>iOS에서 Push 기능을 사용하기 위해서 Push Certificate, 푸시 인증서가 필요합니다. 푸시 인증서를 발급받는 방법은 개발 인증서 발급과정과 비슷합니다.</p>
+<h3 id="Apple-Developers"><a href="#Apple-Developers" class="headerlink" title="Apple Developers"></a>Apple Developers</h3><p><br><a href="https://developer.apple.com/account/ios/certificate/" target="_blank" rel="noopener">애플 개발자센터</a>에 로그인합니다.</p>
+<p><code>+</code> 버튼을 눌러줍니다.</p>
+<p><br>개발용 인증서 발급페이지와 동일합니다. 빨간색으로 표시한 부분이 Push 인증서입니다.<br>개발용 인증서와 마찬가지로 Development(개발용)와 Production(앱스토어용) 으로 분리되어 있으...</p>
+            
+            <span class="read-more"><a href="/2018/05/29/push-cert/" title="Read article" class="posttitle">Read article</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/iOS">
+                  <b>「 </b>IOS<b> 」</b>
+                </a>
+            
+            May 21, 2018
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2018/05/21/scalemode/" title="Content Mode : Scale to Fill, Aspect Fit, Aspect Fill 차이 정리" class="posttitle">Content Mode : Scale to Fill, Aspect Fit, Aspect Fill 차이 정리</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>Words count</i>
+                        1.2k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                        1 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/iOS/">iOS</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p></p>
+<ul>
+<li>비율 무시! 귀여운 고양이가 옆으로 퍼져버렸습니다.</li>
+<li>ImageView의 Width와 height에 이미지를 늘리고 우겨넣습니다.</li>
+<li>디자인 가이드로 정해진 레이아웃과 이미지가 아니면 이렇게 이미지를 괴롭히면 안돼요.</li>
+</ul>
+<p></p>
+<ul>
+<li>비율 유지! 원본의 비율을 그대로 유지합니다.</li>
+<li>이미지는 <code>절대</code> ImageView 밖으로 나가지 않습니다.</li>
+<li>ImageView 내부에서 밖으로 나가지 않는 선에서 최대치의 값을 갖습니다.</li>
+<li>비율이 맞지 않는경우 내부에 <code>여백</code> 이 생기게...</li></ul>
+            
+            <span class="read-more"><a href="/2018/05/21/scalemode/" title="Read article" class="posttitle">Read article</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/iOS">
+                  <b>「 </b>IOS<b> 」</b>
+                </a>
+            
+            May 19, 2018
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2018/05/19/remote-config-forced-update/" title="iOS 앱 업데이트 (강제 업데이트, 선택 업데이트) 기능 구현 예제" class="posttitle">iOS 앱 업데이트 (강제 업데이트, 선택 업데이트) 기능 구현 예제</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>Words count</i>
+                        10k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                        9 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/Firebase/">Firebase</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/RemoteConfig/">RemoteConfig</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/iOS/">iOS</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/업데이트/">업데이트</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p>새로운 버전의 앱이 출시되면 AppStore에 등록되고, <code>설정 -&gt; Apple ID -&gt; iTunes 및 App Store -&gt; 자동 다운로드(업데이트)</code> 가 켜져있다면 보통 새벽시간에 자동 업데이트가 됩니다.<br>하지만 사용자가 자동 업데이트 기능을 꺼두었다면?</p>
+<p>새로운 앱 버전의 출시를 알 수 없습니다.</p>
+<p>가장 큰 문제는, 기존 배포버전에 치명적인 버그가 있을때 Hot-fix 배포를 하더라도 자동업데이트 옵션 미사용 사용자들에게는 새로...</p>
+            
+            <span class="read-more"><a href="/2018/05/19/remote-config-forced-update/" title="Read article" class="posttitle">Read article</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/iOS">
+                  <b>「 </b>IOS<b> 」</b>
+                </a>
+            
+            May 14, 2018
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2018/05/14/keyboard-autolayout-event/" title="Storyboard autolayout 환경에서 Keyboard Event로 Height 처리하기" class="posttitle">Storyboard autolayout 환경에서 Keyboard Event로 Height 처리하기</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>Words count</i>
+                        3.7k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                        3 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/iOS/">iOS</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/오토레이아웃/">오토레이아웃</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p>TextView 또는 TextField를 이용해 사용자로부터 텍스트를 입력받는 화면에서는 <code>키보드</code>가 나타납니다.<br><code>키보드</code>가 나타나면 그만큼 컨텐츠를 보여줄 수 있는 화면의 Height는 줄어들게 되고 그 중 일부는 키보드 밑으로 말려들어가 보이지 않게 되는 문제가 생길 수 있습니다.<br>따라서 키보드가 나타날 때 아래의 뷰를 키보드 위로 올려주는 구현이 필요합니다.</p>
+<p>스토리보드와 오토레이아웃을 사용하면서 iOS 11 이후 등장한 <code>SafeArea</code>에 대한 대응...</p>
+            
+            <span class="read-more"><a href="/2018/05/14/keyboard-autolayout-event/" title="Read article" class="posttitle">Read article</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/iOS">
+                  <b>「 </b>IOS<b> 」</b>
+                </a>
+            
+            May 06, 2018
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2018/05/06/ios-admob/" title="iOS 앱에서 광고 수익 얻기 (Admob 애드몹 설치, 부착, 예제)" class="posttitle">iOS 앱에서 광고 수익 얻기 (Admob 애드몹 설치, 부착, 예제)</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>Words count</i>
+                        4.5k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                        4 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/Admob/">Admob</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/iOS/">iOS</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/애드몹/">애드몹</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p>모바일 어플리케이션에 광고를 부착할 수 있는 다양한 플랫폼이 있다. 그중에서도 Google의 Admob을 이용한 방법을 소개합니다.</p>
+<p><a href="https://www.google.co.kr/admob" target="_blank" rel="noopener">https://www.google.co.kr/admob</a> 구글 애드몹 페이지</p>
+<p>구글 계정으로 로그인 할 수 있습니다.</p>
+<p>우선 애드몹 페이지에서 광고를 붙일 앱을 설정합니다. <code>앱 추가</code> 버튼을 통해 추가할 수 있습니다.</p>
+<p><br>광고를 부착할 앱이 기존에 스토어에 등록되어있던 앱인지, 새로 만들 앱인지 선택합니다. 저는 아직 스토어...</p>
+            
+            <span class="read-more"><a href="/2018/05/06/ios-admob/" title="Read article" class="posttitle">Read article</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/iOS">
+                  <b>「 </b>IOS<b> 」</b>
+                </a>
+            
+            May 03, 2018
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2018/05/03/iboutlet-strong-weak/" title="Interface Builder IBOutlet연결에 Strong과 Weak 어떤것을 써야할까?" class="posttitle">Interface Builder IBOutlet연결에 Strong과 Weak 어떤것을 써야할까?</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>Words count</i>
+                        4.5k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                        4 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/Interface-Builder/">Interface Builder</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/Storyboard/">Storyboard</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/iOS/">iOS</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p>Interface Builder를 사용하는 프로젝트에서 View를 코드상에서 제어하기 위해 <code>IBOutlet</code>으로 <code>스토리보드</code> <-> <code>코드</code> 를 연결하게 됩니다.<br><code>Ctrl</code>키를 누르고 View를 .m 또는 .h 파일로 가져오면 다음과 같이 IBOutlet 연결 팝업이 뜹니다.<br></-></p>
+<p>여기에서 아마도 Property명 또는 Action명을 입력 후 <code>Connect</code> 버튼을 눌러 커넥션을 생성하셨을텐데요.<br>혹시, 아래쪽의 <code>Storage</code> 영역을 확인해보신적이 있으신가요?</p>
+<p>아마도...</p>
+            
+            <span class="read-more"><a href="/2018/05/03/iboutlet-strong-weak/" title="Read article" class="posttitle">Read article</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/iOS">
+                  <b>「 </b>IOS<b> 」</b>
+                </a>
+            
+            April 16, 2018
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2018/04/16/cocoapods-prompt/" title="CocoaPods 똑똑하게 사용하기 (명령어, 사용 예시 소개)" class="posttitle">CocoaPods 똑똑하게 사용하기 (명령어, 사용 예시 소개)</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>Words count</i>
+                        3.3k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                        3 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/CocoaPods/">CocoaPods</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/iOS/">iOS</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p>iOS 프로젝트에서 CocoaPods을 사용하지 않은 프로젝트를 보기 힘들정도로 대부분의 iOS 프로젝트가 CocoaPods를 사용한다.</p>
+<pre><code>프로젝트 다운받고 -&gt; `Pod install` -&gt; 앱 실행
+</code></pre><p>너무나도 익숙한 Flow지만 막상 다른 명령어는 뭐가 있는지, <code>Pod install</code>과 <code>Pod update</code>의 차이를 정확하게 이해하고 사용하고 있지 않다.</p>
+<p>이번 기회에 <code>CocoaPods</code> 을 정확히 이해하고 사용해보자.</p>
+<h3 id="Pod-install-1"><a href="#Pod-install-1" class="headerlink" title="Pod install"></a>Pod install...</h3>
+            
+            <span class="read-more"><a href="/2018/04/16/cocoapods-prompt/" title="Read article" class="posttitle">Read article</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/iOS">
+                  <b>「 </b>IOS<b> 」</b>
+                </a>
+            
+            April 16, 2018
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2018/04/16/cocoapods/" title="iOS 프로젝트에 cocoapods 적용하기" class="posttitle">iOS 프로젝트에 cocoapods 적용하기</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>Words count</i>
+                        2.6k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                        2 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/CocoaPods/">CocoaPods</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/iOS/">iOS</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p>iOS 앱을 개발하면서 외부 라이브러리의 필요성을 느끼게 되고, 여러 라이브러리를 사용하다보면 서로 의존성이 꼬이는 문제가 발생할 수 있다.이런 문제를 해결하기 위해 자바에서는 Maven이나 Gradle등의 의존성 관리 툴을 사용한다.<br>iOS 생태계에도 감사하게 <code>CocoaPods</code>이라는 의존성 관리 툴이 있다.</p>
+<p><code>CocoaPods</code> 외에도 <code>Carthage</code> 라는 툴이 있지만, 사용해본 적 없고 사용중인 프로젝트를 본적이 아직 없다.</p>
+<p>맥 사용자라면 일단 ...</p>
+            
+            <span class="read-more"><a href="/2018/04/16/cocoapods/" title="Read article" class="posttitle">Read article</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/iOS">
+                  <b>「 </b>IOS<b> 」</b>
+                </a>
+            
+            April 15, 2018
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2018/04/15/apple-development-2/" title="iOS Application 개발 시작하기 - 2 (프로비저닝 생성, XCode 프로젝트 설정)" class="posttitle">iOS Application 개발 시작하기 - 2 (프로비저닝 생성, XCode 프로젝트 설정)</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>Words count</i>
+                        3.1k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                        3 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/Apple/">Apple</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/Xcode/">Xcode</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/iOS/">iOS</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p>지난 포스팅 <a href="http://monibu1548.github.io/2018/04/15/apple-development/">iOS Application 개발 시작하기 - 1 (개발자 등록, 인증서 등록)</a> 에서는 애플 개발자 계정을 만들고 인증서를 등록했다.</p>
+<p>이제 앱을 디바이스에서 실행시키기 위해 Provisioning Profile 을 생성하고, Xcode 프로젝트를 생성하는 과정을 다룬다.</p>
+<p>앱을 생성하기 위해서 먼저 Apple Developer에서 어떤 앱을 만들건지 App ID를 생성해야 한다.<br></p>
+<ul>
+<li>App Name : 앱 이름 ex) YourName</li>
+...</ul>
+            
+            <span class="read-more"><a href="/2018/04/15/apple-development-2/" title="Read article" class="posttitle">Read article</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/iOS">
+                  <b>「 </b>IOS<b> 」</b>
+                </a>
+            
+            April 15, 2018
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2018/04/15/apple-development/" title="iOS Application 개발 시작하기 - 1 (개발자 등록, 인증서 등록)" class="posttitle">iOS Application 개발 시작하기 - 1 (개발자 등록, 인증서 등록)</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>Words count</i>
+                        3.5k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                        3 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/Apple/">Apple</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/Xcode/">Xcode</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/iOS/">iOS</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p>iOS앱을 개발하고 AppStore에 등록, 판매하기 위해서 Apple에 개발자 계정을 등록해야 한다. 애플 개발자 계정은 1년에 약 한화로 10만원 정도 된다. Google에 비하면 정말 비싼가격이지만…! iOS 개발자가 개발자 계정 없이 먹고 살 수 없으니 등록하자!</p>
+<p>준비물은 약 10만원 정도가 든 카드와, Apple 계정이다</p>
+<p><a href="https://developer.apple.com/kr/support/development/" target="_blank" rel="noopener">https://developer.apple.com/kr/support/development/</a></p>
+<p>우측 상단의 <code>Account...</code></p>
+            
+            <span class="read-more"><a href="/2018/04/15/apple-development/" title="Read article" class="posttitle">Read article</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+    </div>
     
 </div>
 <div id="preview"></div>

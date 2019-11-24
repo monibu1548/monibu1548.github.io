@@ -52,7 +52,7 @@
                 <div class="share">
                     
                         <a href="javascript:;" class="iconfont icon-share1"></a>
-                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                        <div class="share-component-cc" data-disabled="douban,diandian,tencent"></div>
                     
                 </div>
             </div>
@@ -85,13 +85,13 @@
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>Words count</i>
-                    3.9k
+                    3.2k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
-                    4 mins.
+                    3 mins.
                 </span>
                 
                 
@@ -145,12 +145,16 @@
 <h2 id="GoogleService-Info-plist"><a href="#GoogleService-Info-plist" class="headerlink" title="GoogleService-Info.plist"></a>GoogleService-Info.plist</h2><p>iOS앱에서 Firebase에 연결하기 위해서는 <code>GoogleService-Info.plist</code> 가 필요하며. 이 파일은 Firebase에서 제공합니다.</p>
 <p><img src="../../../../images/firebaseconfig/5.png" alt=""><br>Firebase에서 프로젝트를 생성합니다.</p>
 <p><img src="../../../../images/firebaseconfig/6.png" alt=""><br>프로젝트에서 사용하고있는 Firebase 서비스의 정보를 담긴 <code>GoogleService-Info.plist</code>를 다운받습니다.<br>나중에 Cloude Message 등 다른 추가기능 사용을 선택하면 <code>GoogleService-Info.plist</code> 업데이트도 필요합니다.</p>
-<h3 id="Pod-설치"><a href="#Pod-설치" class="headerlink" title="Pod 설치"></a>Pod 설치</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod &apos;Firebase/RemoteConfig&apos;</span><br></pre></td></tr></table></figure>
-<p>Podfile에 추가 후 설치합니다.</p>
-<h3 id="AppDelegate-설정"><a href="#AppDelegate-설정" class="headerlink" title="AppDelegate 설정"></a>AppDelegate 설정</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Firebase/RemoteConfig</span><br></pre></td></tr></table></figure>
+<h3 id="Pod-설치"><a href="#Pod-설치" class="headerlink" title="Pod 설치"></a>Pod 설치</h3><pre><code>pod &#39;Firebase/RemoteConfig&#39;
+</code></pre><p>Podfile에 추가 후 설치합니다.</p>
+<h3 id="AppDelegate-설정"><a href="#AppDelegate-설정" class="headerlink" title="AppDelegate 설정"></a>AppDelegate 설정</h3><pre><code class="swift">import Firebase/RemoteConfig
+</code></pre>
 <p>사용하고 있는 AppDelegate에 RemoteConfig 모듈을 추가합니다.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -&gt; Bool &#123;</span><br><span class="line">        FirebaseApp.configure()</span><br><span class="line">        return true</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p><code>didFinishLaunchingWithOptions</code> 메소드에  Firebase.configure()를 추가하여 공유 인스턴스를 구성합니다.</p>
+<pre><code>func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -&gt; Bool {
+        FirebaseApp.configure()
+        return true
+    }
+</code></pre><p><code>didFinishLaunchingWithOptions</code> 메소드에  Firebase.configure()를 추가하여 공유 인스턴스를 구성합니다.</p>
 <p><img src="../../../../images/firebaseconfig/7.png" alt=""></p>
 <p>fetch 과정을 통해 Firebase에 등록했던 매개변수들이 정상적으로 내려오는지 확인해봅니다.</p>
 
@@ -178,7 +182,7 @@
                     <p>Jingyu Jung</p>
                     <span>iOS Engineer 정진규</span>
                     <dl>
-                        <dd><a href="https://github.com/TriDiamond" target="_blank"><span
+                        <dd><a href="https://monibu1548.github.io" target="_blank"><span
                                     class=" iconfont icon-github"></span></a></dd>
                         <dd><a href="https://twitter.com/TriDiamond6" target="_blank"><span
                                     class=" iconfont icon-twitter"></span></a></dd>

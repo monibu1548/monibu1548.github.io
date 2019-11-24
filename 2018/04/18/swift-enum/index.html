@@ -11,7 +11,9 @@
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="TriDiamond Obsidian,"> 
     <meta name="description" content="스위프트의 Enum 기본enum의 선언은 enum 키워드로 합니다.
-1234enum Languaegs : String &amp;#123;    case Korean = &#34;KR&#34;    c,"> 
+enum Languaegs : String {
+    case Korean = &amp;quot;KR&amp;quot;
+  ,"> 
     <meta name="author" content="Jingyu Jung"> 
     <link rel="alternative" href="atom.xml" title="JingyuJung&#39;s Blog" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -53,7 +55,7 @@
                 <div class="share">
                     
                         <a href="javascript:;" class="iconfont icon-share1"></a>
-                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                        <div class="share-component-cc" data-disabled="douban,diandian,tencent"></div>
                     
                 </div>
             </div>
@@ -86,13 +88,13 @@
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>Words count</i>
-                    11k
+                    3.4k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
-                    10 mins.
+                    3 mins.
                 </span>
                 
                 
@@ -127,23 +129,83 @@
     <div class='main'>
         <div class="content markdown animated fadeIn">
             <h2 id="스위프트의-Enum-기본"><a href="#스위프트의-Enum-기본" class="headerlink" title="스위프트의 Enum 기본"></a>스위프트의 Enum 기본</h2><p>enum의 선언은 <code>enum</code> 키워드로 합니다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Languaegs</span> : <span class="title">String</span> </span>&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="type">Korean</span> = <span class="string">"KR"</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">Japanese</span> = <span class="string">"JP"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="swift">enum Languaegs : String {
+    case Korean = &quot;KR&quot;
+    case Japanese = &quot;JP&quot;
+}
+</code></pre>
 <p>위 예시 하나로도 Obj-C의 Enum과의 많은 차이점을 느낄 수 있습니다.</p>
 <p>Enum에 String을 넣을 수 있다니!!<br>Obj-C 에서 Enum을 NSString에 매핑하기 위해 얼마나 많은 노오오력이 필요했던가!</p>
-<h3 id="사용-예시-1-서버에서-String으로-내려준-“KR”를-num에-매핑하기"><a href="#사용-예시-1-서버에서-String으로-내려준-“KR”를-num에-매핑하기" class="headerlink" title="사용 예시 1) 서버에서 String으로 내려준 “KR”를 num에 매핑하기"></a>사용 예시 1) 서버에서 String으로 내려준 “KR”를 num에 매핑하기</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> language = <span class="type">Languages</span>.<span class="keyword">init</span>(rawValue: <span class="string">"KR"</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="사용-예시-1-서버에서-String으로-내려준-“KR”를-num에-매핑하기"><a href="#사용-예시-1-서버에서-String으로-내려준-“KR”를-num에-매핑하기" class="headerlink" title="사용 예시 1) 서버에서 String으로 내려준 “KR”를 num에 매핑하기"></a>사용 예시 1) 서버에서 String으로 내려준 “KR”를 num에 매핑하기</h3><pre><code class="swift">let language = Languages.init(rawValue: &quot;KR&quot;)
+</code></pre>
 <p>끝. 참 쉽죠?</p>
-<h3 id="사용-예시-Swift-enum을-서버에-전달하기-위해-Serialize를-하기"><a href="#사용-예시-Swift-enum을-서버에-전달하기-위해-Serialize를-하기" class="headerlink" title="사용 예시 )Swift enum을 서버에 전달하기 위해 Serialize를 하기"></a>사용 예시 )Swift enum을 서버에 전달하기 위해 Serialize를 하기</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> language = <span class="type">Languages</span>.<span class="type">Korean</span></span><br><span class="line">language.rawValue  <span class="comment">//  "KR"</span></span><br></pre></td></tr></table></figure>
-<h2 id="Switch-에서의-Enum"><a href="#Switch-에서의-Enum" class="headerlink" title="Switch 에서의 Enum"></a>Switch 에서의 Enum</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> language = <span class="type">Languages</span>.<span class="type">Korean</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">switch</span> language &#123;</span><br><span class="line"><span class="keyword">case</span> .<span class="type">Korean</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"안녕하세요"</span>)</span><br><span class="line"><span class="keyword">case</span> .<span class="type">Japanese</span>:</span><br><span class="line">    <span class="built_in">print</span> (<span class="string">"こんにちは。"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="사용-예시-Swift-enum을-서버에-전달하기-위해-Serialize를-하기"><a href="#사용-예시-Swift-enum을-서버에-전달하기-위해-Serialize를-하기" class="headerlink" title="사용 예시 )Swift enum을 서버에 전달하기 위해 Serialize를 하기"></a>사용 예시 )Swift enum을 서버에 전달하기 위해 Serialize를 하기</h3><pre><code class="swift">let language = Languages.Korean
+language.rawValue  //  &quot;KR&quot;
+</code></pre>
+<h2 id="Switch-에서의-Enum"><a href="#Switch-에서의-Enum" class="headerlink" title="Switch 에서의 Enum"></a>Switch 에서의 Enum</h2><pre><code class="swift">let language = Languages.Korean
+
+switch language {
+case .Korean:
+    print(&quot;안녕하세요&quot;)
+case .Japanese:
+    print (&quot;こんにちは。&quot;)
+}
+</code></pre>
 <p>결과는 <code>안녕하세요</code></p>
 <p><code>Switch</code> 또는 <code>if</code> 문에서 enum을 사용할 때 <code>.Korean</code> 처럼 enum 타입명을 앞에 붙이지 않아도 됩니다. 열거형의 이름은 스위프트의 타입 검사기가 자동으로 알아낼 수 있기 때문에 생략할 수 있습니다.</p>
 <p>타입 이름이 긴 enum 의 경우에 유용합니다.</p>
-<h2 id="nested-enum"><a href="#nested-enum" class="headerlink" title="nested enum"></a>nested enum</h2><p>enum 의 값으로 enum도 사용 가능합니다.<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Computer</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">OS</span> </span>&#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="type">Windows</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">Linux</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">MadeBy</span> </span>&#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="type">Apple</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">Samsung</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">LG</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">case</span> <span class="type">PowerButton</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">Monitor</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="nested-enum"><a href="#nested-enum" class="headerlink" title="nested enum"></a>nested enum</h2><p>enum 의 값으로 enum도 사용 가능합니다.</p>
+<pre><code class="swift">enum Computer {
+    enum OS {
+        case Windows
+        case Linux
+    }
+    enum MadeBy {
+        case Apple
+        case Samsung
+        case LG
+    }
+    case PowerButton
+    case Monitor
+}
+</code></pre>
 <p>Computer.OS.Windows<br>Computer.MakeBy.LG<br>Computer.PowerButton</p>
 <p>위와 같은 예시로 사용 가능합니다.</p>
 <h2 id="enum의-메소드"><a href="#enum의-메소드" class="headerlink" title="enum의 메소드"></a>enum의 메소드</h2><p>기타 다른 언어와 마찬가지로 Swift 에서도 enum 에 개별 메소드 구현이 가능합니다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Languaegs</span> : <span class="title">String</span> </span>&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="type">Korean</span> = <span class="string">"KR"</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">Japanese</span> = <span class="string">"JP"</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">hello</span><span class="params">()</span></span> -&gt; <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">switch</span> <span class="keyword">self</span>:</span><br><span class="line">            <span class="keyword">case</span> .<span class="type">Korean</span> <span class="keyword">return</span> <span class="string">"안녕하세요"</span></span><br><span class="line">            <span class="keyword">case</span> .<span class="type">Japanese</span> <span class="keyword">return</span> <span class="string">"こんにちは。"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> language.<span class="type">Korean</span>.hello()</span><br></pre></td></tr></table></figure>
+<pre><code class="swift">enum Languaegs : String {
+    case Korean = &quot;KR&quot;
+    case Japanese = &quot;JP&quot;
+
+    func hello() -&gt; String {
+        switch self:
+            case .Korean return &quot;안녕하세요&quot;
+            case .Japanese return &quot;こんにちは。&quot;
+    }
+}
+
+let language.Korean.hello()
+</code></pre>
 <p>languages.Korean.hello() 의 결과는 “안녕하세요” 입니다.<br>메소드 내부에서는 switch 문에서 self 를 통해 적절한 분기처리를 해야합니다.</p>
-<h3 id="정적-메소드"><a href="#정적-메소드" class="headerlink" title="정적 메소드"></a>정적 메소드</h3><p>enum 의 인스턴스 메소드 외에도 정적 메소드 구현이 가능합니다.<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Languages</span> : <span class="title">String</span> </span>&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="type">Korean</span> = <span class="string">"KR"</span></span><br><span class="line">    <span class="keyword">case</span> <span class="type">Japanese</span> = <span class="string">"JP"</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">hello</span><span class="params">()</span></span> -&gt; <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">switch</span> <span class="keyword">self</span>:</span><br><span class="line">            <span class="keyword">case</span> .<span class="type">Korean</span> <span class="keyword">return</span> <span class="string">"안녕하세요"</span></span><br><span class="line">            <span class="keyword">case</span> .<span class="type">Japanese</span> <span class="keyword">return</span> <span class="string">"こんにちは。"</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">fromType</span><span class="params">(type : String)</span></span> -&gt; <span class="type">Languages</span>? &#123;</span><br><span class="line">        <span class="keyword">if</span> type == <span class="string">"KR"</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> .<span class="type">Korean</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> .<span class="type">Japanese</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">Languages</span>.fromType(<span class="string">"KR"</span>)</span><br></pre></td></tr></table></figure></p>
+<h3 id="정적-메소드"><a href="#정적-메소드" class="headerlink" title="정적 메소드"></a>정적 메소드</h3><p>enum 의 인스턴스 메소드 외에도 정적 메소드 구현이 가능합니다.</p>
+<pre><code class="swift">enum Languages : String {
+    case Korean = &quot;KR&quot;
+    case Japanese = &quot;JP&quot;
+
+    func hello() -&gt; String {
+        switch self:
+            case .Korean return &quot;안녕하세요&quot;
+            case .Japanese return &quot;こんにちは。&quot;
+    }
+    static func fromType(type : String) -&gt; Languages? {
+        if type == &quot;KR&quot; {
+            return .Korean
+        }
+        return .Japanese
+    }
+}
+
+Languages.fromType(&quot;KR&quot;)
+</code></pre>
 <p>처럼 사용 가능하며 주로 enum을 생성할 때 rawValue로 정의되지 않은 값이 들어왔을 때 예외 처리를 위해 사용한다.</p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
@@ -170,7 +232,7 @@
                     <p>Jingyu Jung</p>
                     <span>iOS Engineer 정진규</span>
                     <dl>
-                        <dd><a href="https://github.com/TriDiamond" target="_blank"><span
+                        <dd><a href="https://monibu1548.github.io" target="_blank"><span
                                     class=" iconfont icon-github"></span></a></dd>
                         <dd><a href="https://twitter.com/TriDiamond6" target="_blank"><span
                                     class=" iconfont icon-twitter"></span></a></dd>

@@ -52,7 +52,7 @@
                 <div class="share">
                     
                         <a href="javascript:;" class="iconfont icon-share1"></a>
-                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                        <div class="share-component-cc" data-disabled="douban,diandian,tencent"></div>
                     
                 </div>
             </div>
@@ -85,13 +85,13 @@
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>Words count</i>
-                    8k
+                    3.7k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
-                    7 mins.
+                    3 mins.
                 </span>
                 
                 
@@ -132,7 +132,32 @@
 <p>Keyboard가 나타날 수 있는 ViewController의 가장 하단에 View를 하나 끼워넣습니다.<br>이 View는 키보드의 show, dismiss 동일한 타이밍, 사이즈로 동작하게 만들겁니다.</p>
 <p>Contraint를 이용해 topAnchor를 기존에 가장 하단에 있던 뷰의 bottomAnchor에 연결하고, bottomAnchor는 viewController의 root view의 bottom layout guide에 연결해줍니다.<br>그리고 height는 키보드와 동일한 값을 갖게 할거고 초기값은 0으로 설정해줍니다.(키보드 없는상태)</p>
 <p>이제 <code>Notification</code>을 이용해 이 View의 height를 조절하면 됩니다.</p>
-<h2 id="Keyboard-Notification-Register"><a href="#Keyboard-Notification-Register" class="headerlink" title="Keyboard Notification Register"></a>Keyboard Notification Register</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">TranslationViewController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">initializeKeyboardEvent</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="type">NotificationCenter</span>.<span class="keyword">default</span>.addObserver(<span class="keyword">self</span>, selector: #selector(keyBoardWillShow(notification:)), name: .<span class="type">UIKeyboardWillShow</span>, object: <span class="literal">nil</span>)</span><br><span class="line">        <span class="type">NotificationCenter</span>.<span class="keyword">default</span>.addObserver(<span class="keyword">self</span>, selector: #selector(keyBoardWillHide(notification:)), name: .<span class="type">UIKeyboardWillHide</span>, object: <span class="literal">nil</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">removeKeyboardEvent</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="type">NotificationCenter</span>.<span class="keyword">default</span>.removeObserver(<span class="keyword">self</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@objc</span> <span class="function"><span class="keyword">func</span> <span class="title">keyBoardWillShow</span><span class="params">(notification: NSNotification)</span></span> &#123;</span><br><span class="line">        <span class="keyword">let</span> userInfo:<span class="type">NSDictionary</span> = notification.userInfo! <span class="keyword">as</span> <span class="type">NSDictionary</span></span><br><span class="line">        <span class="keyword">let</span> keyboardFrame:<span class="type">NSValue</span> = userInfo.value(forKey: <span class="type">UIKeyboardFrameEndUserInfoKey</span>) <span class="keyword">as</span>! <span class="type">NSValue</span></span><br><span class="line">        <span class="keyword">let</span> keyboardRectangle = keyboardFrame.cgRectValue</span><br><span class="line">        <span class="keyword">let</span> keyboardHeight = keyboardRectangle.height</span><br><span class="line"></span><br><span class="line">        <span class="keyword">self</span>.keyboardHeightConstraint.constant = keyboardHeight</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@objc</span> <span class="function"><span class="keyword">func</span> <span class="title">keyBoardWillHide</span><span class="params">(notification: NSNotification)</span></span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.keyboardHeightConstraint.constant = <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Keyboard-Notification-Register"><a href="#Keyboard-Notification-Register" class="headerlink" title="Keyboard Notification Register"></a>Keyboard Notification Register</h2><pre><code class="swift">extension TranslationViewController {
+
+    private func initializeKeyboardEvent() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyBoardWillShow(notification:)), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyBoardWillHide(notification:)), name: .UIKeyboardWillHide, object: nil)
+    }
+
+    private func removeKeyboardEvent() {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    @objc func keyBoardWillShow(notification: NSNotification) {
+        let userInfo:NSDictionary = notification.userInfo! as NSDictionary
+        let keyboardFrame:NSValue = userInfo.value(forKey: UIKeyboardFrameEndUserInfoKey) as! NSValue
+        let keyboardRectangle = keyboardFrame.cgRectValue
+        let keyboardHeight = keyboardRectangle.height
+
+        self.keyboardHeightConstraint.constant = keyboardHeight
+    }
+
+    @objc func keyBoardWillHide(notification: NSNotification) {
+        self.keyboardHeightConstraint.constant = 0
+    }
+
+}
+</code></pre>
 <p>위 코드는 Keyboard Notification 관련 로직을 처리하기 위해 extension으로 분리한 controller입니다.</p>
 <ul>
 <li>initializeKeyboardEvent : Keyboard의 Show, Hide 이벤트를 받기위해 Notification Center에 옵저버를 등록합니다.</li>
@@ -140,7 +165,18 @@
 <li>keyBoardWillHide : Keyboard가 사라질때 호출됩니다.</li>
 <li>removeKeyboardEvent : Notification을 더 이상 사용하지 않을 때 옵저버를 제거합니다.</li>
 </ul>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TranslationViewController</span>: <span class="title">UIViewController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.viewDidLoad()</span><br><span class="line">        <span class="keyword">self</span>.initializeKeyboardEvent()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">deinit</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.removeKeyboardEvent()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="swift">class TranslationViewController: UIViewController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.initializeKeyboardEvent()
+    }
+
+    deinit {
+        self.removeKeyboardEvent()
+    }
+}
+</code></pre>
 <p>extension에서 구현했던 Nofitication관련 메소드들을 호출하는 메인 뷰컨트롤러입니다.</p>
 <p>키보드를 사용하는 뷰 컨트롤러가 많지는 않지만, 추가될 때마다 이 작업을 계속해야 할 텐데, 아예 상속받을 뷰 컨트롤러을 하나 만들어 주는 것도 좋을 것 같습니다.</p>
 
@@ -168,7 +204,7 @@
                     <p>Jingyu Jung</p>
                     <span>iOS Engineer 정진규</span>
                     <dl>
-                        <dd><a href="https://github.com/TriDiamond" target="_blank"><span
+                        <dd><a href="https://monibu1548.github.io" target="_blank"><span
                                     class=" iconfont icon-github"></span></a></dd>
                         <dd><a href="https://twitter.com/TriDiamond6" target="_blank"><span
                                     class=" iconfont icon-twitter"></span></a></dd>

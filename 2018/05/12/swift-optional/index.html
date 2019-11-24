@@ -52,7 +52,7 @@
                 <div class="share">
                     
                         <a href="javascript:;" class="iconfont icon-share1"></a>
-                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                        <div class="share-component-cc" data-disabled="douban,diandian,tencent"></div>
                     
                 </div>
             </div>
@@ -85,13 +85,13 @@
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>Words count</i>
-                    7k
+                    3.7k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
-                    6 mins.
+                    3 mins.
                 </span>
                 
                 
@@ -126,24 +126,53 @@
     <div class='main'>
         <div class="content markdown animated fadeIn">
             <h2 id="Optional"><a href="#Optional" class="headerlink" title="Optional"></a>Optional</h2><p>Swift가 갖는 Optional이라는 개념은 변수의 값이 <code>nil</code>일 수 있다는 것을 표현하는 건데요, 반대로 Optional이 아니라면(non-optional) 해당 값은 <code>nil</code>이 될 수 없음을 의미합니다. Objective-C를 사용해왔다면 Optional이라는 표현이 너무나도 당연해보일 수 있지만, Swift에서는 Optional은 말 그대로 <code>옵션(선택적)</code> 이며 기본값은 non-Optional 입니다.</p>
-<h2 id="선언"><a href="#선언" class="headerlink" title="선언"></a>선언</h2><p>Optional 변수의 선언은 <code>?</code> 키워드를 사용합니다<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name: <span class="type">String</span>?</span><br></pre></td></tr></table></figure></p>
+<h2 id="선언"><a href="#선언" class="headerlink" title="선언"></a>선언</h2><p>Optional 변수의 선언은 <code>?</code> 키워드를 사용합니다</p>
+<pre><code class="swift">var name: String?
+</code></pre>
 <p>Optional의 디폴트 값은 <code>nil</code>로 name은 <code>nil</code>을 갖게 됩니다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name: <span class="type">String</span> <span class="comment">// 컴파일에러</span></span><br><span class="line"><span class="keyword">var</span> name = <span class="literal">nil</span> <span class="comment">// 컴파일에러</span></span><br></pre></td></tr></table></figure>
+<pre><code class="swift">var name: String // 컴파일에러
+var name = nil // 컴파일에러
+</code></pre>
 <p>만약 Optional 키워드를 사용하지 않았다면 값을 입력하라는 에러가 발생하고, 그 이후에라도 nil을 넣으려하면 컴파일에러가 발생합니다.<br>여기에서 Swift가 기본적으로 non-optional을 지원하면서 갖는 <code>엄청난 장점</code>을 느낄 수 있습니다.<br>nil에 대한 컴파일 에러를 통해 개발자는 nil에 대해 명확한 예외처리가 강제되며, 런타임에 nil로 인한 문제를 <code>컴파일 단계</code>에서 예방할 수 있습니다.</p>
 <p>그래서 Swift가 잠재적 오류에 대해 안전하다고 표현하는 글도 많이 있습니다.</p>
-<h2 id="Optional-변수의-이용"><a href="#Optional-변수의-이용" class="headerlink" title="Optional 변수의 이용"></a>Optional 변수의 이용</h2><p>Optional변수는 <code>nil</code>을 가질 수 있는 특별한 변수입니다. Optional 변수를 이용해서 작업할 때 Optional을 해제하는 과정이 추가적으로 필요합니다.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var number1:Int? = 20</span><br><span class="line">var number2:Int = 100</span><br><span class="line"></span><br><span class="line">number1 + number2</span><br></pre></td></tr></table></figure></p>
-<p>Int(optional)와 Int(non-optional)의 연산을 시도하면<br><code>Value of optional type &#39;Int?&#39; not unwrapped; did you mean to use &#39;!&#39; or &#39;?&#39;?</code></p>
+<h2 id="Optional-변수의-이용"><a href="#Optional-변수의-이용" class="headerlink" title="Optional 변수의 이용"></a>Optional 변수의 이용</h2><p>Optional변수는 <code>nil</code>을 가질 수 있는 특별한 변수입니다. Optional 변수를 이용해서 작업할 때 Optional을 해제하는 과정이 추가적으로 필요합니다.</p>
+<pre><code>var number1:Int? = 20
+var number2:Int = 100
+
+number1 + number2
+</code></pre><p>Int(optional)와 Int(non-optional)의 연산을 시도하면<br><code>Value of optional type &#39;Int?&#39; not unwrapped; did you mean to use &#39;!&#39; or &#39;?&#39;?</code></p>
 <p>위 컴파일 에러가 발생합니다.<br>number1은 Optional로 nil값을 가질 <code>가능성</code>이 있기 때문에 컴파일 단계에서 에러를 발생시킵니다. 연산을 수행하기 위해서는 <code>unwrapping</code> 또는 <code>binding</code> 과정이 필요합니다.</p>
 <h3 id="Optional-Unwrapping-옵셔널-해제"><a href="#Optional-Unwrapping-옵셔널-해제" class="headerlink" title="Optional Unwrapping (옵셔널 해제)"></a>Optional Unwrapping (옵셔널 해제)</h3><p>Optional Unwrapping이란 Optional 변수에서 Optional 껍데기를 벗겨내는 작업입니다. </p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> number1:<span class="type">Int</span>? = <span class="number">20</span></span><br><span class="line"><span class="keyword">var</span> number2:<span class="type">Int</span> = <span class="number">100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> number1 &#123;</span><br><span class="line">    <span class="keyword">let</span> sum = number1! + number1!</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="swift">var number1:Int? = 20
+var number2:Int = 100
+
+if number1 {
+    let sum = number1! + number1!
+}
+
+</code></pre>
 <p>if 로 optional 변수의 값이 nil이 아닌지 판별 후 <code>!</code> unwrapping 키워드를 통해 강제로 값을 꺼내옵니다. 만약 if로 nil 체크를 하지 않고 <code>!</code>을 사용한다면 런타임 오류가 발생할 수 있습니다.</p>
-<h3 id="Optional-Binding-옵셔널-바인딩"><a href="#Optional-Binding-옵셔널-바인딩" class="headerlink" title="Optional Binding (옵셔널 바인딩)"></a>Optional Binding (옵셔널 바인딩)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var number1:Int? = 20</span><br><span class="line">var number2:Int = 100</span><br><span class="line"></span><br><span class="line">if let nonOptionalNumber1 = number1 &#123;</span><br><span class="line">    let sum = nonOptionalNumber1 + number2</span><br></pre></td></tr></table></figure>
-<p>Optional Unwrapping과 비슷하지만 Optional 값을 새로운 상수로 받고, 그 이후로 non-optional값을 사용한다는 차이점이 있다.<br>새로 선언된 nonOptionalNumber1은 이미 non-optional로 연산에 사용할 때 <code>!</code> 키워드를 사용할 필요가 없다.</p>
+<h3 id="Optional-Binding-옵셔널-바인딩"><a href="#Optional-Binding-옵셔널-바인딩" class="headerlink" title="Optional Binding (옵셔널 바인딩)"></a>Optional Binding (옵셔널 바인딩)</h3><pre><code>var number1:Int? = 20
+var number2:Int = 100
+
+if let nonOptionalNumber1 = number1 {
+    let sum = nonOptionalNumber1 + number2
+</code></pre><p>Optional Unwrapping과 비슷하지만 Optional 값을 새로운 상수로 받고, 그 이후로 non-optional값을 사용한다는 차이점이 있다.<br>새로 선언된 nonOptionalNumber1은 이미 non-optional로 연산에 사용할 때 <code>!</code> 키워드를 사용할 필요가 없다.</p>
 <h2 id="Optional-Chaining-옵셔널-체이닝"><a href="#Optional-Chaining-옵셔널-체이닝" class="headerlink" title="Optional Chaining (옵셔널 체이닝)"></a>Optional Chaining (옵셔널 체이닝)</h2><p>여러 객체를 혼합해서 사용하다보면 Optional끼리의 연산이 필요한 경우가 있습니다. 이 경우에 객체마다 옵셔널 바인딩을 사용하게 되면, if문이 꽤나 복잡해지겠죠<br>Optional Chaining을 통해서 좀 더 간단하게 Optional 예외처리를 할 수 있습니다.</p>
 <p>swift에서 <code>.</code> 을 통해 클래스의 프로퍼티에 접근이 가능합다는 점을 이용합니다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> b:<span class="type">B</span>?</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> <span class="built_in">c</span>:<span class="type">String</span>?</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="swift">class A {
+    var b:B?
+}
+
+class B {
+    var c:String?
+}
+</code></pre>
 <p>이 경우 A의 프로퍼티 b의 c에 접근할 때, b에대한 옵셔널, c에대한 옵셔널, 2번의 바인딩이 필요합니다.<br>이 경우에 옵셔널 체이닝을 통해 한줄로 옵셔널 바인딩이 가능합니다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a:<span class="type">A</span> = <span class="type">A</span>()</span><br><span class="line"><span class="keyword">if</span> a.b?.<span class="built_in">c</span> &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="swift">var a:A = A()
+if a.b?.c {
+}
+</code></pre>
 <p><code>a.b?.c</code> 를 통해 b의 옵셔널, c의 옵셔널 바인딩을 모두 처리가능합니다.</p>
 <h2 id="Optional이-점점-불편해-보이는데-왜-사용할까"><a href="#Optional이-점점-불편해-보이는데-왜-사용할까" class="headerlink" title="Optional이 점점 불편해 보이는데 왜 사용할까?"></a>Optional이 점점 불편해 보이는데 왜 사용할까?</h2><p>Objective-C에는 아직 <code>nil</code>타입이 존재하며 하나의 프로젝트에서 obj-c와 swift를 혼용해서 사용할 수 있습니다. 따라서 obj-c와의 상호운용성을 위해 사용합니다.</p>
 
@@ -171,7 +200,7 @@
                     <p>Jingyu Jung</p>
                     <span>iOS Engineer 정진규</span>
                     <dl>
-                        <dd><a href="https://github.com/TriDiamond" target="_blank"><span
+                        <dd><a href="https://monibu1548.github.io" target="_blank"><span
                                     class=" iconfont icon-github"></span></a></dd>
                         <dd><a href="https://twitter.com/TriDiamond6" target="_blank"><span
                                     class=" iconfont icon-twitter"></span></a></dd>

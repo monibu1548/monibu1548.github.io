@@ -52,7 +52,7 @@
                 <div class="share">
                     
                         <a href="javascript:;" class="iconfont icon-share1"></a>
-                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                        <div class="share-component-cc" data-disabled="douban,diandian,tencent"></div>
                     
                 </div>
             </div>
@@ -85,13 +85,13 @@
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>Words count</i>
-                    15k
+                    5k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
-                    14 mins.
+                    5 mins.
                 </span>
                 
                 
@@ -127,20 +127,119 @@
         <div class="content markdown animated fadeIn">
             <h2 id="Sqlite3를-이용하여-CRUD-구현하기"><a href="#Sqlite3를-이용하여-CRUD-구현하기" class="headerlink" title="Sqlite3를 이용하여 CRUD 구현하기"></a>Sqlite3를 이용하여 CRUD 구현하기</h2><p>Serverless한 앱을 주로 만들면 데이터를 로컬에 저장하게 되는데, 주로 UserDefault를 사용합니다. 데이터가 단순하고 양이 많지 않다면 상관없지만 CRUD 횟수가 많고 데이터 양이 많다면<br>Database 를 사용하는게 바람직합니다.</p>
 <p>iOS Swift4환경에서 Sqlite3를 이용해서 데이터 CRUD를 구현하는 과정을 설명합니다.</p>
-<h2 id="import-Sqlite3"><a href="#import-Sqlite3" class="headerlink" title="import Sqlite3"></a>import Sqlite3</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"><span class="keyword">import</span> SQLite3</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WorkingTimeDBManager</span>: <span class="title">NSObject</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="import-Sqlite3"><a href="#import-Sqlite3" class="headerlink" title="import Sqlite3"></a>import Sqlite3</h2><pre><code class="swift">import UIKit
+import SQLite3
+
+class WorkingTimeDBManager: NSObject {
+
+}
+</code></pre>
 <p>근무시간을 관리하는 데이터를 저장하는 앱을 제작중입니다. 근무시간을 저장하기 위한 역할을 하는 WorkingTimeDBManager를 구현합니다.<br><code>import SQLite3</code> 로 해당 파일에서 SQLite3 모듈을 사용할 수 있도록 선언합니다.</p>
 <p>WorkingTime 모델은</p>
 <p>id : Primary 키<br>start : 근무 시작 시간<br>end : 근무 종료 시간</p>
 <p>로 구성할 예정입니다.</p>
 <h2 id="CRUD"><a href="#CRUD" class="headerlink" title="CRUD"></a>CRUD</h2><p>가장 기본이 되는 CRUD 메소드를 선언합니다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">createWorkingTime</span><span class="params">(start: NSDate, end: NSDate)</span></span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">updateWorkingTime</span><span class="params">(id: Int, start: NSDate, end: NSDate)</span></span> &#123;</span><br><span class="line">    ....</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">readWorkingTimes</span><span class="params">(start: NSDate, end: NSDate)</span></span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">deleteWorkingTime</span><span class="params">(id: Int)</span></span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="CRUD-Create"><a href="#CRUD-Create" class="headerlink" title="CRUD - Create"></a>CRUD - Create</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">createWorkingTime</span><span class="params">(start: NSDate, end: NSDate)</span></span> &#123;</span><br><span class="line">        <span class="keyword">var</span> insertStatement: <span class="type">OpaquePointer</span>? = <span class="literal">nil</span></span><br><span class="line">        <span class="keyword">let</span> insertStatementString = <span class="string">"INSERT INTO WorkingTimes (start, end) VALUES (?, ?);"</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> sqlite3_prepare_v2(db, insertStatementString, -<span class="number">1</span>, &amp;insertStatement, <span class="literal">nil</span>) == <span class="type">SQLITE_OK</span> &#123;</span><br><span class="line">            </span><br><span class="line">            sqlite3_bind_int(insertStatement, <span class="number">1</span>, <span class="type">Int32</span>(start.timeIntervalSince1970))</span><br><span class="line">            sqlite3_bind_int(insertStatement, <span class="number">2</span>, <span class="type">Int32</span>(end.timeIntervalSince1970))</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> sqlite3_step(insertStatement) == <span class="type">SQLITE_DONE</span> &#123;</span><br><span class="line">                <span class="comment">// Success</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// Fail</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//Fail</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 4</span></span><br><span class="line">        sqlite3_finalize(insertStatement)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="swift">    private func createWorkingTime(start: NSDate, end: NSDate) {
+        ...
+    }
+
+    private func updateWorkingTime(id: Int, start: NSDate, end: NSDate) {
+        ....
+    }
+
+    private func readWorkingTimes(start: NSDate, end: NSDate) {
+        ...
+    }
+
+    private func deleteWorkingTime(id: Int) {
+        ...
+    }
+</code></pre>
+<h3 id="CRUD-Create"><a href="#CRUD-Create" class="headerlink" title="CRUD - Create"></a>CRUD - Create</h3><pre><code class="swift">private func createWorkingTime(start: NSDate, end: NSDate) {
+        var insertStatement: OpaquePointer? = nil
+        let insertStatementString = &quot;INSERT INTO WorkingTimes (start, end) VALUES (?, ?);&quot;
+
+        if sqlite3_prepare_v2(db, insertStatementString, -1, &amp;insertStatement, nil) == SQLITE_OK {
+
+            sqlite3_bind_int(insertStatement, 1, Int32(start.timeIntervalSince1970))
+            sqlite3_bind_int(insertStatement, 2, Int32(end.timeIntervalSince1970))
+
+            if sqlite3_step(insertStatement) == SQLITE_DONE {
+                // Success
+            } else {
+                // Fail
+            }
+        } else {
+            //Fail
+        }
+        // 4
+        sqlite3_finalize(insertStatement)
+    }
+
+</code></pre>
 <p>근무시간을 저장하는 메소드입니다. 근무시작시간과 종료 시간을 받아서 <code>WorkingTimes</code> 테이블에 start, end 컬럼에 데이터를 추가합니다. id 컬럼은 테이블 선언시 AUTOINCREMENT로 선언했습니다.</p>
-<h3 id="CRUD-Read"><a href="#CRUD-Read" class="headerlink" title="CRUD - Read"></a>CRUD - Read</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">readWorkingTimes</span><span class="params">(start: NSDate, end: NSDate)</span></span> &#123;</span><br><span class="line">        <span class="keyword">let</span> queryStatementString = <span class="string">"SELECT * FROM WorkingTimes;"</span></span><br><span class="line">        <span class="keyword">var</span> queryStatement: <span class="type">OpaquePointer</span>? = <span class="literal">nil</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> sqlite3_prepare_v2(db, queryStatementString, -<span class="number">1</span>, &amp;queryStatement, <span class="literal">nil</span>) == <span class="type">SQLITE_OK</span> &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span> sqlite3_step(queryStatement) == <span class="type">SQLITE_ROW</span> &#123;</span><br><span class="line">                </span><br><span class="line">                <span class="keyword">let</span> id = sqlite3_column_int(queryStatement, <span class="number">0</span>)</span><br><span class="line">                </span><br><span class="line">                <span class="keyword">let</span> queryResultCol1 = sqlite3_column_int(queryStatement, <span class="number">1</span>)</span><br><span class="line">                <span class="keyword">let</span> queryResultCol2 = sqlite3_column_int(queryStatement, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">                <span class="built_in">print</span>(<span class="string">"<span class="subst">\(id)</span> | <span class="subst">\(queryResultCol1)</span> | <span class="subst">\(queryResultCol2)</span>"</span>)</span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// Fail</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        sqlite3_finalize(queryStatement)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="CRUD-Read"><a href="#CRUD-Read" class="headerlink" title="CRUD - Read"></a>CRUD - Read</h3><pre><code class="swift">private func readWorkingTimes(start: NSDate, end: NSDate) {
+        let queryStatementString = &quot;SELECT * FROM WorkingTimes;&quot;
+        var queryStatement: OpaquePointer? = nil
+
+        if sqlite3_prepare_v2(db, queryStatementString, -1, &amp;queryStatement, nil) == SQLITE_OK {
+
+            while sqlite3_step(queryStatement) == SQLITE_ROW {
+
+                let id = sqlite3_column_int(queryStatement, 0)
+
+                let queryResultCol1 = sqlite3_column_int(queryStatement, 1)
+                let queryResultCol2 = sqlite3_column_int(queryStatement, 2)
+
+                print(&quot;\(id) | \(queryResultCol1) | \(queryResultCol2)&quot;)
+
+            }
+        } else {
+            // Fail
+        }
+
+        sqlite3_finalize(queryStatement)
+    }
+</code></pre>
 <p><code>WorkingTimes</code> 테이블의 모든 ROW를 읽어옵니다. while 문을 통해 읽어온 모든 ROW 에 대해 처리합니다.</p>
-<h3 id="CRUD-Update"><a href="#CRUD-Update" class="headerlink" title="CRUD - Update"></a>CRUD - Update</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">updateWorkingTime</span><span class="params">(id: Int, start: NSDate, end: NSDate)</span></span> &#123;</span><br><span class="line">        <span class="keyword">let</span> updateStatementString = <span class="string">"UPDATE WorkingTimes SET start = "</span> +</span><br><span class="line">            <span class="type">String</span>(start.timeIntervalSince1970) +</span><br><span class="line">            <span class="string">", end = "</span> +</span><br><span class="line">            <span class="type">String</span>(end.timeIntervalSince1970) +</span><br><span class="line">        <span class="string">" WHERE id = "</span> + <span class="type">String</span>(id)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> updateStatement: <span class="type">OpaquePointer</span>? = <span class="literal">nil</span></span><br><span class="line">        <span class="keyword">if</span> sqlite3_prepare_v2(db, updateStatementString, -<span class="number">1</span>, &amp;updateStatement, <span class="literal">nil</span>) == <span class="type">SQLITE_OK</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> sqlite3_step(updateStatement) == <span class="type">SQLITE_DONE</span> &#123;</span><br><span class="line">                <span class="comment">// Success</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// Fail</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// Fail</span></span><br><span class="line">        &#125;</span><br><span class="line">        sqlite3_finalize(updateStatement)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="CRUD-Update"><a href="#CRUD-Update" class="headerlink" title="CRUD - Update"></a>CRUD - Update</h3><pre><code class="swift">private func updateWorkingTime(id: Int, start: NSDate, end: NSDate) {
+        let updateStatementString = &quot;UPDATE WorkingTimes SET start = &quot; +
+            String(start.timeIntervalSince1970) +
+            &quot;, end = &quot; +
+            String(end.timeIntervalSince1970) +
+        &quot; WHERE id = &quot; + String(id)
+
+        var updateStatement: OpaquePointer? = nil
+        if sqlite3_prepare_v2(db, updateStatementString, -1, &amp;updateStatement, nil) == SQLITE_OK {
+            if sqlite3_step(updateStatement) == SQLITE_DONE {
+                // Success
+            } else {
+                // Fail
+            }
+        } else {
+            // Fail
+        }
+        sqlite3_finalize(updateStatement)
+    }
+</code></pre>
 <p>id에 해당하는 ROW 를 찾아서 start와 end column을 갱신합니다.</p>
-<h3 id="CRUD-Delete"><a href="#CRUD-Delete" class="headerlink" title="CRUD - Delete"></a>CRUD - Delete</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">deleteWorkingTime</span><span class="params">(id: Int)</span></span> &#123;</span><br><span class="line">        <span class="keyword">let</span> deleteStatementStirng = <span class="string">"DELETE FROM WorkingTimes WHERE id = "</span> + <span class="type">String</span>(id)</span><br><span class="line">        <span class="keyword">var</span> deleteStatement: <span class="type">OpaquePointer</span>? = <span class="literal">nil</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> sqlite3_prepare_v2(db, deleteStatementStirng, -<span class="number">1</span>, &amp;deleteStatement, <span class="literal">nil</span>) == <span class="type">SQLITE_OK</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> sqlite3_step(deleteStatement) == <span class="type">SQLITE_DONE</span> &#123;</span><br><span class="line">                <span class="comment">// Success</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// Fail</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// Fail</span></span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        sqlite3_finalize(deleteStatement)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="CRUD-Delete"><a href="#CRUD-Delete" class="headerlink" title="CRUD - Delete"></a>CRUD - Delete</h3><pre><code class="swift">private func deleteWorkingTime(id: Int) {
+        let deleteStatementStirng = &quot;DELETE FROM WorkingTimes WHERE id = &quot; + String(id)
+        var deleteStatement: OpaquePointer? = nil
+
+        if sqlite3_prepare_v2(db, deleteStatementStirng, -1, &amp;deleteStatement, nil) == SQLITE_OK {
+            if sqlite3_step(deleteStatement) == SQLITE_DONE {
+                // Success
+            } else {
+                // Fail
+            }
+        } else {
+            // Fail
+        }
+
+        sqlite3_finalize(deleteStatement)
+    }
+</code></pre>
 <p><code>WorkingTimes</code> 테이블에서 전달인자로 넘어온 id 에 해당하는 ROW 를 제거합니다.</p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
@@ -167,7 +266,7 @@
                     <p>Jingyu Jung</p>
                     <span>iOS Engineer 정진규</span>
                     <dl>
-                        <dd><a href="https://github.com/TriDiamond" target="_blank"><span
+                        <dd><a href="https://monibu1548.github.io" target="_blank"><span
                                     class=" iconfont icon-github"></span></a></dd>
                         <dd><a href="https://twitter.com/TriDiamond6" target="_blank"><span
                                     class=" iconfont icon-twitter"></span></a></dd>

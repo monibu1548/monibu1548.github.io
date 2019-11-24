@@ -52,7 +52,7 @@
                 <div class="share">
                     
                         <a href="javascript:;" class="iconfont icon-share1"></a>
-                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                        <div class="share-component-cc" data-disabled="douban,diandian,tencent"></div>
                     
                 </div>
             </div>
@@ -85,13 +85,13 @@
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>Words count</i>
-                    9k
+                    6.5k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
-                    8 mins.
+                    6 mins.
                 </span>
                 
                 
@@ -134,8 +134,9 @@
 <p><a href="http://monibu1548.github.io/2018/04/15/apple-development/">iOS Application 개발 시작하기 - 1 (개발자 등록, 인증서 등록)</a></p>
 <p><img src="../../../../images/push-cert/5.png" alt=""><br>CSR파일을 선택하고 Continue 버튼을 클릭합니다.</p>
 <p><img src="../../../../images/push-cert/6.png" alt=""><br>Push인증서 발급이 완료되었습니다. 같은 과정으로 Production환경의 Push인증서도 발급받습니다.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">참고로 Push 인증서는 앱 인증서처럼 개발 맥북에 등록하여 사용하는 것이 아닙니다.</span><br><span class="line">Push용 인증서는 iOS앱에 Push Notification을 발생시킬 때 사용하는 인증서입니다.</span><br></pre></td></tr></table></figure>
-<h2 id="프로비저닝-재발급"><a href="#프로비저닝-재발급" class="headerlink" title="프로비저닝 재발급"></a>프로비저닝 재발급</h2><p>지난번 프로비저닝 발급 포스트(<a href="http://monibu1548.github.io/2018/04/15/apple-development/">iOS Application 개발 시작하기 - 1 (개발자 등록, 인증서 등록)</a>)에서 프로비저닝에는 Certificate 정보가 포함된다고 소개했습니다.</p>
+<pre><code>참고로 Push 인증서는 앱 인증서처럼 개발 맥북에 등록하여 사용하는 것이 아닙니다.
+Push용 인증서는 iOS앱에 Push Notification을 발생시킬 때 사용하는 인증서입니다.
+</code></pre><h2 id="프로비저닝-재발급"><a href="#프로비저닝-재발급" class="headerlink" title="프로비저닝 재발급"></a>프로비저닝 재발급</h2><p>지난번 프로비저닝 발급 포스트(<a href="http://monibu1548.github.io/2018/04/15/apple-development/">iOS Application 개발 시작하기 - 1 (개발자 등록, 인증서 등록)</a>)에서 프로비저닝에는 Certificate 정보가 포함된다고 소개했습니다.</p>
 <p>따라서, Push를 위해 Certificate를 재발급 받았으니 프로비저닝도 재발급 받아야 합니다.<br>이런 귀찮음을 피하기 위해서는 앱 개발 프로젝트 초기단계에 한번에 다 발급받는 것도 방법입니다 :)</p>
 <p><img src="../../../../images/push-cert/7.png" alt=""><br>프로비저닝을 재발급 받기위해 위 페이지에 접속하면 아마 빨간색 부분이 <code>invalid</code>라고 뜰겁니다. 저는 이미 재발급을 받아버려서 active라고 나옵니다.<br>이 프로비저닝을 Delete하고 재발급 받아도 되지만 <code>Edit</code> 버튼으로 들어가서 <code>Generate</code> 해주면 자동으로 Push Certificate 가 업데이트 된 프로비저닝을 쉽게 받을 수도 있습니다.</p>
 <p><img src="../../../../images/push-cert/8.png" alt=""><br>프로비저닝 정보를 보면 <code>Push Notifications</code>가 추가된 것을 볼 수 있습니다.</p>
@@ -145,9 +146,26 @@
 <p><img src="../../../../images/push-cert/10.png" alt=""><br>지금까지 잘 진행했다면 위와 같이 2개의 체크!를 볼 수 있습니다. 프로비저닝 또는 Push 인증서에 문제가 있다면 이곳에 표시됩니다.</p>
 <h2 id="Push-Permission-획득"><a href="#Push-Permission-획득" class="headerlink" title="Push Permission 획득"></a>Push Permission 획득</h2><p>이제 정말 Push가 오는지, 보낼 수 있는지 확인이 필요합니다.</p>
 <p><code>AppDelegate</code>파일의 didFinishLaunchingWithOptions 메소드에 다음의 코드를 작성합니다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">application</span><span class="params">(<span class="number">_</span> application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?)</span></span> -&gt; <span class="type">Bool</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">UNUserNotificationCenter</span>.current().requestAuthorization(options: [.alert, .sound, .badge]) &#123;</span><br><span class="line">        (granted, error) <span class="keyword">in</span></span><br><span class="line">        <span class="keyword">guard</span> granted <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line">        <span class="type">DispatchQueue</span>.main.async &#123;</span><br><span class="line">            application.registerForRemoteNotifications()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="swift">    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -&gt; Bool {
+
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
+            (granted, error) in
+            guard granted else { return }
+            DispatchQueue.main.async {
+                application.registerForRemoteNotifications()
+            }
+        }
+
+        return true
+    }
+</code></pre>
 <p><img src="../../../../images/push-cert/11.jpeg" alt=""><br>Push도 위치정보, 사진정보등과 같이 Native를 활용하기 때문에 사용자의 권한 동의가 필요하기 때문에 동의를 얻는 코드입니다.<br>위의 코드를 넣으면 앱 실행시 사용자에게 다음과 같은 Alert으로 알람 동의를 얻습니다.</p>
-<h2 id="Device-Token-확인"><a href="#Device-Token-확인" class="headerlink" title="Device Token 확인"></a>Device Token 확인</h2><p>이제 디바이스 토큰 확인을 위해 AppDelegate파일에 <code>didRegisterForRemoteNotificationsWithDeviceToken</code> 메소드를 오버라이드 합니다<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">application</span><span class="params">(<span class="number">_</span> application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data)</span></span> &#123;</span><br><span class="line">        <span class="keyword">let</span>   tokenString = deviceToken.<span class="built_in">reduce</span>(<span class="string">""</span>, &#123;$<span class="number">0</span> + <span class="type">String</span>(format: <span class="string">"%02X"</span>, $<span class="number">1</span>)&#125;)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"deviceToken: <span class="subst">\(tokenString)</span>"</span>)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Device-Token-확인"><a href="#Device-Token-확인" class="headerlink" title="Device Token 확인"></a>Device Token 확인</h2><p>이제 디바이스 토큰 확인을 위해 AppDelegate파일에 <code>didRegisterForRemoteNotificationsWithDeviceToken</code> 메소드를 오버라이드 합니다</p>
+<pre><code class="swift">func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let   tokenString = deviceToken.reduce(&quot;&quot;, {$0 + String(format: &quot;%02X&quot;, $1)})
+        print(&quot;deviceToken: \(tokenString)&quot;)
+    }
+</code></pre>
 <p><code>시뮬레이터에서는 다르게 동작할 수 있습니다. 정확한 테스트를 위해 실제 디바이스에서 진행해주세요.</code></p>
 <p>device token을 확인하기 위해 console에 tokenString을 출력하도록 해봅니다.</p>
 <p><img src="../../../../images/push-cert/12.png" alt=""><br>앱을 실행하고 Push 권한을 허용하면 콘솔창에 위와 같은 로그가 찍힙니다.</p>
@@ -160,8 +178,10 @@
 <p>이제 다시 APN Easy Provider에서 방금 내보내기로 만든 .cer 형태의 Push certificate를 선택합니다.</p>
 <p>그리고 <code>3. Connect to:</code>를 클릭합니다. 우측의 드랍다운메뉴는 <code>gateway.sandbox.push.apple.com</code>을 선택합니다.</p>
 <p><img src="../../../../images/push-cert/17.png" alt=""><br>apple의 apn server에 연결되면 Status에</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Connecting to gateway.sandbox.push.apple.com</span><br><span class="line">Connected to server, validating identity...</span><br><span class="line">Connected to APN server successfully</span><br></pre></td></tr></table></figure>
-<p>라고 뜹니다. 이제 Push 테스트 환경 구축이 끝났습니다.</p>
+<pre><code>Connecting to gateway.sandbox.push.apple.com
+Connected to server, validating identity...
+Connected to APN server successfully
+</code></pre><p>라고 뜹니다. 이제 Push 테스트 환경 구축이 끝났습니다.</p>
 <p><img src="../../../../images/push-cert/18.png" alt=""></p>
 <p>Push Noti의 타이틀과 내용을 작성 후 <code>5. Send APN</code> 버튼을 눌러봅니다.</p>
 <p><img src="../../../../images/push-cert/19.png" alt=""></p>
@@ -193,7 +213,7 @@
                     <p>Jingyu Jung</p>
                     <span>iOS Engineer 정진규</span>
                     <dl>
-                        <dd><a href="https://github.com/TriDiamond" target="_blank"><span
+                        <dd><a href="https://monibu1548.github.io" target="_blank"><span
                                     class=" iconfont icon-github"></span></a></dd>
                         <dd><a href="https://twitter.com/TriDiamond6" target="_blank"><span
                                     class=" iconfont icon-twitter"></span></a></dd>

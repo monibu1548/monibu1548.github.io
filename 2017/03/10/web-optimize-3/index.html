@@ -55,7 +55,7 @@
                 <div class="share">
                     
                         <a href="javascript:;" class="iconfont icon-share1"></a>
-                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                        <div class="share-component-cc" data-disabled="douban,diandian,tencent"></div>
                     
                 </div>
             </div>
@@ -88,13 +88,13 @@
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>Words count</i>
-                    9.9k
+                    6.5k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
-                    9 mins.
+                    6 mins.
                 </span>
                 
                 
@@ -153,7 +153,20 @@
 <p>BIULD_NUMBER는 현재 사용하고 있는 정적파일의 버전을 갖고 있는다</p>
 <p><img src="../../../../images/versioning/build-version.PNG" alt=""></p>
 <p>그러면 이제 스크립트를 통해 한방에 빠르게!! 정적파일만 선배포 할 준비가 끝났다</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/web-resource</span><br><span class="line"></span><br><span class="line">bn=$(&lt;BUILD_NUMBER)</span><br><span class="line">bn=$((bn+1))</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$bn</span>&gt;BUILD_NUMBER</span><br><span class="line">mkdir <span class="variable">$bn</span></span><br><span class="line"></span><br><span class="line">mkdir temp</span><br><span class="line">unzip -d temp asog_recent.zip</span><br><span class="line">mv  temp/asog-1.0.0-BUILD-SNAPSHOT/resources <span class="variable">$bn</span>/</span><br><span class="line">chmod -R 0755 <span class="variable">$bn</span></span><br><span class="line">rm -rf temp</span><br><span class="line">rm -rf asog_recent.zip</span><br></pre></td></tr></table></figure>
+<pre><code class="bash">cd ~/web-resource
+
+bn=$(&lt;BUILD_NUMBER)
+bn=$((bn+1))
+echo $bn&gt;BUILD_NUMBER
+mkdir $bn
+
+mkdir temp
+unzip -d temp asog_recent.zip
+mv  temp/asog-1.0.0-BUILD-SNAPSHOT/resources $bn/
+chmod -R 0755 $bn
+rm -rf temp
+rm -rf asog_recent.zip
+</code></pre>
 <p>BUILD_NUMBER 에서 현재 빌드 번호를 가져오고 + 1 해서 새로운 버전의 디렉토리를 만든다.</p>
 <p>이렇게 되면 배포시점에 HTML과 js,css 등 정적파일 매칭이 이루어지기 때문에 구서버, 신서버가 L4아래 함께있어도 호환 가능하다.</p>
 <h2 id="이거로-문제가-다-해결되나"><a href="#이거로-문제가-다-해결되나" class="headerlink" title="이거로 문제가 다 해결되나?"></a>이거로 문제가 다 해결되나?</h2><p>그렇지 않다. 서버에서 버전에 맞는 css, js파일을 골라서 전해준다고 해도 클라이언트에서 요청하지 않으면 줄리가 없지.</p>
@@ -171,8 +184,25 @@
 <h3 id="무슨-값을-넣어야-할까"><a href="#무슨-값을-넣어야-할까" class="headerlink" title="무슨 값을 넣어야 할까?"></a>무슨 값을 넣어야 할까?</h3><p>HTML과 js, css가 매칭되는 시점은 maven 빌드타이밍이 적절하다고 생각한다.</p>
 <p>그렇다면 파라미터에 maven 빌드타임을 넣으면 좋을 것 같다.</p>
 <p>메이븐 빌드타임 정보를 가져오기 위해 pom.xml에 다음의 플러그인과 설정을 추가한다.</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.keyboardsamurais.maven<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-timestamp-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">phase</span>&gt;</span>package<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">goal</span>&gt;</span>create<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">querystring</span>&gt;</span>$&#123;maven.build.timestamp&#125;<span class="tag">&lt;/<span class="name">querystring</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">maven.build.timestamp.format</span>&gt;</span>yyyyMMdd<span class="tag">&lt;/<span class="name">maven.build.timestamp.format</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<pre><code class="xml">&lt;plugin&gt;
+    &lt;groupId&gt;com.keyboardsamurais.maven&lt;/groupId&gt;
+    &lt;artifactId&gt;maven-timestamp-plugin&lt;/artifactId&gt;
+    &lt;version&gt;1.0&lt;/version&gt;
+    &lt;executions&gt;
+        &lt;execution&gt;
+            &lt;phase&gt;package&lt;/phase&gt;
+            &lt;goals&gt;
+                &lt;goal&gt;create&lt;/goal&gt;
+            &lt;/goals&gt;
+        &lt;/execution&gt;
+    &lt;/executions&gt;
+&lt;/plugin&gt;
+</code></pre>
+<pre><code class="xml">&lt;properties&gt;
+  &lt;querystring&gt;${maven.build.timestamp}&lt;/querystring&gt;
+        &lt;maven.build.timestamp.format&gt;yyyyMMdd&lt;/maven.build.timestamp.format&gt;
+&lt;/properties&gt;
+</code></pre>
 <p>이렇게 하면 <querystring> 은 이제 아래의 format에 맞는 timestamp값을 갖는다.</querystring></p>
 <p>이제 version.properties에 다음의 정보를 추가할 수 있다.</p>
 <p><img src="../../../../images/versioning/queryString.PNG" alt=""></p>
@@ -215,7 +245,7 @@
                     <p>Jingyu Jung</p>
                     <span>iOS Engineer 정진규</span>
                     <dl>
-                        <dd><a href="https://github.com/TriDiamond" target="_blank"><span
+                        <dd><a href="https://monibu1548.github.io" target="_blank"><span
                                     class=" iconfont icon-github"></span></a></dd>
                         <dd><a href="https://twitter.com/TriDiamond6" target="_blank"><span
                                     class=" iconfont icon-twitter"></span></a></dd>

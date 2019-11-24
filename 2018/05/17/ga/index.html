@@ -52,7 +52,7 @@
                 <div class="share">
                     
                         <a href="javascript:;" class="iconfont icon-share1"></a>
-                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                        <div class="share-component-cc" data-disabled="douban,diandian,tencent"></div>
                     
                 </div>
             </div>
@@ -85,13 +85,13 @@
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>Words count</i>
-                    8.2k
+                    5.6k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
-                    7 mins.
+                    5 mins.
                 </span>
                 
                 
@@ -133,12 +133,24 @@
 <p><img src="../../../../images/ga/2.png" alt=""><br>iOS 앱의 지표수집에 사용할 것으로 <code>모바일 앱</code>을 선택 후 계정이름과, 앱이름을 설정합니다.<br>데이터 공유 설정은 잘 읽어보시고 선택하시고, 모르겠다 싶으면 전체선택하셔도 괜찮습니다.<br>모두 작성 완료 후 가장 아래에 <code>추적 ID 가져오기</code>를 클릭합니다.</p>
 <p><img src="../../../../images/ga/3.png" alt=""><br>애널리틱스 서비스 약관동의 팝업이 뜹니다. 요즘 GDPR 관련돼서 이슈가 많은데요. GDPR 관련해서는 따로 <code>꼭</code> 확인해주세요.<br>동의함을 눌러주세요.</p>
 <p><img src="../../../../images/ga/4.png" alt=""><br>앱 등록이 완료되면 위와 같은 화면이 나옵니다. 이 화면에서 필요한 것은!! <code>추적 ID</code> 입니다. 복사해두세요~</p>
-<h2 id="iOS에-Google-Analytics-적용하기"><a href="#iOS에-Google-Analytics-적용하기" class="headerlink" title="iOS에 Google Analytics 적용하기"></a>iOS에 Google Analytics 적용하기</h2><h3 id="Pod-install"><a href="#Pod-install" class="headerlink" title="Pod install"></a>Pod install</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod &apos;GoogleAnalytics&apos;</span><br></pre></td></tr></table></figure>
-<p>사용중인 프로젝트의 Podfile에 <code>GoogleAnanytics</code> Pod 을 추가, 설치해줍니다.</p>
+<h2 id="iOS에-Google-Analytics-적용하기"><a href="#iOS에-Google-Analytics-적용하기" class="headerlink" title="iOS에 Google Analytics 적용하기"></a>iOS에 Google Analytics 적용하기</h2><h3 id="Pod-install"><a href="#Pod-install" class="headerlink" title="Pod install"></a>Pod install</h3><pre><code>pod &#39;GoogleAnalytics&#39;
+</code></pre><p>사용중인 프로젝트의 Podfile에 <code>GoogleAnanytics</code> Pod 을 추가, 설치해줍니다.</p>
 <p>cocoaPod사용법은 아래 포스팅을 참고해주세요.<br><a href="http://monibu1548.github.io/2018/04/16/cocoapods/">iOS 프로젝트에 cocoapods 적용하기</a><br><a href="http://monibu1548.github.io/2018/04/16/cocoapods-prompt/">CocoaPods 똑똑하게 사용하기 (명령어, 사용 예시 소개)</a></p>
 <h3 id="AppDelegate-설정"><a href="#AppDelegate-설정" class="headerlink" title="AppDelegate 설정"></a>AppDelegate 설정</h3><p>아쉽게도 아직 <code>Swift</code> 에서는 Object-c bridge를 통해 사용합니다. 번거로워요.<br>object-bridge 는 다음 블로그를 확인해주세요 <a href="https://m.blog.naver.com/PostView.nhn?blogId=seotaji&amp;logNo=220312825002&amp;proxyReferer=https%3A%2F%2Fwww.google.co.kr%2F" target="_blank" rel="noopener">애플 스위프트(Apple Swift) Bridging-Header.h 생성하기</a></p>
 <p>그리고 AppDelegate의 didFinishLaunchingWithOptions메소드에 아까 발급받은 Tracking ID(추적 ID)를 등록합니다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">application</span><span class="params">(<span class="number">_</span> application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?)</span></span> -&gt; <span class="type">Bool</span> &#123;</span><br><span class="line"></span><br><span class="line">    gai.tracker(withTrackingId: <span class="string">"YOUR_TRACKING_ID"</span>)  <span class="comment">// 발급받은 트래킹 ID를 넣어주세요</span></span><br><span class="line">    <span class="comment">// Optional: automatically report uncaught exceptions.</span></span><br><span class="line">    gai.trackUncaughtExceptions = <span class="literal">true</span>   <span class="comment">// 앱 크래시 발생 내역도 수집을 할 것인지 선택하는 옵션입니다.</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Optional: set Logger to VERBOSE for debug information.</span></span><br><span class="line">    <span class="comment">// Remove before app release.</span></span><br><span class="line">    gai.logger.logLevel = .verbose;  <span class="comment">// 로그레벨을 결정합니다. 앱스토어 배포용에서는 이 옵션을 꼭 제거해주세요</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="swift">    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -&gt; Bool {
+
+        gai.tracker(withTrackingId: &quot;YOUR_TRACKING_ID&quot;)  // 발급받은 트래킹 ID를 넣어주세요
+        // Optional: automatically report uncaught exceptions.
+        gai.trackUncaughtExceptions = true   // 앱 크래시 발생 내역도 수집을 할 것인지 선택하는 옵션입니다.
+
+        // Optional: set Logger to VERBOSE for debug information.
+        // Remove before app release.
+        gai.logger.logLevel = .verbose;  // 로그레벨을 결정합니다. 앱스토어 배포용에서는 이 옵션을 꼭 제거해주세요
+
+        return true
+    }
+</code></pre>
 <p><code>주의할 점</code></p>
 <ul>
 <li>우리가 원하는 것은 이 앱의 사용자들이 앱을 사용하는 방식에 대한 데이터입니다. 위의 코드를 개발단계에서 사용할 경우 앱을 개발하는 과정에서의 지표도 수집되기 때문에 유효한 데이터를 수집할 수 없습니다.</li>
@@ -150,10 +162,25 @@
 </ul>
 <h2 id="수집할-지표의-결정"><a href="#수집할-지표의-결정" class="headerlink" title="수집할 지표의 결정"></a>수집할 지표의 결정</h2><p>AppDelegate에 트래킹 ID 등록까지 끝났다면, 사용준비는 끝났습니다. 이제 수집하고 싶은 데이터의 위치에 수집코드만 넣어주면 됩니다.</p>
 <h3 id="화면-정보-수집"><a href="#화면-정보-수집" class="headerlink" title="화면 정보 수집"></a>화면 정보 수집</h3><p>아마 무조건 사용하는 정보일겁니다. 사용자가 어떤 화면에 얼마나 많이, 오래 진입했는지의 정도를 알 수 있는 지표입니다.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">override func viewWillAppear(_ animated: Bool) &#123;</span><br><span class="line">        super.viewWillAppear(animated)</span><br><span class="line">        guard let tracker = GAI.sharedInstance().defaultTracker else &#123; return &#125;</span><br><span class="line">        tracker.set(kGAIScreenName, value: &quot;메인&quot;)</span><br><span class="line">        </span><br><span class="line">        guard let builder = GAIDictionaryBuilder.createScreenView() else &#123; return &#125;</span><br><span class="line">        tracker.send(builder.build() as [NSObject : AnyObject])</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>화면 정보를 수집할 뷰컨트롤러의 <code>viewWillAppear</code>에 위의 코드를 넣어줍니다.<br><code>tracker.set()</code> 의 value에는 화면 이름을 입력합니다.<br>이제 사용자가 해당 화면에 진입하면 해당 화면정보가 수집됩니다.</p>
-<h3 id="이벤트-정보-수집"><a href="#이벤트-정보-수집" class="headerlink" title="이벤트 정보 수집"></a>이벤트 정보 수집</h3><p>화면 수집 다음으로 유용한 지표입니다. 사용자가 특정 버튼을 얼마나 눌렀는지, 사용빈도를 알 수 있습니다.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">private func getVoca() -&gt; Voca? &#123;</span><br><span class="line">        </span><br><span class="line">        let tracker = GAI.sharedInstance().defaultTracker</span><br><span class="line">        tracker?.send(GAIDictionaryBuilder.createEvent(withCategory: &quot;단어 퀴즈&quot;, action: &quot;문제 Go&quot;, label: &quot;문제 출제&quot;, value: nil).build() as [NSObject : AnyObject])</span><br><span class="line">        </span><br><span class="line">    </span><br><span class="line">        // ... 문제 출제 로직 ... </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-<p>위 코드는 특정 버튼을 눌렀을때 해당 이벤트를 수집하는 코드입니다. 카테고리, 액션, 라벨 3단계로 구분되어 개발자가 서비스에 맞게 사용하면 됩니다.</p>
+<pre><code>override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        guard let tracker = GAI.sharedInstance().defaultTracker else { return }
+        tracker.set(kGAIScreenName, value: &quot;메인&quot;)
+
+        guard let builder = GAIDictionaryBuilder.createScreenView() else { return }
+        tracker.send(builder.build() as [NSObject : AnyObject])
+    }
+</code></pre><p>화면 정보를 수집할 뷰컨트롤러의 <code>viewWillAppear</code>에 위의 코드를 넣어줍니다.<br><code>tracker.set()</code> 의 value에는 화면 이름을 입력합니다.<br>이제 사용자가 해당 화면에 진입하면 해당 화면정보가 수집됩니다.</p>
+<h3 id="이벤트-정보-수집"><a href="#이벤트-정보-수집" class="headerlink" title="이벤트 정보 수집"></a>이벤트 정보 수집</h3><p>화면 수집 다음으로 유용한 지표입니다. 사용자가 특정 버튼을 얼마나 눌렀는지, 사용빈도를 알 수 있습니다.</p>
+<pre><code>private func getVoca() -&gt; Voca? {
+
+        let tracker = GAI.sharedInstance().defaultTracker
+        tracker?.send(GAIDictionaryBuilder.createEvent(withCategory: &quot;단어 퀴즈&quot;, action: &quot;문제 Go&quot;, label: &quot;문제 출제&quot;, value: nil).build() as [NSObject : AnyObject])
+
+
+        // ... 문제 출제 로직 ... 
+    }
+</code></pre><p>위 코드는 특정 버튼을 눌렀을때 해당 이벤트를 수집하는 코드입니다. 카테고리, 액션, 라벨 3단계로 구분되어 개발자가 서비스에 맞게 사용하면 됩니다.</p>
 <p><img src="../../../../images/ga/5.png" alt=""><br><img src="../../../../images/ga/6.png" alt=""></p>
 <p>테스트를 해보면 다음과 같은 화면이 뜹니다. 현재 실시간 사용자, 화면, 앱버전, 위치 등 다양한 정보를 볼 수 있습니다!</p>
 
@@ -181,7 +208,7 @@
                     <p>Jingyu Jung</p>
                     <span>iOS Engineer 정진규</span>
                     <dl>
-                        <dd><a href="https://github.com/TriDiamond" target="_blank"><span
+                        <dd><a href="https://monibu1548.github.io" target="_blank"><span
                                     class=" iconfont icon-github"></span></a></dd>
                         <dd><a href="https://twitter.com/TriDiamond6" target="_blank"><span
                                     class=" iconfont icon-twitter"></span></a></dd>

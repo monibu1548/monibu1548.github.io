@@ -53,7 +53,7 @@ Admob,">
                 <div class="share">
                     
                         <a href="javascript:;" class="iconfont icon-share1"></a>
-                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                        <div class="share-component-cc" data-disabled="douban,diandian,tencent"></div>
                     
                 </div>
             </div>
@@ -86,13 +86,13 @@ Admob,">
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>Words count</i>
-                    6k
+                    4.5k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
-                    5 mins.
+                    4 mins.
                 </span>
                 
                 
@@ -142,16 +142,27 @@ Admob,">
 <li>UnitID : 배너 광고를 띄울 뷰컨트롤러 설정에 필요</li>
 </ul>
 <h2 id="CocoaPods-설치"><a href="#CocoaPods-설치" class="headerlink" title="CocoaPods 설치"></a>CocoaPods 설치</h2><p>이제 앱에 배너광고를 설치합니다.<br><code>Podfile</code>에 아래 Pod를 추가하고 <code>Pod install</code>을 통해 SDK를 설치합니다.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod &apos;Google-Mobile-Ads-SDK&apos;</span><br></pre></td></tr></table></figure>
-<h2 id="App-Delegate-설정"><a href="#App-Delegate-설정" class="headerlink" title="App Delegate 설정"></a>App Delegate 설정</h2><p>AppDelegate.m 파일을 열어주세요.</p>
-<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">&lt;GoogleAnalytics/GAI.h&gt;</span></span></span><br></pre></td></tr></table></figure>
+<pre><code>pod &#39;Google-Mobile-Ads-SDK&#39;
+</code></pre><h2 id="App-Delegate-설정"><a href="#App-Delegate-설정" class="headerlink" title="App Delegate 설정"></a>App Delegate 설정</h2><p>AppDelegate.m 파일을 열어주세요.</p>
+<pre><code class="obj-c">#import &lt;GoogleAnalytics/GAI.h&gt;
+</code></pre>
 <p>위 헤더파일이 필요합니다.</p>
 <p>아래 코드와 같이 <code>didFinishLaunchingWithOptions</code> 메소드에 애드몹을 설정하는 코드를 추가합니다.</p>
-<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="built_in">NSDictionary</span> *)launchOptions &#123;</span><br><span class="line">    <span class="comment">// Override point for customization after application launch.</span></span><br><span class="line">    </span><br><span class="line">    [GADMobileAds configureWithApplicationID:<span class="string">@"애드몹AppId"</span>];</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="obj-c">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    // Override point for customization after application launch.
+
+    [GADMobileAds configureWithApplicationID:@&quot;애드몹AppId&quot;];
+
+    return YES;
+}
+</code></pre>
 <h2 id="Banner-영역-설정하기"><a href="#Banner-영역-설정하기" class="headerlink" title="Banner 영역 설정하기"></a>Banner 영역 설정하기</h2><p><img src="../../../../images/admob/8.png" alt=""></p>
 <p>스토리보드에서 Banner영역을 잡아줍니다.<br>저는 화면 아래쪽에 배치했습니다. Banner의 Size는 <code>320 * 50</code>으로 지정해주셔야합니다. 그리고 그 View 의 CustomClass를 <code>GADBannerView</code>로 설정합니다.</p>
 <p>이제 코드영역에서 해당 뷰에 UnitID를 지정해줘야 합니다. 이 작업은 <code>ViewDidLoad</code> 에서 작업합니다.</p>
-<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">self</span>.bannerView.adUnitID = admobBannerUnitId;</span><br><span class="line"><span class="keyword">self</span>.bannerView.rootViewController = <span class="keyword">self</span>;</span><br><span class="line">[<span class="keyword">self</span>.bannerView loadRequest:[GADRequest request]];</span><br></pre></td></tr></table></figure>
+<pre><code class="obj-c">self.bannerView.adUnitID = admobBannerUnitId;
+self.bannerView.rootViewController = self;
+[self.bannerView loadRequest:[GADRequest request]];
+</code></pre>
 <p>여기에서 self.bannerView는 스토리보드에서 IBOutlet으로 가져온 GADBannerView 입니다.<br><code>admobBannerUnitId</code> 을 발급받은 UnitID로 변경합니다.</p>
 <ul>
 <li>추가적으로, bannerView에 델리게이트를 지정하여 광고를 성공적으로 가져왔는지, 문제가 있는지 등의 결과를 받을 수 있습니다. 해당내용은 아래에 링크합니다.<br><a href="https://developers.google.com/admob/ios/banner" target="_blank" rel="noopener">https://developers.google.com/admob/ios/banner</a></li>
@@ -189,7 +200,7 @@ Admob,">
                     <p>Jingyu Jung</p>
                     <span>iOS Engineer 정진규</span>
                     <dl>
-                        <dd><a href="https://github.com/TriDiamond" target="_blank"><span
+                        <dd><a href="https://monibu1548.github.io" target="_blank"><span
                                     class=" iconfont icon-github"></span></a></dd>
                         <dd><a href="https://twitter.com/TriDiamond6" target="_blank"><span
                                     class=" iconfont icon-twitter"></span></a></dd>

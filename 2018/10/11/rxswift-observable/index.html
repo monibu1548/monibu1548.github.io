@@ -53,7 +53,7 @@
                 <div class="share">
                     
                         <a href="javascript:;" class="iconfont icon-share1"></a>
-                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                        <div class="share-component-cc" data-disabled="douban,diandian,tencent"></div>
                     
                 </div>
             </div>
@@ -86,13 +86,13 @@
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>Words count</i>
-                    11k
+                    4.1k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
-                    10 mins.
+                    4 mins.
                 </span>
                 
                 
@@ -158,18 +158,85 @@
 <li>프로젝트 내에 playground 파일 생성 후 RxSwift import</li>
 </ol>
 <h2 id="예제"><a href="#예제" class="headerlink" title="예제"></a>예제</h2><p>1.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> observable = <span class="type">Observable</span>&lt;<span class="type">Int</span>&gt;.range(start: <span class="number">1</span>, <span class="built_in">count</span>: <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">observable.subscribe(onNext: &#123; (event) <span class="keyword">in</span></span><br><span class="line">    <span class="built_in">print</span>(event)</span><br><span class="line">&#125;, onError: &#123; (error) <span class="keyword">in</span></span><br><span class="line">    <span class="built_in">print</span>(error)</span><br><span class="line">&#125;, onCompleted: &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"completed"</span>)</span><br><span class="line">&#125;) &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">----</span><br><span class="line"></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">6</span></span><br><span class="line"><span class="number">7</span></span><br><span class="line"><span class="number">8</span></span><br><span class="line"><span class="number">9</span></span><br><span class="line"><span class="number">10</span></span><br><span class="line">completed</span><br></pre></td></tr></table></figure>
+<pre><code class="swift">let observable = Observable&lt;Int&gt;.range(start: 1, count: 10)
+
+observable.subscribe(onNext: { (event) in
+    print(event)
+}, onError: { (error) in
+    print(error)
+}, onCompleted: {
+    print(&quot;completed&quot;)
+}) {
+
+}
+
+----
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+completed
+
+</code></pre>
 <p>range 메소드는 start, count 내의 Event Sequence를 만든다</p>
 <ol start="2">
-<li><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> observable = <span class="type">Observable</span>.of(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>)</span><br><span class="line"></span><br><span class="line">observable.subscribe(onNext: &#123; (event) <span class="keyword">in</span></span><br><span class="line">    <span class="built_in">print</span>(event)</span><br><span class="line">&#125;, onError: &#123; (error) <span class="keyword">in</span></span><br><span class="line">    <span class="built_in">print</span>(error)</span><br><span class="line">&#125;, onCompleted: &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"completed"</span>)</span><br><span class="line">&#125;) &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">----</span><br><span class="line"></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">6</span></span><br><span class="line"><span class="number">7</span></span><br><span class="line">completed</span><br></pre></td></tr></table></figure>
+<li><p><code>`</code>swift<br>let observable = Observable.of(1,2,3,4,5,6,7)</p>
 </li>
 </ol>
-<p>of 메소드에 sequence를 넘기면 순서대로 Event Sequence가 생성된다.</p>
-<p>3.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> observable = <span class="type">Observable</span>.of([<span class="string">"A"</span>, <span class="string">"B"</span>, <span class="string">"C"</span>])</span><br><span class="line"></span><br><span class="line">observable.subscribe(onNext: &#123; (event) <span class="keyword">in</span></span><br><span class="line">    <span class="built_in">print</span>(event)</span><br><span class="line">&#125;, onError: &#123; (error) <span class="keyword">in</span></span><br><span class="line">    <span class="built_in">print</span>(error)</span><br><span class="line">&#125;, onCompleted: &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"completed"</span>)</span><br><span class="line">&#125;) &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">----</span><br><span class="line"></span><br><span class="line">[<span class="string">"A"</span>, <span class="string">"B"</span>, <span class="string">"C"</span>]</span><br><span class="line">completed</span><br></pre></td></tr></table></figure>
-<p>of 메소드에 배열을 넘길 경우 배열 그 자체에 대한 Event가 생성된다.</p>
+<p>observable.subscribe(onNext: { (event) in<br>    print(event)<br>}, onError: { (error) in<br>    print(error)<br>}, onCompleted: {<br>    print(“completed”)<br>}) {</p>
+<p>}</p>
+<hr>
+<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>completed</p>
+<pre><code>
+of 메소드에 sequence를 넘기면 순서대로 Event Sequence가 생성된다.
+
+3.
+
+```swift
+let observable = Observable.of([&quot;A&quot;, &quot;B&quot;, &quot;C&quot;])
+
+observable.subscribe(onNext: { (event) in
+    print(event)
+}, onError: { (error) in
+    print(error)
+}, onCompleted: {
+    print(&quot;completed&quot;)
+}) {
+
+}
+
+----
+
+[&quot;A&quot;, &quot;B&quot;, &quot;C&quot;]
+completed
+</code></pre><p>of 메소드에 배열을 넘길 경우 배열 그 자체에 대한 Event가 생성된다.</p>
 <p>4.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> observable = <span class="type">Observable</span>.from([<span class="string">"A"</span>, <span class="string">"B"</span>, <span class="string">"C"</span>])</span><br><span class="line"></span><br><span class="line">observable.subscribe(onNext: &#123; (event) <span class="keyword">in</span></span><br><span class="line">    <span class="built_in">print</span>(event)</span><br><span class="line">&#125;, onError: &#123; (error) <span class="keyword">in</span></span><br><span class="line">    <span class="built_in">print</span>(error)</span><br><span class="line">&#125;, onCompleted: &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"completed"</span>)</span><br><span class="line">&#125;) &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">----</span><br><span class="line"></span><br><span class="line"><span class="type">A</span></span><br><span class="line"><span class="type">B</span></span><br><span class="line"><span class="type">C</span></span><br><span class="line">completed</span><br></pre></td></tr></table></figure>
+<pre><code class="swift">let observable = Observable.from([&quot;A&quot;, &quot;B&quot;, &quot;C&quot;])
+
+observable.subscribe(onNext: { (event) in
+    print(event)
+}, onError: { (error) in
+    print(error)
+}, onCompleted: {
+    print(&quot;completed&quot;)
+}) {
+
+}
+
+----
+
+A
+B
+C
+completed
+</code></pre>
 <p>from 메소드를 사용하면 배열 객체의 각 element에 대한 event sequence가 생성된다.</p>
 <h2 id="실제-프로젝트-개발에서의-적용"><a href="#실제-프로젝트-개발에서의-적용" class="headerlink" title="실제 프로젝트 개발에서의 적용"></a>실제 프로젝트 개발에서의 적용</h2><p>위의 예제는 정적인 배열 또는 클래스에 대한 Event 생성으로, 학습용일뿐 실제 프로젝트에는 적용할 수 없다.<br>실제 프로젝트에 적용하기 위해서는 Runtime에 외부 요건(네트워크 통신, 사용자의 입력)에 대한 Event Sequence를 사용해야한다.</p>
 <p>Rx에 대한 이해를 바탕을 Observable한 사용자 클래스, 적절한 Operator를 이용해 적용한다.</p>
@@ -198,7 +265,7 @@
                     <p>Jingyu Jung</p>
                     <span>iOS Engineer 정진규</span>
                     <dl>
-                        <dd><a href="https://github.com/TriDiamond" target="_blank"><span
+                        <dd><a href="https://monibu1548.github.io" target="_blank"><span
                                     class=" iconfont icon-github"></span></a></dd>
                         <dd><a href="https://twitter.com/TriDiamond6" target="_blank"><span
                                     class=" iconfont icon-twitter"></span></a></dd>

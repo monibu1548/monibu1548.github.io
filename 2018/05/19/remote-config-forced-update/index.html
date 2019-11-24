@@ -52,7 +52,7 @@
                 <div class="share">
                     
                         <a href="javascript:;" class="iconfont icon-share1"></a>
-                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                        <div class="share-component-cc" data-disabled="douban,diandian,tencent"></div>
                     
                 </div>
             </div>
@@ -85,13 +85,13 @@
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>Words count</i>
-                    22k
+                    10k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
-                    20 mins.
+                    9 mins.
                 </span>
                 
                 
@@ -145,9 +145,115 @@
 <h2 id="앱의-최소-최신-버전-관리"><a href="#앱의-최소-최신-버전-관리" class="headerlink" title="앱의 최소, 최신 버전 관리"></a>앱의 최소, 최신 버전 관리</h2><p>필수 또는 선택 업데이트의 필요 유무를 판단하기 위해서는 <code>앱 최소지원 버전</code>, <code>최신 앱 버전</code>을 알 수 있어야 합니다. 이 정보를 위해 서버가 필요한가 싶은 이때!<br>우리에겐 <code>Firebase</code>가 있습니다.</p>
 <p>지난 포스팅 <a href="http://monibu1548.github.io/2018/05/14/firebase-config/">iOS앱 고도화 - Firebase Remote Config를 사용한 앱 운영방법</a> 을 참고해주세요.</p>
 <p>Firebase Remote Config에 앱의 버전정보를 등록하여 사용할 수 있습니다.</p>
-<h2 id="앱-실행시-버전체크-예제"><a href="#앱-실행시-버전체크-예제" class="headerlink" title="앱 실행시 버전체크 예제"></a>앱 실행시 버전체크 예제</h2><h3 id="AppDelegate-m"><a href="#AppDelegate-m" class="headerlink" title="AppDelegate.m"></a>AppDelegate.m</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">application</span><span class="params">(<span class="number">_</span> application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?)</span></span> -&gt; <span class="type">Bool</span> &#123;</span><br><span class="line">    <span class="keyword">self</span>.window?.rootViewController = <span class="type">UIStoryboard</span>.<span class="keyword">init</span>(name: <span class="string">"LaunchScreen"</span>, bundle: <span class="literal">nil</span>).instantiateInitialViewController()</span><br><span class="line">    <span class="type">RemoteConfigManager</span>.sharedManager.launching(completionHandler: &#123; (config) <span class="keyword">in</span>      </span><br><span class="line">    &#125;, forceUpdate: &#123; (forceUpdate) <span class="keyword">in</span></span><br><span class="line">        <span class="keyword">if</span> !forceUpdate &#123;</span><br><span class="line">            <span class="keyword">let</span> vc = <span class="type">UIStoryboard</span>.<span class="keyword">init</span>(name: <span class="string">"Home"</span>, bundle: <span class="literal">nil</span>).instantiateInitialViewController()</span><br><span class="line">            <span class="keyword">self</span>.window?.rootViewController = vc</span><br><span class="line">            <span class="keyword">self</span>.window?.makeKeyAndVisible()</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="앱-실행시-버전체크-예제"><a href="#앱-실행시-버전체크-예제" class="headerlink" title="앱 실행시 버전체크 예제"></a>앱 실행시 버전체크 예제</h2><h3 id="AppDelegate-m"><a href="#AppDelegate-m" class="headerlink" title="AppDelegate.m"></a>AppDelegate.m</h3><pre><code class="swift">    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -&gt; Bool {
+        self.window?.rootViewController = UIStoryboard.init(name: &quot;LaunchScreen&quot;, bundle: nil).instantiateInitialViewController()
+        RemoteConfigManager.sharedManager.launching(completionHandler: { (config) in      
+        }, forceUpdate: { (forceUpdate) in
+            if !forceUpdate {
+                let vc = UIStoryboard.init(name: &quot;Home&quot;, bundle: nil).instantiateInitialViewController()
+                self.window?.rootViewController = vc
+                self.window?.makeKeyAndVisible()
+                }
+        })
+
+        return true
+    }
+</code></pre>
 <p>AppDelegate.m의 didFinishLaunchingWithOptions 메소드입니다.<br>앱 진입 시점에서 window의 rootViewController를 <code>LaunchScreen</code>으로 바꿔치기합니다. 앱 버전을 확인하지 않고 바로 앱으로 진입하는 것을 막기 위함입니다.<br>그 이후 RemoteConfigManager에서 firebase의 remote config를 가져오는 메소드를 호출합니다.<br>RemoteConfigManger의 코드입니다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"><span class="keyword">import</span> Firebase</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AppConfig</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> lastestVersion: <span class="type">String</span>?</span><br><span class="line">    <span class="keyword">var</span> minVersion: <span class="type">String</span>?</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RemoteConfigManager</span>: <span class="title">NSObject</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">let</span> sharedManager = <span class="type">RemoteConfigManager</span>()</span><br><span class="line">    <span class="keyword">override</span> <span class="keyword">private</span> <span class="keyword">init</span>() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">launching</span><span class="params">(completionHandler: @escaping <span class="params">(<span class="number">_</span> conf: AppConfig)</span></span></span> -&gt; (), forceUpdate:@escaping (<span class="number">_</span> need: <span class="type">Bool</span>)-&gt;()) &#123;</span><br><span class="line">        <span class="keyword">let</span> remoteConfig = <span class="type">RemoteConfig</span>.remoteConfig()</span><br><span class="line">        </span><br><span class="line">        remoteConfig.fetch(withExpirationDuration: <span class="type">TimeInterval</span>(<span class="number">3600</span>)) &#123; (status, error) -&gt; <span class="type">Void</span> <span class="keyword">in</span></span><br><span class="line">            <span class="keyword">if</span> status == .success &#123;</span><br><span class="line">                remoteConfig.activateFetched()</span><br><span class="line">          </span><br><span class="line">                <span class="comment">// 데이터 Fetch</span></span><br><span class="line">                <span class="keyword">let</span> appConfig: <span class="type">AppConfig</span> = <span class="type">AppConfig</span>()</span><br><span class="line">                appConfig.lastestVersion = remoteConfig[<span class="string">"lastest_version"</span>].stringValue</span><br><span class="line">                appConfig.minVersion = remoteConfig[<span class="string">"min_version"</span>].stringValue</span><br><span class="line"></span><br><span class="line">                completionHandler(appConfig)</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 강제업데이트</span></span><br><span class="line">                <span class="keyword">let</span> needForcedUpdate:<span class="type">Bool</span> = (<span class="keyword">self</span>.compareVersion(versionA: <span class="type">ConfigEnv</span>.appVersion(), versionB: appConfig.minVersion) == <span class="type">ComparisonResult</span>.orderedAscending)</span><br><span class="line">                forceUpdate(needForcedUpdate)</span><br><span class="line">                <span class="keyword">if</span> needForcedUpdate &#123;</span><br><span class="line">                    <span class="keyword">let</span> alertController = <span class="type">UIAlertController</span>.<span class="keyword">init</span>(title: <span class="string">"업데이트"</span>, message: <span class="string">"필수 업데이트가 있습니다. 업데이트하시겠습니까?"</span>, preferredStyle: <span class="type">UIAlertControllerStyle</span>.alert)</span><br><span class="line">                    alertController.addAction(<span class="type">UIAlertAction</span>.<span class="keyword">init</span>(title: <span class="string">"업데이트"</span>, style: <span class="type">UIAlertActionStyle</span>.<span class="keyword">default</span>, handler: &#123; (action) <span class="keyword">in</span></span><br><span class="line">                        <span class="comment">// 앱스토어마켓으로 이동</span></span><br><span class="line">                    &#125;))</span><br><span class="line">                    <span class="keyword">var</span> topController = <span class="type">UIApplication</span>.shared.keyWindow?.rootViewController</span><br><span class="line">                    <span class="keyword">if</span> topController != <span class="literal">nil</span> &#123;</span><br><span class="line">                        <span class="keyword">while</span> <span class="keyword">let</span> presentedViewController = topController?.presentedViewController &#123;</span><br><span class="line">                            topController = presentedViewController</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    topController!.present(alertController, animated: <span class="literal">false</span>, completion: &#123;</span><br><span class="line">                        </span><br><span class="line">                    &#125;)</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">                <span class="comment">// 선택업데이트</span></span><br><span class="line">                <span class="keyword">let</span> needUpdate:<span class="type">Bool</span> = (<span class="keyword">self</span>.compareVersion(versionA: <span class="type">ConfigEnv</span>.appVersion(), versionB: appConfig.minVersion) != <span class="type">ComparisonResult</span>.orderedAscending) &amp;&amp; (<span class="keyword">self</span>.compareVersion(versionA: <span class="type">ConfigEnv</span>.appVersion(), versionB: appConfig.lastestVersion) == <span class="type">ComparisonResult</span>.orderedAscending)</span><br><span class="line">                <span class="keyword">if</span> needUpdate &#123;</span><br><span class="line">                    <span class="keyword">let</span> alertController = <span class="type">UIAlertController</span>.<span class="keyword">init</span>(title: <span class="string">"업데이트"</span>, message: <span class="string">"최신 업데이트가 있습니다. 업데이트하시겠습니까?"</span>, preferredStyle: <span class="type">UIAlertControllerStyle</span>.alert)</span><br><span class="line">                    alertController.addAction(<span class="type">UIAlertAction</span>.<span class="keyword">init</span>(title: <span class="string">"업데이트"</span>, style: <span class="type">UIAlertActionStyle</span>.<span class="keyword">default</span>, handler: &#123; (action) <span class="keyword">in</span></span><br><span class="line">                        <span class="comment">// 앱스토어마켓으로 이동</span></span><br><span class="line">                    &#125;))</span><br><span class="line">                    alertController.addAction(<span class="type">UIAlertAction</span>.<span class="keyword">init</span>(title: <span class="string">"나중에"</span>, style: <span class="type">UIAlertActionStyle</span>.<span class="keyword">default</span>, handler: &#123; (action) <span class="keyword">in</span></span><br><span class="line">                        <span class="comment">// 앱으로 진입</span></span><br><span class="line">                    &#125;))</span><br><span class="line">                    <span class="keyword">var</span> topController = <span class="type">UIApplication</span>.shared.keyWindow?.rootViewController</span><br><span class="line">                    <span class="keyword">if</span> topController != <span class="literal">nil</span> &#123;</span><br><span class="line">                        <span class="keyword">while</span> <span class="keyword">let</span> presentedViewController = topController?.presentedViewController &#123;</span><br><span class="line">                            topController = presentedViewController</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    topController!.present(alertController, animated: <span class="literal">false</span>, completion: &#123;</span><br><span class="line">                        </span><br><span class="line">                    &#125;)</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">compareVersion</span><span class="params">(versionA:String!, versionB:String!)</span></span> -&gt; <span class="type">ComparisonResult</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> majorA = <span class="type">Int</span>(<span class="type">Array</span>(versionA.<span class="built_in">split</span>(separator: <span class="string">"."</span>))[<span class="number">0</span>])!</span><br><span class="line">        <span class="keyword">let</span> majorB = <span class="type">Int</span>(<span class="type">Array</span>(versionB.<span class="built_in">split</span>(separator: <span class="string">"."</span>))[<span class="number">0</span>])!</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> majorA &gt; majorB &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="type">ComparisonResult</span>.orderedDescending</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> majorB &gt; majorA &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="type">ComparisonResult</span>.orderedAscending</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> minorA = <span class="type">Int</span>(<span class="type">Array</span>(versionA.<span class="built_in">split</span>(separator: <span class="string">"."</span>))[<span class="number">1</span>])!</span><br><span class="line">        <span class="keyword">let</span> minorB = <span class="type">Int</span>(<span class="type">Array</span>(versionB.<span class="built_in">split</span>(separator: <span class="string">"."</span>))[<span class="number">1</span>])!</span><br><span class="line">        <span class="keyword">if</span> minorA &gt; minorB &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="type">ComparisonResult</span>.orderedDescending</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> minorB &gt; minorA &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="type">ComparisonResult</span>.orderedAscending</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="type">ComparisonResult</span>.orderedSame</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="swift">import UIKit
+import Firebase
+
+class AppConfig {
+    var lastestVersion: String?
+    var minVersion: String?
+}
+
+
+class RemoteConfigManager: NSObject {
+
+    static let sharedManager = RemoteConfigManager()
+    override private init() {}
+
+    public func launching(completionHandler: @escaping (_ conf: AppConfig) -&gt; (), forceUpdate:@escaping (_ need: Bool)-&gt;()) {
+        let remoteConfig = RemoteConfig.remoteConfig()
+
+        remoteConfig.fetch(withExpirationDuration: TimeInterval(3600)) { (status, error) -&gt; Void in
+            if status == .success {
+                remoteConfig.activateFetched()
+
+                // 데이터 Fetch
+                let appConfig: AppConfig = AppConfig()
+                appConfig.lastestVersion = remoteConfig[&quot;lastest_version&quot;].stringValue
+                appConfig.minVersion = remoteConfig[&quot;min_version&quot;].stringValue
+
+                completionHandler(appConfig)
+
+                // 강제업데이트
+                let needForcedUpdate:Bool = (self.compareVersion(versionA: ConfigEnv.appVersion(), versionB: appConfig.minVersion) == ComparisonResult.orderedAscending)
+                forceUpdate(needForcedUpdate)
+                if needForcedUpdate {
+                    let alertController = UIAlertController.init(title: &quot;업데이트&quot;, message: &quot;필수 업데이트가 있습니다. 업데이트하시겠습니까?&quot;, preferredStyle: UIAlertControllerStyle.alert)
+                    alertController.addAction(UIAlertAction.init(title: &quot;업데이트&quot;, style: UIAlertActionStyle.default, handler: { (action) in
+                        // 앱스토어마켓으로 이동
+                    }))
+                    var topController = UIApplication.shared.keyWindow?.rootViewController
+                    if topController != nil {
+                        while let presentedViewController = topController?.presentedViewController {
+                            topController = presentedViewController
+                        }
+                    }
+                    topController!.present(alertController, animated: false, completion: {
+
+                    })
+                }
+
+                // 선택업데이트
+                let needUpdate:Bool = (self.compareVersion(versionA: ConfigEnv.appVersion(), versionB: appConfig.minVersion) != ComparisonResult.orderedAscending) &amp;&amp; (self.compareVersion(versionA: ConfigEnv.appVersion(), versionB: appConfig.lastestVersion) == ComparisonResult.orderedAscending)
+                if needUpdate {
+                    let alertController = UIAlertController.init(title: &quot;업데이트&quot;, message: &quot;최신 업데이트가 있습니다. 업데이트하시겠습니까?&quot;, preferredStyle: UIAlertControllerStyle.alert)
+                    alertController.addAction(UIAlertAction.init(title: &quot;업데이트&quot;, style: UIAlertActionStyle.default, handler: { (action) in
+                        // 앱스토어마켓으로 이동
+                    }))
+                    alertController.addAction(UIAlertAction.init(title: &quot;나중에&quot;, style: UIAlertActionStyle.default, handler: { (action) in
+                        // 앱으로 진입
+                    }))
+                    var topController = UIApplication.shared.keyWindow?.rootViewController
+                    if topController != nil {
+                        while let presentedViewController = topController?.presentedViewController {
+                            topController = presentedViewController
+                        }
+                    }
+                    topController!.present(alertController, animated: false, completion: {
+
+                    })
+                }
+
+                }
+            }
+    }
+
+    private func compareVersion(versionA:String!, versionB:String!) -&gt; ComparisonResult {
+        let majorA = Int(Array(versionA.split(separator: &quot;.&quot;))[0])!
+        let majorB = Int(Array(versionB.split(separator: &quot;.&quot;))[0])!
+
+        if majorA &gt; majorB {
+            return ComparisonResult.orderedDescending
+        } else if majorB &gt; majorA {
+            return ComparisonResult.orderedAscending
+        }
+
+        let minorA = Int(Array(versionA.split(separator: &quot;.&quot;))[1])!
+        let minorB = Int(Array(versionB.split(separator: &quot;.&quot;))[1])!
+        if minorA &gt; minorB {
+            return ComparisonResult.orderedDescending
+        } else if minorB &gt; minorA {
+            return ComparisonResult.orderedAscending
+        }
+        return ComparisonResult.orderedSame
+    }
+
+}
+</code></pre>
 <p>Firebase Remote Config에서 데이터를 Fetch 한 뒤에 <code>AppConfig</code> 라는 클래스에 매핑을 합니다. 그 이후 plist에 있는 현재 앱의 버전과 AppConfig의 minVersion, lastestVersion을 비교하여 강제, 선택 업데이트 여부를 판단합니다.<br>AppConfig 클래스의 변수들이 저렇게 생긴 이유는 Firebase에서 이렇게 설정했기 때문입니다.</p>
 <p><img src="../../../../images/update/1.png" alt=""></p>
 <p><code>compareVersion</code>이라는 메소드로 현재버전과 최소, 최신 버전을 확인하여 적절한 AlertController를 노출합니다.</p>
@@ -201,7 +307,7 @@
                     <p>Jingyu Jung</p>
                     <span>iOS Engineer 정진규</span>
                     <dl>
-                        <dd><a href="https://github.com/TriDiamond" target="_blank"><span
+                        <dd><a href="https://monibu1548.github.io" target="_blank"><span
                                     class=" iconfont icon-github"></span></a></dd>
                         <dd><a href="https://twitter.com/TriDiamond6" target="_blank"><span
                                     class=" iconfont icon-twitter"></span></a></dd>

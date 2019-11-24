@@ -52,7 +52,7 @@
                 <div class="share">
                     
                         <a href="javascript:;" class="iconfont icon-share1"></a>
-                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                        <div class="share-component-cc" data-disabled="douban,diandian,tencent"></div>
                     
                 </div>
             </div>
@@ -85,13 +85,13 @@
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>Words count</i>
-                    21k
+                    5.7k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
-                    19 mins.
+                    5 mins.
                 </span>
                 
                 
@@ -134,21 +134,202 @@
 <li>Variables (Deprecated 예정)</li>
 </ul>
 <h2 id="PublishSubject"><a href="#PublishSubject" class="headerlink" title="PublishSubject"></a>PublishSubject</h2><p>가장 일반적인 Subject이다. Observable의 특징대로 subscribe 되면 event sequence에서 event를 받으며 terminated(error 또는 completed)가 되면 더이상 event를 수신하지 않는다.</p>
-<h3 id="예제"><a href="#예제" class="headerlink" title="예제"></a>예제</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> subject = <span class="type">PublishSubject</span>&lt;<span class="type">String</span>&gt;()</span><br><span class="line"></span><br><span class="line">subject.onNext(<span class="string">"A"</span>)</span><br><span class="line">subject.onNext(<span class="string">"B"</span>)</span><br><span class="line">subject.onNext(<span class="string">"C"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 구독 시작</span></span><br><span class="line"><span class="keyword">let</span> observer1 = subject.subscribe(onNext: &#123; (event) <span class="keyword">in</span></span><br><span class="line">    <span class="built_in">print</span>(event)</span><br><span class="line">&#125;, onError: &#123; (error) <span class="keyword">in</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"error"</span>)</span><br><span class="line">&#125;, onCompleted: &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"completed"</span>)</span><br><span class="line">&#125;) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"disposed"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">subject.onNext(<span class="string">"D"</span>)</span><br><span class="line">subject.onNext(<span class="string">"E"</span>)</span><br><span class="line">subject.onNext(<span class="string">"F"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// completed</span></span><br><span class="line">subject.onCompleted()</span><br><span class="line"></span><br><span class="line">subject.onNext(<span class="string">"G"</span>)</span><br><span class="line">subject.onNext(<span class="string">"H"</span>)</span><br><span class="line"></span><br><span class="line">----</span><br><span class="line"></span><br><span class="line"><span class="type">D</span></span><br><span class="line"><span class="type">E</span></span><br><span class="line"><span class="type">F</span></span><br><span class="line">completed</span><br><span class="line">disposed</span><br></pre></td></tr></table></figure>
+<h3 id="예제"><a href="#예제" class="headerlink" title="예제"></a>예제</h3><pre><code class="swift">let subject = PublishSubject&lt;String&gt;()
+
+subject.onNext(&quot;A&quot;)
+subject.onNext(&quot;B&quot;)
+subject.onNext(&quot;C&quot;)
+
+// 구독 시작
+let observer1 = subject.subscribe(onNext: { (event) in
+    print(event)
+}, onError: { (error) in
+    print(&quot;error&quot;)
+}, onCompleted: {
+    print(&quot;completed&quot;)
+}) {
+    print(&quot;disposed&quot;)
+}
+
+subject.onNext(&quot;D&quot;)
+subject.onNext(&quot;E&quot;)
+subject.onNext(&quot;F&quot;)
+
+// completed
+subject.onCompleted()
+
+subject.onNext(&quot;G&quot;)
+subject.onNext(&quot;H&quot;)
+
+----
+
+D
+E
+F
+completed
+disposed
+</code></pre>
 <p>PublishSubject가 생성되고 A, B, C… 의 event sequence를 갖는다고 할 때,<br>observer1은 “C” event 이후에 구독을 시작한다.</p>
 <p>따라서 <code>D</code> Event 부터 수신하며 Completed Event를 수신한 이후에는 더이상 G, H는 수신하지 않는다.</p>
 <h2 id="BehaviorSubject"><a href="#BehaviorSubject" class="headerlink" title="BehaviorSubject"></a>BehaviorSubject</h2><p>Behavior Subject의 가장 큰 특징은 initial Value를 갖는다는 것이다. 따라서 Behavior Subject를 생성시에는 반드시 초기값을 입력해야한다.<br>Observer측면에서 보면 구독과 동시에 initial Event를 수신한다. initial Event는 가장 최근에 발생한 Event를 의미한다.<br>Subject가 처음 생성되었다면 생성시 입력된 initial value를, event sequence 중간에 subscribe했다면 가장 최근의 event를 수신한다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> subject = <span class="type">BehaviorSubject</span>(value: <span class="string">"Initial Value"</span>)</span><br><span class="line"></span><br><span class="line">subject.onNext(<span class="string">"A"</span>)</span><br><span class="line">subject.onNext(<span class="string">"B"</span>)</span><br><span class="line">subject.onNext(<span class="string">"C"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 구독 시작</span></span><br><span class="line"><span class="keyword">let</span> observer1 = subject.subscribe(onNext: &#123; (event) <span class="keyword">in</span></span><br><span class="line">    <span class="built_in">print</span>(event)</span><br><span class="line">&#125;, onError: &#123; (error) <span class="keyword">in</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"error"</span>)</span><br><span class="line">&#125;, onCompleted: &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"completed"</span>)</span><br><span class="line">&#125;) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"disposed"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">subject.onNext(<span class="string">"D"</span>)</span><br><span class="line">subject.onNext(<span class="string">"E"</span>)</span><br><span class="line">subject.onNext(<span class="string">"F"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// completed</span></span><br><span class="line">subject.onCompleted()</span><br><span class="line"></span><br><span class="line">subject.onNext(<span class="string">"G"</span>)</span><br><span class="line">subject.onNext(<span class="string">"H"</span>)</span><br><span class="line"></span><br><span class="line">----</span><br><span class="line"></span><br><span class="line"><span class="type">C</span></span><br><span class="line"><span class="type">D</span></span><br><span class="line"><span class="type">E</span></span><br><span class="line"><span class="type">F</span></span><br><span class="line">completed</span><br><span class="line">disposed</span><br></pre></td></tr></table></figure>
+<pre><code class="swift">let subject = BehaviorSubject(value: &quot;Initial Value&quot;)
+
+subject.onNext(&quot;A&quot;)
+subject.onNext(&quot;B&quot;)
+subject.onNext(&quot;C&quot;)
+
+// 구독 시작
+let observer1 = subject.subscribe(onNext: { (event) in
+    print(event)
+}, onError: { (error) in
+    print(&quot;error&quot;)
+}, onCompleted: {
+    print(&quot;completed&quot;)
+}) {
+    print(&quot;disposed&quot;)
+}
+
+subject.onNext(&quot;D&quot;)
+subject.onNext(&quot;E&quot;)
+subject.onNext(&quot;F&quot;)
+
+// completed
+subject.onCompleted()
+
+subject.onNext(&quot;G&quot;)
+subject.onNext(&quot;H&quot;)
+
+----
+
+C
+D
+E
+F
+completed
+disposed
+</code></pre>
 <p>PublishSubject 예제에서 PublishSubject를 BehaviorSubject로 변경 후의 결과이다.<br>observer1이 subscribe를 하면서 가장 최근에 발생한 Event <code>C</code>를 가져온다는 차이점이 있다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> subject = <span class="type">BehaviorSubject</span>(value: <span class="string">"Initial Value"</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 구독 시작</span></span><br><span class="line"><span class="keyword">let</span> observer1 = subject.subscribe(onNext: &#123; (event) <span class="keyword">in</span></span><br><span class="line">    <span class="built_in">print</span>(event)</span><br><span class="line">&#125;, onError: &#123; (error) <span class="keyword">in</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"error"</span>)</span><br><span class="line">&#125;, onCompleted: &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"completed"</span>)</span><br><span class="line">&#125;) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"disposed"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">subject.onNext(<span class="string">"A"</span>)</span><br><span class="line">subject.onNext(<span class="string">"B"</span>)</span><br><span class="line">subject.onNext(<span class="string">"C"</span>)</span><br><span class="line"></span><br><span class="line">----</span><br><span class="line"></span><br><span class="line"><span class="type">Initial</span> <span class="type">Value</span></span><br><span class="line"><span class="type">A</span></span><br><span class="line"><span class="type">B</span></span><br><span class="line"><span class="type">C</span></span><br></pre></td></tr></table></figure>
+<pre><code class="swift">let subject = BehaviorSubject(value: &quot;Initial Value&quot;)
+
+
+// 구독 시작
+let observer1 = subject.subscribe(onNext: { (event) in
+    print(event)
+}, onError: { (error) in
+    print(&quot;error&quot;)
+}, onCompleted: {
+    print(&quot;completed&quot;)
+}) {
+    print(&quot;disposed&quot;)
+}
+
+subject.onNext(&quot;A&quot;)
+subject.onNext(&quot;B&quot;)
+subject.onNext(&quot;C&quot;)
+
+----
+
+Initial Value
+A
+B
+C
+</code></pre>
 <h2 id="ReplaySubject"><a href="#ReplaySubject" class="headerlink" title="ReplaySubject"></a>ReplaySubject</h2><p>ReplaySubject는 Buffer를 갖는다. Buffer에 Event를 Queue로 저장하며 subscribe 하면 buffer에 있는 event sequence 부터 수신하기 시작한다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> subject = <span class="type">ReplaySubject</span>&lt;<span class="type">String</span>&gt;.create(bufferSize: <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">subject.onNext(<span class="string">"A"</span>)</span><br><span class="line">subject.onNext(<span class="string">"B"</span>)</span><br><span class="line">subject.onNext(<span class="string">"C"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 구독 시작</span></span><br><span class="line"><span class="keyword">let</span> observer1 = subject.subscribe(onNext: &#123; (event) <span class="keyword">in</span></span><br><span class="line">    <span class="built_in">print</span>(event)</span><br><span class="line">&#125;, onError: &#123; (error) <span class="keyword">in</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"error"</span>)</span><br><span class="line">&#125;, onCompleted: &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"completed"</span>)</span><br><span class="line">&#125;) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"disposed"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">subject.onNext(<span class="string">"D"</span>)</span><br><span class="line">subject.onNext(<span class="string">"E"</span>)</span><br><span class="line">subject.onNext(<span class="string">"F"</span>)</span><br><span class="line"></span><br><span class="line">----</span><br><span class="line"></span><br><span class="line"><span class="type">B</span></span><br><span class="line"><span class="type">C</span></span><br><span class="line"><span class="type">D</span></span><br><span class="line"><span class="type">E</span></span><br><span class="line"><span class="type">F</span></span><br></pre></td></tr></table></figure>
+<pre><code class="swift">let subject = ReplaySubject&lt;String&gt;.create(bufferSize: 2)
+
+subject.onNext(&quot;A&quot;)
+subject.onNext(&quot;B&quot;)
+subject.onNext(&quot;C&quot;)
+
+// 구독 시작
+let observer1 = subject.subscribe(onNext: { (event) in
+    print(event)
+}, onError: { (error) in
+    print(&quot;error&quot;)
+}, onCompleted: {
+    print(&quot;completed&quot;)
+}) {
+    print(&quot;disposed&quot;)
+}
+
+subject.onNext(&quot;D&quot;)
+subject.onNext(&quot;E&quot;)
+subject.onNext(&quot;F&quot;)
+
+----
+
+B
+C
+D
+E
+F
+</code></pre>
 <p>Buffer를 2로 ReplaySubject를 생성한 후 subscribe한 결과이다. 가장 최근에 발생한 B, C 를 크기가 2인 Buffer에 저장하고 있다가 subscribe가 되면 Event를 전달한다.</p>
 <p>Buffer크기보다 이전에 발생했던 이벤트 갯수가 적으면 어떻게 될까?</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> subject = <span class="type">ReplaySubject</span>&lt;<span class="type">String</span>&gt;.create(bufferSize: <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">subject.onNext(<span class="string">"A"</span>)</span><br><span class="line">subject.onNext(<span class="string">"B"</span>)</span><br><span class="line">subject.onNext(<span class="string">"C"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 구독 시작</span></span><br><span class="line"><span class="keyword">let</span> observer1 = subject.subscribe(onNext: &#123; (event) <span class="keyword">in</span></span><br><span class="line">    <span class="built_in">print</span>(event)</span><br><span class="line">&#125;, onError: &#123; (error) <span class="keyword">in</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"error"</span>)</span><br><span class="line">&#125;, onCompleted: &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"completed"</span>)</span><br><span class="line">&#125;) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"disposed"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">subject.onNext(<span class="string">"D"</span>)</span><br><span class="line">subject.onNext(<span class="string">"E"</span>)</span><br><span class="line">subject.onNext(<span class="string">"F"</span>)</span><br><span class="line"></span><br><span class="line">----</span><br><span class="line"></span><br><span class="line"><span class="type">A</span></span><br><span class="line"><span class="type">B</span></span><br><span class="line"><span class="type">C</span></span><br><span class="line"><span class="type">D</span></span><br><span class="line"><span class="type">E</span></span><br><span class="line"><span class="type">F</span></span><br></pre></td></tr></table></figure>
+<pre><code class="swift">let subject = ReplaySubject&lt;String&gt;.create(bufferSize: 5)
+
+subject.onNext(&quot;A&quot;)
+subject.onNext(&quot;B&quot;)
+subject.onNext(&quot;C&quot;)
+
+// 구독 시작
+let observer1 = subject.subscribe(onNext: { (event) in
+    print(event)
+}, onError: { (error) in
+    print(&quot;error&quot;)
+}, onCompleted: {
+    print(&quot;completed&quot;)
+}) {
+    print(&quot;disposed&quot;)
+}
+
+subject.onNext(&quot;D&quot;)
+subject.onNext(&quot;E&quot;)
+subject.onNext(&quot;F&quot;)
+
+----
+
+A
+B
+C
+D
+E
+F
+</code></pre>
 <p>Buffer가 가득차지 않았을 뿐, Buffer에 있는 Event들을 순서대로 구독하는데 문제가 없다.</p>
 <p>그렇다면 subscribe 이전에 onCompleted가 발생한 경우에는 어떻게 될까?</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> subject = <span class="type">ReplaySubject</span>&lt;<span class="type">String</span>&gt;.create(bufferSize: <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">subject.onNext(<span class="string">"A"</span>)</span><br><span class="line">subject.onNext(<span class="string">"B"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// onCompleted</span></span><br><span class="line">subject.onCompleted()</span><br><span class="line"></span><br><span class="line">subject.onNext(<span class="string">"C"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 구독 시작</span></span><br><span class="line"><span class="keyword">let</span> observer1 = subject.subscribe(onNext: &#123; (event) <span class="keyword">in</span></span><br><span class="line">    <span class="built_in">print</span>(event)</span><br><span class="line">&#125;, onError: &#123; (error) <span class="keyword">in</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"error"</span>)</span><br><span class="line">&#125;, onCompleted: &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"completed"</span>)</span><br><span class="line">&#125;) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"disposed"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">subject.onNext(<span class="string">"D"</span>)</span><br><span class="line">subject.onNext(<span class="string">"E"</span>)</span><br><span class="line">subject.onNext(<span class="string">"F"</span>)</span><br><span class="line"></span><br><span class="line">----</span><br><span class="line"></span><br><span class="line"><span class="type">A</span></span><br><span class="line"><span class="type">B</span></span><br><span class="line">completed</span><br><span class="line">disposed</span><br></pre></td></tr></table></figure>
+<pre><code class="swift">let subject = ReplaySubject&lt;String&gt;.create(bufferSize: 5)
+
+subject.onNext(&quot;A&quot;)
+subject.onNext(&quot;B&quot;)
+
+// onCompleted
+subject.onCompleted()
+
+subject.onNext(&quot;C&quot;)
+
+// 구독 시작
+let observer1 = subject.subscribe(onNext: { (event) in
+    print(event)
+}, onError: { (error) in
+    print(&quot;error&quot;)
+}, onCompleted: {
+    print(&quot;completed&quot;)
+}) {
+    print(&quot;disposed&quot;)
+}
+
+subject.onNext(&quot;D&quot;)
+subject.onNext(&quot;E&quot;)
+subject.onNext(&quot;F&quot;)
+
+----
+
+A
+B
+completed
+disposed
+</code></pre>
 <p>onCompleted 발생 이전의 Event들은 Buffer에 그대로 유지되며 onCompleted 까지 Event Sequence가 전달된다.</p>
 <h2 id="정리"><a href="#정리" class="headerlink" title="정리"></a>정리</h2><p>Variables를 제외한 3가지 타입(Publish, Behavior, Replay)의 Subject에 대해 예제를 통해 학습했다.<br>각각의 Subject는 Event Sequence에 대한 처리시점에 따라 구분되어 있으며, 실제 프로젝트에 적용할 때 적절한 선택이 필요해 보인다!</p>
 
@@ -176,7 +357,7 @@
                     <p>Jingyu Jung</p>
                     <span>iOS Engineer 정진규</span>
                     <dl>
-                        <dd><a href="https://github.com/TriDiamond" target="_blank"><span
+                        <dd><a href="https://monibu1548.github.io" target="_blank"><span
                                     class=" iconfont icon-github"></span></a></dd>
                         <dd><a href="https://twitter.com/TriDiamond6" target="_blank"><span
                                     class=" iconfont icon-twitter"></span></a></dd>

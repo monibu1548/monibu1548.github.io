@@ -52,7 +52,7 @@
                 <div class="share">
                     
                         <a href="javascript:;" class="iconfont icon-share1"></a>
-                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                        <div class="share-component-cc" data-disabled="douban,diandian,tencent"></div>
                     
                 </div>
             </div>
@@ -85,13 +85,13 @@
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>Words count</i>
-                    11k
+                    4.8k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
-                    10 mins.
+                    4 mins.
                 </span>
                 
                 
@@ -159,14 +159,68 @@
 <p>위 처럼 로그인 페이지를 만들어줍니다. 디자인은…. 나중에 :)<br>그리고 이제 앱의 첫 실행페이지를 로그인 페이지로 연결해 줍니다.</p>
 <p><img src="../../../../images/firebase-auth/6.png" alt=""></p>
 <p>가장 첫번째로 필요한 페이지. 로그인을 하기 전 회원가입을 먼저 해야합니다. 이메일 로그인 페이지를 구현합니다.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"><span class="keyword">import</span> FirebaseAuth</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EmailSignUpViewController</span>: <span class="title">UIViewController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="meta">@IBOutlet</span> <span class="keyword">weak</span> <span class="keyword">var</span> emailTextField: <span class="type">UITextField</span>!</span><br><span class="line">    <span class="meta">@IBOutlet</span> <span class="keyword">weak</span> <span class="keyword">var</span> passwordTextField: <span class="type">UITextField</span>!</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.viewDidLoad()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@IBAction</span> <span class="function"><span class="keyword">func</span> <span class="title">didSignUpButtonTapped</span><span class="params">(<span class="number">_</span> sender: Any)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> email = emailTextField.text, <span class="keyword">let</span> password = passwordTextField.text <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="type">Auth</span>.auth().createUser(withEmail: email, password: password) &#123; (authResult, error) <span class="keyword">in</span></span><br><span class="line">            <span class="keyword">guard</span> <span class="keyword">let</span> user = authResult?.user <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> error == <span class="literal">nil</span> &#123;</span><br><span class="line">                <span class="comment">// <span class="doctag">TODO:</span> 회원가입 정상 처리 후 다음 로직, 로그인 페이지 or 바로 로그인 시키기</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// <span class="doctag">TODO:</span> 회원가입 실패</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="swift">import UIKit
+import FirebaseAuth
+
+class EmailSignUpViewController: UIViewController {
+
+
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+
+    @IBAction func didSignUpButtonTapped(_ sender: Any) {
+
+        guard let email = emailTextField.text, let password = passwordTextField.text else { return }
+
+        Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
+            guard let user = authResult?.user else { return }
+
+            if error == nil {
+                // TODO: 회원가입 정상 처리 후 다음 로직, 로그인 페이지 or 바로 로그인 시키기
+            } else {
+                // TODO: 회원가입 실패
+            }
+        }
+    }
+}
+</code></pre>
 <p>위 코드를 구성 후 회원가입을 시도하면 다음과 같은 결과가 리턴됩니다.</p>
 <p><img src="../../../../images/firebase-auth/7.png" alt=""></p>
 <p>AuthToken값이 담긴 FIRUser 객체가 리턴되며 Firebase Authentication console에서 회원가입이 되었음을 확인할 수 있습니다.</p>
 <p><img src="../../../../images/firebase-auth/8.png" alt=""></p>
 <h2 id="iOS-앱-구현-이메일-비밀번호-로그인"><a href="#iOS-앱-구현-이메일-비밀번호-로그인" class="headerlink" title="iOS 앱 구현 (이메일/비밀번호 로그인)"></a>iOS 앱 구현 (이메일/비밀번호 로그인)</h2><p><img src="../../../../images/firebase-auth/9.png" alt=""></p>
 <p>이메일/비밀번호 로그인 페이지의 구현.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"><span class="keyword">import</span> FirebaseAuth</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EmailLoginViewController</span>: <span class="title">UIViewController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.viewDidLoad()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@IBOutlet</span> <span class="keyword">weak</span> <span class="keyword">var</span> emailTextField: <span class="type">UITextField</span>!</span><br><span class="line">    <span class="meta">@IBOutlet</span> <span class="keyword">weak</span> <span class="keyword">var</span> passwordTextField: <span class="type">UITextField</span>!</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    <span class="meta">@IBAction</span> <span class="function"><span class="keyword">func</span> <span class="title">didLoginButtonTapped</span><span class="params">(<span class="number">_</span> sender: Any)</span></span> &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> email = emailTextField.text, <span class="keyword">let</span> password = passwordTextField.text <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">Auth</span>.auth().signIn(withEmail: email, password: password) &#123; (user, error) <span class="keyword">in</span></span><br><span class="line">            <span class="keyword">if</span> error != <span class="literal">nil</span> &#123;</span><br><span class="line">                <span class="comment">// <span class="doctag">TODO:</span> 로그인 성공 user 객체에서 정보 사용</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// <span class="doctag">TODO:</span> 로그인 실패 처리</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="swift">import UIKit
+import FirebaseAuth
+
+class EmailLoginViewController: UIViewController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+
+
+    @IBAction func didLoginButtonTapped(_ sender: Any) {
+
+        guard let email = emailTextField.text, let password = passwordTextField.text else { return }
+
+        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+            if error != nil {
+                // TODO: 로그인 성공 user 객체에서 정보 사용
+            } else {
+                // TODO: 로그인 실패 처리
+            }
+        }
+    }
+}
+</code></pre>
 <p>로그인 성공 처리</p>
 <p><img src="../../../../images/firebase-auth/10.png" alt=""></p>
 <h2 id="로그인-성공-이후-처리과정에-대해서"><a href="#로그인-성공-이후-처리과정에-대해서" class="headerlink" title="로그인 성공 이후 처리과정에 대해서.."></a>로그인 성공 이후 처리과정에 대해서..</h2><p>로그인 이후에는 uid를 key값으로 DB에 데이터를 읽고/쓰며 사용자에 특화된 서비스를 제공할 수 있습니다.<br>uid의 관리 (세션 유지, 로그아웃) 등의 처리는 주로 LoginManager 또는 SessionManager라는 이름의 싱글톤객체를 통해 앱의 라이프사이클 내에서 사용하도록 합니다.</p>
@@ -198,7 +252,7 @@
                     <p>Jingyu Jung</p>
                     <span>iOS Engineer 정진규</span>
                     <dl>
-                        <dd><a href="https://github.com/TriDiamond" target="_blank"><span
+                        <dd><a href="https://monibu1548.github.io" target="_blank"><span
                                     class=" iconfont icon-github"></span></a></dd>
                         <dd><a href="https://twitter.com/TriDiamond6" target="_blank"><span
                                     class=" iconfont icon-twitter"></span></a></dd>

@@ -54,7 +54,7 @@ POST 메소드로 Bot 등록할 수 있도록 XCod,">
                 <div class="share">
                     
                         <a href="javascript:;" class="iconfont icon-share1"></a>
-                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                        <div class="share-component-cc" data-disabled="douban,diandian,tencent"></div>
                     
                 </div>
             </div>
@@ -87,13 +87,13 @@ POST 메소드로 Bot 등록할 수 있도록 XCod,">
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>Words count</i>
-                    12k
+                    7.5k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
-                    11 mins.
+                    7 mins.
                 </span>
                 
                 
@@ -137,21 +137,37 @@ POST 메소드로 Bot 등록할 수 있도록 XCod,">
 <p>Apple 가이드 문서, StackOverflow에도 공식적인 백업방법은 언급되어 있지 않습니다.<br>제가 제시하는 방법은 비공식적으로 XCode Server API를 우회하여 백업, 이전하는 방법으로 XCode Server의 버전 등에 따라 일부 다를 수 있습니다.</p>
 <h2 id="XCode-Server에-대한-이해"><a href="#XCode-Server에-대한-이해" class="headerlink" title="XCode Server에 대한 이해"></a>XCode Server에 대한 이해</h2><p>우선, XCode Server의 구조에 대해 알아봅니다. XCode Server는 내부적으로 apache, nodejs, redis, couchDB로 구성되어 있습니다.<br>여기서 눈여겨 봐야할 부분은 nodejs 입니다.</p>
 <p>XCode에서 Bot을 만들고 Integration을 실행시키고 하는 과정을 XCode Server의 API를 호출하는 과정이며, 이 API는 NodeJS가 처리합니다.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/Library/Developer/XcodeServer/CurrentXcodeSymlink/Contents/Developer/usr/share/xcs</span><br></pre></td></tr></table></figure>
-<p>위 경로는 XCode Server가 설치되어 있는 위치이며 여기에서 XCode Server의 코드를 볼 수 있습니다.</p>
+<pre><code>/Library/Developer/XcodeServer/CurrentXcodeSymlink/Contents/Developer/usr/share/xcs
+</code></pre><p>위 경로는 XCode Server가 설치되어 있는 위치이며 여기에서 XCode Server의 코드를 볼 수 있습니다.</p>
 <p><img src="../../../../images/xcode-server-backup/1.png" alt=""></p>
 <h2 id="XCode-Server에서-제공하는-API"><a href="#XCode-Server에서-제공하는-API" class="headerlink" title="XCode Server에서 제공하는 API"></a>XCode Server에서 제공하는 API</h2><p>XCode Server에서 제공하는 API를 통해 raw한 데이터를 직접 볼 수 있습니다.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://&#123;xcode server ip&#125;:20343/api/xcodes</span><br></pre></td></tr></table></figure>
-<ul>
+<pre><code>https://{xcode server ip}:20343/api/xcodes
+</code></pre><ul>
 <li>XCode Server의 XCode 정보를 조회하는 API</li>
 </ul>
 <p>하나의 예로 위의 API를 호출하면 다음과 같은 결과가 내려옵니다.</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">count: 1,</span><br><span class="line">results: [</span><br><span class="line">&#123;</span><br><span class="line">_id: "c67d878dbc911a8f84ea65393e000e99",</span><br><span class="line">_rev: "3-31c9c9d424fb7221fafbf68f434b8cf2",</span><br><span class="line">path: "/Applications/Xcode.app",</span><br><span class="line">buildNumber: "10A255",</span><br><span class="line">primary: true,</span><br><span class="line">version: "10.0",</span><br><span class="line">agentID: "6e3b6b1cef06fb79387f04391c001d03",</span><br><span class="line">doc_type: "xcode",</span><br><span class="line">tinyID: "CAE0F35"</span><br><span class="line">&#125;</span><br><span class="line">]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="json">{
+count: 1,
+results: [
+{
+_id: &quot;c67d878dbc911a8f84ea65393e000e99&quot;,
+_rev: &quot;3-31c9c9d424fb7221fafbf68f434b8cf2&quot;,
+path: &quot;/Applications/Xcode.app&quot;,
+buildNumber: &quot;10A255&quot;,
+primary: true,
+version: &quot;10.0&quot;,
+agentID: &quot;6e3b6b1cef06fb79387f04391c001d03&quot;,
+doc_type: &quot;xcode&quot;,
+tinyID: &quot;CAE0F35&quot;
+}
+]
+}
+</code></pre>
 <p>그 외 XCode Server API는 <a href="https://developer.apple.com/library/archive/documentation/Xcode/Conceptual/XcodeServerAPIReference/index.html" target="_blank" rel="noopener">Apple XCode Server API문서</a>에서 확인할 수 있습니다.</p>
 <p><code>네 문서 성의 없습니다. 없는 API도 있고, 제대로 동작 하지 않는 API도 많습니다. Bot에 관련된 API들이 그렇죠.. 정말 이걸 쓰라고 만든건지..</code></p>
 <h2 id="XCode-Server에-등록된-Bot-들의-정보-백업하기"><a href="#XCode-Server에-등록된-Bot-들의-정보-백업하기" class="headerlink" title="XCode Server에 등록된 Bot 들의 정보 백업하기"></a>XCode Server에 등록된 Bot 들의 정보 백업하기</h2><p>XCode Server Bot의 백업도 같은 방법을 사용합니다.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://&#123;xcode server ip&#125;:20343/api/bots</span><br></pre></td></tr></table></figure>
-<ul>
+<pre><code>https://{xcode server ip}:20343/api/bots
+</code></pre><ul>
 <li>response</li>
 </ul>
 <p><img src="../../../../images/xcode-server-backup/2.png" alt=""></p>
@@ -162,17 +178,52 @@ POST 메소드로 Bot 등록할 수 있도록 XCod,">
 <ul>
 <li>삽질하면서 가장 어이없던 부분인데요, XCode Server API 공식 가이드 문서가 잘못되어 있으며, 인증 이유로도 호출이 되지 않습니다.</li>
 </ul>
-<h2 id="XCode-Server에-커스텀-route-등록하기"><a href="#XCode-Server에-커스텀-route-등록하기" class="headerlink" title="XCode Server에 커스텀 route 등록하기"></a>XCode Server에 커스텀 route 등록하기</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/Library/Developer/XcodeServer/CurrentXcodeSymlink/Contents/Developer/usr/share/xcs/xcsd/routes/routes_bot.js</span><br></pre></td></tr></table></figure>
-<p>vim 또는 텍스트에디터로 위 파일을 열어줍니다. (관리자 권한으로 열어야 수정 가능합니다.)</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>),</span><br><span class="line">    auth = <span class="built_in">require</span>(<span class="string">'../classes/authClass.js'</span>),</span><br><span class="line">    bot = <span class="built_in">require</span>(<span class="string">'../classes/botClass.js'</span>),</span><br><span class="line">    routes_utils = <span class="built_in">require</span>(<span class="string">'./routes_utils.js'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> prepareRequest = routes_utils.prepareRequest,</span><br><span class="line">    setTTLInDocumentIfNeeded = routes_utils.setTTLInDocumentIfNeeded,</span><br><span class="line">    enforceBotCreatorRole = auth.enforceBotCreatorRole,</span><br><span class="line">    enforceBotViewerRole = auth.enforceBotViewerRole;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> router = express.Router();</span><br><span class="line"></span><br><span class="line">router.route(<span class="string">'/bots/:id'</span>)</span><br><span class="line">    .get(prepareRequest, enforceBotViewerRole, bot.findBot)</span><br><span class="line">    .patch(prepareRequest, enforceBotCreatorRole, bot.update);</span><br><span class="line"></span><br><span class="line">router.delete(<span class="string">'/bots/:id/:rev?'</span>, prepareRequest, enforceBotCreatorRole, bot.remove);</span><br><span class="line"></span><br><span class="line">router.route(<span class="string">'/bots'</span>)</span><br><span class="line">    .get(prepareRequest, enforceBotViewerRole, bot.list)</span><br><span class="line">    .post(prepareRequest, enforceBotCreatorRole, setTTLInDocumentIfNeeded, bot.create);</span><br><span class="line"></span><br><span class="line">router.post(<span class="string">'/bots/:id/duplicate'</span>, prepareRequest, enforceBotCreatorRole, bot.duplicate);</span><br><span class="line">router.get(<span class="string">'/bots/:id/stats'</span>, prepareRequest, enforceBotViewerRole, bot.stats);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = router;</span><br></pre></td></tr></table></figure>
+<h2 id="XCode-Server에-커스텀-route-등록하기"><a href="#XCode-Server에-커스텀-route-등록하기" class="headerlink" title="XCode Server에 커스텀 route 등록하기"></a>XCode Server에 커스텀 route 등록하기</h2><pre><code>/Library/Developer/XcodeServer/CurrentXcodeSymlink/Contents/Developer/usr/share/xcs/xcsd/routes/routes_bot.js
+</code></pre><p>vim 또는 텍스트에디터로 위 파일을 열어줍니다. (관리자 권한으로 열어야 수정 가능합니다.)</p>
+<pre><code class="js">&#39;use strict&#39;;
+
+var express = require(&#39;express&#39;),
+    auth = require(&#39;../classes/authClass.js&#39;),
+    bot = require(&#39;../classes/botClass.js&#39;),
+    routes_utils = require(&#39;./routes_utils.js&#39;);
+
+var prepareRequest = routes_utils.prepareRequest,
+    setTTLInDocumentIfNeeded = routes_utils.setTTLInDocumentIfNeeded,
+    enforceBotCreatorRole = auth.enforceBotCreatorRole,
+    enforceBotViewerRole = auth.enforceBotViewerRole;
+
+var router = express.Router();
+
+router.route(&#39;/bots/:id&#39;)
+    .get(prepareRequest, enforceBotViewerRole, bot.findBot)
+    .patch(prepareRequest, enforceBotCreatorRole, bot.update);
+
+router.delete(&#39;/bots/:id/:rev?&#39;, prepareRequest, enforceBotCreatorRole, bot.remove);
+
+router.route(&#39;/bots&#39;)
+    .get(prepareRequest, enforceBotViewerRole, bot.list)
+    .post(prepareRequest, enforceBotCreatorRole, setTTLInDocumentIfNeeded, bot.create);
+
+router.post(&#39;/bots/:id/duplicate&#39;, prepareRequest, enforceBotCreatorRole, bot.duplicate);
+router.get(&#39;/bots/:id/stats&#39;, prepareRequest, enforceBotViewerRole, bot.stats);
+
+module.exports = router;
+
+</code></pre>
 <p>NodeJS 코드입니다. NodeJS를 몰라도 어느정도 해석할 수 있습니다.<br>주의깊게 볼 부분은 21 ~ 23 라인입니다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">router.route(<span class="string">'/bots'</span>)</span><br><span class="line">    .get(prepareRequest, enforceBotViewerRole, bot.list)</span><br><span class="line">    .post(prepareRequest, enforceBotCreatorRole, setTTLInDocumentIfNeeded, bot.create);</span><br></pre></td></tr></table></figure>
+<pre><code class="js">router.route(&#39;/bots&#39;)
+    .get(prepareRequest, enforceBotViewerRole, bot.list)
+    .post(prepareRequest, enforceBotCreatorRole, setTTLInDocumentIfNeeded, bot.create);
+</code></pre>
 <p>/bots 에 GET으로 request를 보내면 bot.list를 리턴해주며<br>/bots 에 POST로 request를 보내면 bot을 create 한다는 내용을 유추할 수 있습니다. 다만 중간에 setTTLInDocumentIfNeeded 파라미터를 통해 인증이 필요하다는 내용도 알 수 있습니다.</p>
 <p>그 아래 다음 라인을 추가하여 인증 없이 bot을 만들 수 있는 route를 열어줍니다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">router.route(<span class="string">'/bots/noauth'</span>)</span><br><span class="line">    .post(prepareRequest, bot.create);</span><br></pre></td></tr></table></figure>
+<pre><code class="js">router.route(&#39;/bots/noauth&#39;)
+    .post(prepareRequest, bot.create);
+</code></pre>
 <p>저장 후 XCode Server를 재실행시킵니다.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo xcscontrol --shutdown</span><br><span class="line">sudo xcscontrol --start</span><br></pre></td></tr></table></figure>
-<h2 id="Postman을-이용해-POST-request-보내기"><a href="#Postman을-이용해-POST-request-보내기" class="headerlink" title="Postman을 이용해 POST request 보내기"></a>Postman을 이용해 POST request 보내기</h2><p>이제 백업했던 Bots 정보를 POST로 등록할 순서입니다.</p>
+<pre><code>sudo xcscontrol --shutdown
+sudo xcscontrol --start
+</code></pre><h2 id="Postman을-이용해-POST-request-보내기"><a href="#Postman을-이용해-POST-request-보내기" class="headerlink" title="Postman을 이용해 POST request 보내기"></a>Postman을 이용해 POST request 보내기</h2><p>이제 백업했던 Bots 정보를 POST로 등록할 순서입니다.</p>
 <ol>
 <li>먼저 https로 요청을 보내기 때문에, postman에서 한가지 옵션을 설정해야 합니다. Settings &gt; General 에서 SSL certificate verification 옵션을 OFF로 설정합니다.</li>
 </ol>
@@ -220,7 +271,7 @@ POST 메소드로 Bot 등록할 수 있도록 XCod,">
                     <p>Jingyu Jung</p>
                     <span>iOS Engineer 정진규</span>
                     <dl>
-                        <dd><a href="https://github.com/TriDiamond" target="_blank"><span
+                        <dd><a href="https://monibu1548.github.io" target="_blank"><span
                                     class=" iconfont icon-github"></span></a></dd>
                         <dd><a href="https://twitter.com/TriDiamond6" target="_blank"><span
                                     class=" iconfont icon-twitter"></span></a></dd>
